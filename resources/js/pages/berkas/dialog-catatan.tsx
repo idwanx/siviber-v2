@@ -522,6 +522,7 @@ export default function DialogCatatan({
                     variant={"default"}
                     type="submit" 
                     tabIndex={2}
+                    disabled={processing}
                   >
                     {selectedItems.length > 0 || submitMode === 'edit'  ? 'Update' : 'Simpan'}
                   </Button>
