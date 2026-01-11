@@ -35,9 +35,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('destroy-berkas/{berka}', [BerkasController::class, 'destroyBerkas'])->name('berkas.destroy');
 
 
-    Route::get('edit-berkas/{id}', [BerkasController::class, 'edit'])->name('berkas.edit');
+    Route::get('edit-berkas/{id}', [BerkasController::class, 'editBerkas'])->name('berkas.edit');
 
-    Route::get('find-berkas/{id}', [BerkasController::class, 'edit'])->name('berkas.find');
+    Route::get('find-berkas/{id}', [BerkasController::class, 'findBerkas'])->name('berkas.find');
 
     Route::get('detail-berkas/{id}', [BerkasController::class, 'detailBerkas'])->name('berkas.detail');
 

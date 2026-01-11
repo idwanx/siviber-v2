@@ -623,7 +623,7 @@ destroy.form = destroyForm
 
 /**
 * @see \App\Http\Controllers\Berkas\BerkasController::edit
-* @see app/Http/Controllers/Berkas/BerkasController.php:0
+* @see app/Http/Controllers/Berkas/BerkasController.php:706
 * @route '/edit-berkas/{id}'
 */
 export const edit = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -638,7 +638,7 @@ edit.definition = {
 
 /**
 * @see \App\Http\Controllers\Berkas\BerkasController::edit
-* @see app/Http/Controllers/Berkas/BerkasController.php:0
+* @see app/Http/Controllers/Berkas/BerkasController.php:706
 * @route '/edit-berkas/{id}'
 */
 edit.url = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -665,7 +665,7 @@ edit.url = (args: { id: string | number } | [id: string | number ] | string | nu
 
 /**
 * @see \App\Http\Controllers\Berkas\BerkasController::edit
-* @see app/Http/Controllers/Berkas/BerkasController.php:0
+* @see app/Http/Controllers/Berkas/BerkasController.php:706
 * @route '/edit-berkas/{id}'
 */
 edit.get = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -675,7 +675,7 @@ edit.get = (args: { id: string | number } | [id: string | number ] | string | nu
 
 /**
 * @see \App\Http\Controllers\Berkas\BerkasController::edit
-* @see app/Http/Controllers/Berkas/BerkasController.php:0
+* @see app/Http/Controllers/Berkas/BerkasController.php:706
 * @route '/edit-berkas/{id}'
 */
 edit.head = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -685,7 +685,7 @@ edit.head = (args: { id: string | number } | [id: string | number ] | string | n
 
 /**
 * @see \App\Http\Controllers\Berkas\BerkasController::edit
-* @see app/Http/Controllers/Berkas/BerkasController.php:0
+* @see app/Http/Controllers/Berkas/BerkasController.php:706
 * @route '/edit-berkas/{id}'
 */
 const editForm = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -695,7 +695,7 @@ const editForm = (args: { id: string | number } | [id: string | number ] | strin
 
 /**
 * @see \App\Http\Controllers\Berkas\BerkasController::edit
-* @see app/Http/Controllers/Berkas/BerkasController.php:0
+* @see app/Http/Controllers/Berkas/BerkasController.php:706
 * @route '/edit-berkas/{id}'
 */
 editForm.get = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -705,7 +705,7 @@ editForm.get = (args: { id: string | number } | [id: string | number ] | string 
 
 /**
 * @see \App\Http\Controllers\Berkas\BerkasController::edit
-* @see app/Http/Controllers/Berkas/BerkasController.php:0
+* @see app/Http/Controllers/Berkas/BerkasController.php:706
 * @route '/edit-berkas/{id}'
 */
 editForm.head = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

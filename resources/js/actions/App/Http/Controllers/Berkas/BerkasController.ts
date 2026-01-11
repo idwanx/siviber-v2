@@ -622,26 +622,26 @@ destroyBerkasForm.delete = (args: { berka: number | { id: number } } | [berka: n
 destroyBerkas.form = destroyBerkasForm
 
 /**
-* @see \App\Http\Controllers\Berkas\BerkasController::edit
-* @see app/Http/Controllers/Berkas/BerkasController.php:0
+* @see \App\Http\Controllers\Berkas\BerkasController::editBerkas
+* @see app/Http/Controllers/Berkas/BerkasController.php:706
 * @route '/edit-berkas/{id}'
 */
-const editcafa241b421341a9e895346b10ffdbb6 = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: editcafa241b421341a9e895346b10ffdbb6.url(args, options),
+export const editBerkas = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: editBerkas.url(args, options),
     method: 'get',
 })
 
-editcafa241b421341a9e895346b10ffdbb6.definition = {
+editBerkas.definition = {
     methods: ["get","head"],
     url: '/edit-berkas/{id}',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see \App\Http\Controllers\Berkas\BerkasController::edit
-* @see app/Http/Controllers/Berkas/BerkasController.php:0
+* @see \App\Http\Controllers\Berkas\BerkasController::editBerkas
+* @see app/Http/Controllers/Berkas/BerkasController.php:706
 * @route '/edit-berkas/{id}'
 */
-editcafa241b421341a9e895346b10ffdbb6.url = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions) => {
+editBerkas.url = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { id: args }
     }
@@ -658,58 +658,58 @@ editcafa241b421341a9e895346b10ffdbb6.url = (args: { id: string | number } | [id:
         id: args.id,
     }
 
-    return editcafa241b421341a9e895346b10ffdbb6.definition.url
+    return editBerkas.definition.url
             .replace('{id}', parsedArgs.id.toString())
             .replace(/\/+$/, '') + queryParams(options)
 }
 
 /**
-* @see \App\Http\Controllers\Berkas\BerkasController::edit
-* @see app/Http/Controllers/Berkas/BerkasController.php:0
+* @see \App\Http\Controllers\Berkas\BerkasController::editBerkas
+* @see app/Http/Controllers/Berkas/BerkasController.php:706
 * @route '/edit-berkas/{id}'
 */
-editcafa241b421341a9e895346b10ffdbb6.get = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: editcafa241b421341a9e895346b10ffdbb6.url(args, options),
+editBerkas.get = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: editBerkas.url(args, options),
     method: 'get',
 })
 
 /**
-* @see \App\Http\Controllers\Berkas\BerkasController::edit
-* @see app/Http/Controllers/Berkas/BerkasController.php:0
+* @see \App\Http\Controllers\Berkas\BerkasController::editBerkas
+* @see app/Http/Controllers/Berkas/BerkasController.php:706
 * @route '/edit-berkas/{id}'
 */
-editcafa241b421341a9e895346b10ffdbb6.head = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: editcafa241b421341a9e895346b10ffdbb6.url(args, options),
+editBerkas.head = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: editBerkas.url(args, options),
     method: 'head',
 })
 
 /**
-* @see \App\Http\Controllers\Berkas\BerkasController::edit
-* @see app/Http/Controllers/Berkas/BerkasController.php:0
+* @see \App\Http\Controllers\Berkas\BerkasController::editBerkas
+* @see app/Http/Controllers/Berkas/BerkasController.php:706
 * @route '/edit-berkas/{id}'
 */
-const editcafa241b421341a9e895346b10ffdbb6Form = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: editcafa241b421341a9e895346b10ffdbb6.url(args, options),
+const editBerkasForm = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: editBerkas.url(args, options),
     method: 'get',
 })
 
 /**
-* @see \App\Http\Controllers\Berkas\BerkasController::edit
-* @see app/Http/Controllers/Berkas/BerkasController.php:0
+* @see \App\Http\Controllers\Berkas\BerkasController::editBerkas
+* @see app/Http/Controllers/Berkas/BerkasController.php:706
 * @route '/edit-berkas/{id}'
 */
-editcafa241b421341a9e895346b10ffdbb6Form.get = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: editcafa241b421341a9e895346b10ffdbb6.url(args, options),
+editBerkasForm.get = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: editBerkas.url(args, options),
     method: 'get',
 })
 
 /**
-* @see \App\Http\Controllers\Berkas\BerkasController::edit
-* @see app/Http/Controllers/Berkas/BerkasController.php:0
+* @see \App\Http\Controllers\Berkas\BerkasController::editBerkas
+* @see app/Http/Controllers/Berkas/BerkasController.php:706
 * @route '/edit-berkas/{id}'
 */
-editcafa241b421341a9e895346b10ffdbb6Form.head = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: editcafa241b421341a9e895346b10ffdbb6.url(args, {
+editBerkasForm.head = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: editBerkas.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'HEAD',
             ...(options?.query ?? options?.mergeQuery ?? {}),
@@ -718,28 +718,29 @@ editcafa241b421341a9e895346b10ffdbb6Form.head = (args: { id: string | number } |
     method: 'get',
 })
 
-editcafa241b421341a9e895346b10ffdbb6.form = editcafa241b421341a9e895346b10ffdbb6Form
+editBerkas.form = editBerkasForm
+
 /**
-* @see \App\Http\Controllers\Berkas\BerkasController::edit
+* @see \App\Http\Controllers\Berkas\BerkasController::findBerkas
 * @see app/Http/Controllers/Berkas/BerkasController.php:0
 * @route '/find-berkas/{id}'
 */
-const edit918f6b7d1047dc50100d27dc07a2e71c = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: edit918f6b7d1047dc50100d27dc07a2e71c.url(args, options),
+export const findBerkas = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: findBerkas.url(args, options),
     method: 'get',
 })
 
-edit918f6b7d1047dc50100d27dc07a2e71c.definition = {
+findBerkas.definition = {
     methods: ["get","head"],
     url: '/find-berkas/{id}',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see \App\Http\Controllers\Berkas\BerkasController::edit
+* @see \App\Http\Controllers\Berkas\BerkasController::findBerkas
 * @see app/Http/Controllers/Berkas/BerkasController.php:0
 * @route '/find-berkas/{id}'
 */
-edit918f6b7d1047dc50100d27dc07a2e71c.url = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions) => {
+findBerkas.url = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { id: args }
     }
@@ -756,58 +757,58 @@ edit918f6b7d1047dc50100d27dc07a2e71c.url = (args: { id: string | number } | [id:
         id: args.id,
     }
 
-    return edit918f6b7d1047dc50100d27dc07a2e71c.definition.url
+    return findBerkas.definition.url
             .replace('{id}', parsedArgs.id.toString())
             .replace(/\/+$/, '') + queryParams(options)
 }
 
 /**
-* @see \App\Http\Controllers\Berkas\BerkasController::edit
+* @see \App\Http\Controllers\Berkas\BerkasController::findBerkas
 * @see app/Http/Controllers/Berkas/BerkasController.php:0
 * @route '/find-berkas/{id}'
 */
-edit918f6b7d1047dc50100d27dc07a2e71c.get = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: edit918f6b7d1047dc50100d27dc07a2e71c.url(args, options),
+findBerkas.get = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: findBerkas.url(args, options),
     method: 'get',
 })
 
 /**
-* @see \App\Http\Controllers\Berkas\BerkasController::edit
+* @see \App\Http\Controllers\Berkas\BerkasController::findBerkas
 * @see app/Http/Controllers/Berkas/BerkasController.php:0
 * @route '/find-berkas/{id}'
 */
-edit918f6b7d1047dc50100d27dc07a2e71c.head = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: edit918f6b7d1047dc50100d27dc07a2e71c.url(args, options),
+findBerkas.head = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: findBerkas.url(args, options),
     method: 'head',
 })
 
 /**
-* @see \App\Http\Controllers\Berkas\BerkasController::edit
+* @see \App\Http\Controllers\Berkas\BerkasController::findBerkas
 * @see app/Http/Controllers/Berkas/BerkasController.php:0
 * @route '/find-berkas/{id}'
 */
-const edit918f6b7d1047dc50100d27dc07a2e71cForm = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: edit918f6b7d1047dc50100d27dc07a2e71c.url(args, options),
+const findBerkasForm = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: findBerkas.url(args, options),
     method: 'get',
 })
 
 /**
-* @see \App\Http\Controllers\Berkas\BerkasController::edit
+* @see \App\Http\Controllers\Berkas\BerkasController::findBerkas
 * @see app/Http/Controllers/Berkas/BerkasController.php:0
 * @route '/find-berkas/{id}'
 */
-edit918f6b7d1047dc50100d27dc07a2e71cForm.get = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: edit918f6b7d1047dc50100d27dc07a2e71c.url(args, options),
+findBerkasForm.get = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: findBerkas.url(args, options),
     method: 'get',
 })
 
 /**
-* @see \App\Http\Controllers\Berkas\BerkasController::edit
+* @see \App\Http\Controllers\Berkas\BerkasController::findBerkas
 * @see app/Http/Controllers/Berkas/BerkasController.php:0
 * @route '/find-berkas/{id}'
 */
-edit918f6b7d1047dc50100d27dc07a2e71cForm.head = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: edit918f6b7d1047dc50100d27dc07a2e71c.url(args, {
+findBerkasForm.head = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: findBerkas.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'HEAD',
             ...(options?.query ?? options?.mergeQuery ?? {}),
@@ -816,12 +817,7 @@ edit918f6b7d1047dc50100d27dc07a2e71cForm.head = (args: { id: string | number } |
     method: 'get',
 })
 
-edit918f6b7d1047dc50100d27dc07a2e71c.form = edit918f6b7d1047dc50100d27dc07a2e71cForm
-
-export const edit = {
-    '/edit-berkas/{id}': editcafa241b421341a9e895346b10ffdbb6,
-    '/find-berkas/{id}': edit918f6b7d1047dc50100d27dc07a2e71c,
-}
+findBerkas.form = findBerkasForm
 
 /**
 * @see \App\Http\Controllers\Berkas\BerkasController::detailBerkas
@@ -922,6 +918,6 @@ detailBerkasForm.head = (args: { id: string | number } | [id: string | number ] 
 
 detailBerkas.form = detailBerkasForm
 
-const BerkasController = { index, addRiwayat, getVerifikator, getHistory, storeBerkas, updateBerkas, destroyBerkas, edit, detailBerkas }
+const BerkasController = { index, addRiwayat, getVerifikator, getHistory, storeBerkas, updateBerkas, destroyBerkas, editBerkas, findBerkas, detailBerkas }
 
 export default BerkasController
