@@ -9,7 +9,6 @@ import { Check, CircleCheckBig, CircleSlash2 } from "lucide-react";
 import { Spinner } from "@/components/ui/spinner";
 import { SharedData } from "@/types";
 import { router, usePage } from "@inertiajs/react";
-
 import { useState } from "react";
 import { toast } from "sonner";
 import berkas from "@/routes/berkas";

@@ -15,7 +15,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Edit2, Trash } from "lucide-react";
-import { ScrollArea } from "@/components/ui/scroll-area"
 import {
   Table,
   TableBody,
