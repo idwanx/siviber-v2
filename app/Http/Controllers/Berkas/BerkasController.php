@@ -727,4 +727,16 @@ class BerkasController extends Controller
 
         return new DetailBerkasResource($findberkas);
     }
+
+    public function findBerkas(int $id)
+    {
+        $findberkas = Berka::select(['berkas.id', 'berkas.jenis_berka_id', 'berkas.kode', 'berkas.no_spm', 'berkas.nilai_spm', 'berkas.penerima_id', 'berkas.tgl_spm', 'berkas.kegiatan', 'berkas.created_at', 'berkas.status_berka_id', 'berkas.sumber_dana_id', 'instansis.nama_instansi', 'jenis_berkas.nama_jenis_berkas', 'penerimas.norek', 'penerimas.npwp', 'sumber_danas.nama_sumber_dana'])
+        ->leftJoin('instansis', 'berkas.instansi_id', '=', 'instansis.id')
+        ->leftJoin('jenis_berkas', 'berkas.jenis_berka_id', '=', 'jenis_berkas.id')
+        ->leftJoin('penerimas', 'berkas.penerima_id', '=', 'penerimas.id')
+        ->leftJoin('sumber_danas', 'berkas.sumber_dana_id', '=', 'sumber_danas.id')
+        ->find($id);
+
+        return new FindBerkasResource($findberkas);
+    }
 }
