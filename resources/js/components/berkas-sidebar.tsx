@@ -1,0 +1,81 @@
+import {
+    Sidebar,
+    SidebarContent,
+    SidebarGroup,
+    SidebarMenu,
+    SidebarMenuButton,
+    SidebarMenuItem,
+} from '@/components/ui/sidebar';
+import berkas from '@/routes/berkas';
+import { type NavItem } from '@/types';
+import { Link, usePage } from '@inertiajs/react';
+import { resolveUrl } from "@/lib/utils";
+import { Check, CircleCheckBig, CircleSlash2, FileInput } from 'lucide-react';
+
+interface PropsTahun {
+    tahun: number;
+    [key: string]: unknown;
+}
+
+export function BerkasSidebar() {
+    const { url } = usePage();
+
+    const { tahun } = usePage<PropsTahun>().props;
+    
+    const currentYear: number = new Date().getFullYear();
+
+    const mainNavItems: NavItem[] = [
+    {
+        title: 'Registrasi',
+        href: berkas.main({ tahun: !tahun ? currentYear : tahun, statusberkas: "registrasi" }),
+        icon: FileInput
+    },
+    {
+        title: 'Verifikasi',
+        href: berkas.main( { tahun: !tahun ? currentYear : tahun, statusberkas: "verifikasi" }),
+        icon: Check,
+    },
+    {
+        title: 'Penolakan',
+        href: berkas.main( { tahun: !tahun ? currentYear : tahun, statusberkas: "penolakan" }),
+        icon: CircleSlash2,
+    },
+    {
+        title: 'Sp2d',
+        href: berkas.main( { tahun: !tahun ? currentYear : tahun, statusberkas: "sp2d" }),
+        icon: CircleCheckBig,
+    },
+];
+
+    return (
+        <Sidebar 
+            className="top-(--header-height) h-[calc(100svh-var(--header-height))]!"
+            variant="inset"
+        >
+            <SidebarContent>
+                {/* <NavMain items={mainNavItems} /> */}
+                <SidebarGroup className="mt-2 py-0">
+            {/* <SidebarGroupLabel>Platform</SidebarGroupLabel> */}
+                    <SidebarMenu>
+                        {mainNavItems.map((item) => (
+                            <SidebarMenuItem key={item.title}>
+                                <SidebarMenuButton
+                                    asChild
+                                    isActive={url.startsWith(
+                                        resolveUrl(item.href),
+                                    )}
+                                    tooltip={{ children: item.title }}
+                                >
+                                    <Link href={item.href} only={['daftarberkas', 'menuOption']}>
+                                        {item.icon && <item.icon />}
+                                        <span>{item.title}</span>
+                                    </Link>
+                                </SidebarMenuButton>
+                            </SidebarMenuItem>
+                        ))}
+                    </SidebarMenu>
+                </SidebarGroup>
+            </SidebarContent>
+        </Sidebar>
+    );
+}
