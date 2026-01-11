@@ -139,7 +139,7 @@ export default function FormRegistrasiBerkas({ modalCrud, addNew, dataState, mod
   const getDataBerkasToUpdate = useCallback(async (id: number): Promise<void> => {
     setIsLoadingUpdate(true);
       try {
-          const response = await fetch(berkas.find(id).url);
+          const response = await fetch(berkas.edit(id).url);
           const result: any = await response.json();
           setData({
             no_spm: result.no_spm,
@@ -272,8 +272,8 @@ export default function FormRegistrasiBerkas({ modalCrud, addNew, dataState, mod
             post(berkas.store().url, {
               preserveScroll: true,
               onSuccess: (response: { props: FlashProps }) => {
-                  const berkasBaru: FieldDataBerkas = response.props.newdata?.datas;
-                  addNew(berkasBaru);
+                  const berkasBaru: any = response.props.newdata?.datas;
+                  addNew(berkasBaru.data);
                   reset('no_spm', 'kegiatan');
                   clearErrors();
                   if (response.props.flash?.type === 'success') {

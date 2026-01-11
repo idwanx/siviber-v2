@@ -20,28 +20,9 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
-// Route::middleware(['auth', 'verified'])->group(function () {
-//     Route::get('dashboard', function () {
-//         return Inertia::render('dashboard');
-//     })->name('dashboard');
-// });
-
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard/{tahun?}', DashboardController::class)->name('dashboard');
-
-
-
-    // Route::get('berkas/{tahun?}/{statusberkas}', [BerkasController::class, 'registrasi'])->name('berkas.registrasi');
-
-    // Route::get('berkas/{tahun?}/verifikasi', [BerkasController::class, 'verifikasi'])->name('berkas.verifikasi');
-
-    // Route::get('berkas/{tahun?}/penolakan', [BerkasController::class, 'penolakan'])->name('berkas.penolakan');
-
-    // Route::get('berkas/{tahun?}/sp2d', [BerkasController::class, 'sp2d'])->name('berkas.sp2d');
-
     Route::get('berkas/{tahun?}/{statusberkas}', [BerkasController::class, 'index'])->name('berkas.main');
-
-
     Route::post('add-riwayat/{berka}', [BerkasController::class, 'addRiwayat'])->name('berkas.addriwayat');
     Route::get('get-verifikator/{berka}', [BerkasController::class, 'getVerifikator'])->name('berkas.getverifikator');
     
@@ -54,7 +35,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('destroy-berkas/{berka}', [BerkasController::class, 'destroyBerkas'])->name('berkas.destroy');
 
 
-    Route::get('find-berkas/{id}', [BerkasController::class, 'find'])->name('berkas.find');
+    Route::get('edit-berkas/{id}', [BerkasController::class, 'edit'])->name('berkas.edit');
+
+    Route::get('find-berkas/{id}', [BerkasController::class, 'edit'])->name('berkas.find');
 
     Route::get('detail-berkas/{id}', [BerkasController::class, 'detailBerkas'])->name('berkas.detail');
 

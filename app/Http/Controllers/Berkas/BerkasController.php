@@ -101,31 +101,35 @@ class BerkasController extends Controller
             $formatHariIni = Carbon::parse($hariIni)->format('Y-m-d');
 
             $newData = [
-                'hari' => $berkas->created_at->isoFormat('dddd'),
-                'hari_ke' => $berkas->tgl_spm->diffInDays($formatHariIni),
-                'id' => $berkas->id,
-                'jam' => $berkas->created_at->format('H:m:s'),
-                'info' => "berkas",
                 'action' => "newBerkas",
+                'info' => "berkas",
                 'instansi_id' => $this->roleuser->instansi_id,
-                'jumlah_catatan' => 0,
-                'kegiatan' => $berkas->kegiatan,
-                'kode' => $berkas->kode,
-                'nama_instansi' => $this->roleuser->nama_instansi,
-                'nama_jenis_berkas' => $explodeJenisSpm[1],
-                'nama_sumber_dana' => $explodeSumberDana[1],
-                'no_spm' => $berkas->no_spm,
-                'riwayats' => [
-                    [
-                        'berka_id' => $riwayatBaru->berka_id,
-                        'id' => $riwayatBaru->id,
-                        'user_id' => $request->user()->id,
-                        'status_berka_id' => $riwayatBaru->status_berka_id
-                    ]
-                ],
+                'user_id' => $request->user()->id,
                 'status_berka_id' => 1,
-                'tgl_registrasi' => $berkas->created_at->isoFormat('D MMMM Y'),
-                'tgl_spm' => $berkas->tgl_spm->isoFormat('D MMMM Y'),
+                'data' => [
+                    'hari' => $berkas->created_at->isoFormat('dddd'),
+                    'hari_ke' => $berkas->tgl_spm->diffInDays($formatHariIni),
+                    'id' => $berkas->id,
+                    'jam' => $berkas->created_at->format('H:m:s'),
+                    'jumlah_catatan' => 0,
+                    'kegiatan' => $berkas->kegiatan,
+                    'kode' => $berkas->kode,
+                    'nama_instansi' => $this->roleuser->nama_instansi,
+                    'nama_jenis_berkas' => $explodeJenisSpm[1],
+                    'nama_sumber_dana' => $explodeSumberDana[1],
+                    'no_spm' => $berkas->no_spm,
+                    'riwayats' => [
+                        [
+                            'berka_id' => $riwayatBaru->berka_id,
+                            'id' => $riwayatBaru->id,
+                            'user_id' => $request->user()->id,
+                            'status_berka_id' => 1
+                        ]
+                    ],
+                    'status_berka_id' => 1,
+                    'tgl_registrasi' => $berkas->created_at->isoFormat('D MMMM Y'),
+                    'tgl_spm' => $berkas->tgl_spm->isoFormat('D MMMM Y'),
+                ]
             ];
 
             broadcast(new StatusBerkasEvent($this->roleuser->instansi_id, $newData))->toOthers();
@@ -699,7 +703,7 @@ class BerkasController extends Controller
         return RiwayatBerkasResource::collection($histories);
     }
 
-    public function find(int $id)
+    public function editBerkas(int $id)
     {
         $findberkas = Berka::select(['berkas.id', 'berkas.jenis_berka_id', 'berkas.kode', 'berkas.no_spm', 'berkas.nilai_spm', 'berkas.penerima_id', 'berkas.tgl_spm', 'berkas.kegiatan', 'berkas.created_at', 'berkas.status_berka_id', 'berkas.sumber_dana_id', 'instansis.nama_instansi', 'jenis_berkas.nama_jenis_berkas', 'penerimas.norek', 'penerimas.npwp', 'sumber_danas.nama_sumber_dana'])
         ->leftJoin('instansis', 'berkas.instansi_id', '=', 'instansis.id')

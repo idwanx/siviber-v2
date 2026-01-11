@@ -153,7 +153,6 @@ const LayoutBerkas = ({ auth, daftarberkas, menuOption }: IndexBerkasProps) => {
                 }
             });
         } else {
-
             setStateBerkas(prevBerkas => {
                 return prevBerkas.filter(item=> item.id !== newData.berka_id)
             });
@@ -170,9 +169,9 @@ const LayoutBerkas = ({ auth, daftarberkas, menuOption }: IndexBerkasProps) => {
 
     const addNew = (berkasBaru: FieldDataBerkas) => {
         const newItem = {
-            id: berkasBaru.id,
             hari: berkasBaru.hari,
             hari_ke: berkasBaru.hari_ke,
+            id: berkasBaru.id,
             jam: berkasBaru.jam,
             jumlah_catatan: berkasBaru.jumlah_catatan,
             kegiatan: berkasBaru.kegiatan,
@@ -181,10 +180,10 @@ const LayoutBerkas = ({ auth, daftarberkas, menuOption }: IndexBerkasProps) => {
             nama_jenis_berkas: berkasBaru.nama_jenis_berkas,
             nama_sumber_dana: berkasBaru.nama_sumber_dana,
             no_spm: berkasBaru.no_spm,
+            riwayats: berkasBaru.riwayats,
             status_berka_id: berkasBaru.status_berka_id,
-            tgl_spm: berkasBaru.tgl_spm,
             tgl_registrasi: berkasBaru.tgl_registrasi,
-            riwayats: berkasBaru.riwayats
+            tgl_spm: berkasBaru.tgl_spm
         };
         setStateBerkas((prevData) => {
             return [newItem,...prevData]
@@ -265,7 +264,8 @@ const LayoutBerkas = ({ auth, daftarberkas, menuOption }: IndexBerkasProps) => {
             case 'berkas':
                 if (e.newData.action === "newBerkas") {
                     if (menuOption === "registrasi" && auth.user.roleuser.slug === "admin" || auth.user.roleuser.slug === "verifikator") {
-                        addNew(e.newData);
+                        addNew(e.newData.data);
+                        
                     } else {
                         return () => e.newData.info;
                     }
