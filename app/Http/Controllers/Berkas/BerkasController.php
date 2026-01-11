@@ -283,12 +283,13 @@ class BerkasController extends Controller
                                 ]);
                                 
                             } else {
+
                                 $berkas->update(['status_berka_id' => $beforeLastCurrentStatus->status_berka_id]);
 
                                 $hariIni = Carbon::now();
                                 $formatHariIni = Carbon::parse($hariIni)->format('Y-m-d');
 
-                                $resource = [
+                                $newData = [
                                     'action' => "updateStatus",
                                     'berka_id' => $berkas->id,
                                     'info' => "berkas",
@@ -312,8 +313,6 @@ class BerkasController extends Controller
                                     ]
                                 ];
 
-                                $newData = collect($resource);
-
                                 broadcast(new StatusBerkasEvent($berkas->instansi_id, $newData))->toOthers();
 
                                 return back()->with([
@@ -324,6 +323,7 @@ class BerkasController extends Controller
 
                             }
                         } else {
+                            
                             $addRiwayat = $berkas->riwayatberkas()->create([
                                 'status_berka_id' => 2,
                                 'user_id' => $request->user()->id,
@@ -348,7 +348,8 @@ class BerkasController extends Controller
                                 'datas' => $newData,
                             ]);
                         }
-                    } else {
+                    } else { 
+                        
                         // update status berkas pada tabel berkas
                         $berkas->update(['status_berka_id' => 2]);
                         // tambahkan riwayat status baru pada tabel riwayat
@@ -367,7 +368,7 @@ class BerkasController extends Controller
                         $hariIni = Carbon::now();
                         $formatHariIni = Carbon::parse($hariIni)->format('Y-m-d');
 
-                        $resource = [
+                        $newData = [
                             'action' => "updateStatus",
                             'berka_id' => $berkas->id,
                             'info' => "berkas",
@@ -391,9 +392,7 @@ class BerkasController extends Controller
                             ]
                         ];
 
-                        $resource['data']['riwayats'][] = $newRiwayat;
-
-                        $newData = collect($resource);
+                        $newData['data']['riwayats']->push($newRiwayat);
 
                         broadcast(new StatusBerkasEvent($berkas->instansi_id, $newData))->toOthers();
 
