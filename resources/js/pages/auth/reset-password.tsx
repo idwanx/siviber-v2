@@ -17,7 +17,7 @@ export default function ResetPassword({ token, email }: ResetPasswordProps) {
     return (
         <AuthLayout
             title="Reset password"
-            description="Please enter your new password below"
+            description="Silakan masukkan kata sandi baru Anda di bawah ini."
         >
             <Head title="Reset password" />
 

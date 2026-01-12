@@ -25,7 +25,7 @@ export interface NavItem {
 
 export interface SharedData {
     name: string;
-    quote: { message: string; author: string };
+    // quote: { message: string; author: string };
     auth: Auth;
     sidebarOpen: boolean;
     tahun: number
@@ -36,6 +36,8 @@ export interface SharedData {
 export interface User {
     id: number;
     name: string;
+    nip: string;
+    no_hp: string;
     email: string;
     foto?: string;
     email_verified_at: string | null;

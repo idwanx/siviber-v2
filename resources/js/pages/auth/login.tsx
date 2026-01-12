@@ -1,5 +1,6 @@
 import InputError from '@/components/input-error';
 import TextLink from '@/components/text-link';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
@@ -10,6 +11,14 @@ import { register } from '@/routes';
 import { store } from '@/routes/login';
 import { request } from '@/routes/password';
 import { Form, Head } from '@inertiajs/react';
+import { CheckCircle2Icon, Eye, EyeClosed, EyeClosedIcon, EyeOff } from 'lucide-react';
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput,
+} from "@/components/ui/input-group";
+import { useState } from 'react';
 
 interface LoginProps {
     status?: string;
@@ -22,13 +31,26 @@ export default function Login({
     canResetPassword,
     canRegister,
 }: LoginProps) {
+    const [showPassword, setShowPassword] = useState(false);
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
     return (
         <AuthLayout
-            title="Log in to your account"
-            description="Enter your email and password below to log in"
+            title="Log in"
+            description="Masukkan email dan kata sandi Anda di bawah ini untuk masuk"
         >
             <Head title="Log in" />
-
+            {status && (
+                <Alert variant="success" className='mb-4'>
+                    <CheckCircle2Icon />
+                    <AlertTitle className='text-green-600'>Berhasil</AlertTitle>
+                    <AlertDescription>
+                        {status}
+                    </AlertDescription>
+                </Alert>
+            )}
             <Form
                 {...store.form()}
                 resetOnSuccess={['password']}
@@ -38,7 +60,7 @@ export default function Login({
                     <>
                         <div className="grid gap-6">
                             <div className="grid gap-2">
-                                <Label htmlFor="email">Email address</Label>
+                                <Label htmlFor="email">Email</Label>
                                 <Input
                                     id="email"
                                     type="email"
@@ -61,19 +83,32 @@ export default function Login({
                                             className="ml-auto text-sm"
                                             tabIndex={5}
                                         >
-                                            Forgot password?
+                                            Lupa password?
                                         </TextLink>
                                     )}
                                 </div>
-                                <Input
-                                    id="password"
-                                    type="password"
-                                    name="password"
-                                    required
-                                    tabIndex={2}
-                                    autoComplete="current-password"
-                                    placeholder="Password"
-                                />
+                                <InputGroup>
+                                    <InputGroupInput
+                                        id="password"
+                                        type={showPassword ? 'text' : 'password'}
+                                        name="password"
+                                        required
+                                        tabIndex={2}
+                                        autoComplete="current-password"
+                                        placeholder="Password"
+                                    />
+                                    <InputGroupAddon align="inline-end">
+                                        <InputGroupButton
+                                            type="button"
+                                            variant="ghost"
+                                            size="icon-xs"
+                                            onClick={togglePasswordVisibility}
+                                            aria-label="show password"
+                                        >
+                                        {showPassword ? <Eye /> : <EyeOff />}
+                                        </InputGroupButton>
+                                    </InputGroupAddon>
+                                </InputGroup>
                                 <InputError message={errors.password} />
                             </div>
 
@@ -83,7 +118,7 @@ export default function Login({
                                     name="remember"
                                     tabIndex={3}
                                 />
-                                <Label htmlFor="remember">Remember me</Label>
+                                <Label htmlFor="remember">Ingat saya</Label>
                             </div>
 
                             <Button
@@ -100,21 +135,15 @@ export default function Login({
 
                         {canRegister && (
                             <div className="text-center text-sm text-muted-foreground">
-                                Don't have an account?{' '}
+                                Belum punya akun?{' '}
                                 <TextLink href={register()} tabIndex={5}>
-                                    Sign up
+                                    Buat Akun
                                 </TextLink>
                             </div>
                         )}
                     </>
                 )}
             </Form>
-
-            {status && (
-                <div className="mb-4 text-center text-sm font-medium text-green-600">
-                    {status}
-                </div>
-            )}
         </AuthLayout>
     );
 }

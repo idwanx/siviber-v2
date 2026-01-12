@@ -10,10 +10,10 @@ import { Form, Head } from '@inertiajs/react';
 export default function ConfirmPassword() {
     return (
         <AuthLayout
-            title="Confirm your password"
-            description="This is a secure area of the application. Please confirm your password before continuing."
+            title="Konfirmasi Password"
+            description="Ini adalah area aman dalam aplikasi. Harap konfirmasi kata sandi Anda sebelum melanjutkan."
         >
-            <Head title="Confirm password" />
+            <Head title="Konfirmasi password" />
 
             <Form {...store.form()} resetOnSuccess={['password']}>
                 {({ processing, errors }) => (
@@ -39,7 +39,7 @@ export default function ConfirmPassword() {
                                 data-test="confirm-password-button"
                             >
                                 {processing && <Spinner />}
-                                Confirm password
+                                Konfirmasi password
                             </Button>
                         </div>
                     </div>

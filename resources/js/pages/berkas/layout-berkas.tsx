@@ -334,7 +334,7 @@ const LayoutBerkas = ({ auth, daftarberkas, menuOption }: IndexBerkasProps) => {
             <BerkasSidebar />
             <Head title="Berkas" />
             <SidebarInset className="py-1">
-                <div className="flex flex-1 flex-col space-y-2 pl-2 mt-(--header-height) h-[calc(100svh-var(--header-height))]!">
+                <main className="flex flex-1 flex-col space-y-2 pl-2 mt-(--header-height) h-[calc(100svh-var(--header-height))]!">
                     <AppSidebarHeader breadcrumbs={breadcrumbs} trigger={true} />
                     <div className="min-h-screen p-4 flex-1 overflow-hidden bg-background shadow-sm rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
                         <div className="flex flex-1">
@@ -404,7 +404,7 @@ const LayoutBerkas = ({ auth, daftarberkas, menuOption }: IndexBerkasProps) => {
                                                     <div className='2xl:hidden md:w-100 text-muted-foreground mb-0.5 md:truncate'>
                                                         {item.nama_instansi}
                                                     </div>
-                                                    <p>{item.kegiatan}</p>
+                                                    <p className='text-sm/6 font-medium'>{item.kegiatan}</p>
                                                     <div className="text-muted-foreground sm:grid sm:grid-cols-6">
                                                         <div>No. Spm</div>
                                                         <div className="sm:col-span-5">: {item.no_spm}</div>
@@ -456,7 +456,7 @@ const LayoutBerkas = ({ auth, daftarberkas, menuOption }: IndexBerkasProps) => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </main>
             </SidebarInset>
         </>
     )

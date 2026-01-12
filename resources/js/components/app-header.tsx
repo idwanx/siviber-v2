@@ -169,7 +169,7 @@ export function AppHeader({
                     </div>
 
                     <Link
-                        href={dashboard()}
+                        href={'/'}
                         prefetch
                         className="flex items-center space-x-2"
                     >

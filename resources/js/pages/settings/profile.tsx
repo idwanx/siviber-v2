@@ -2,23 +2,20 @@ import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileCo
 import { send } from '@/routes/verification';
 import { type BreadcrumbItem, type SharedData } from '@/types';
 import { Transition } from '@headlessui/react';
-import { Form, Head, Link, usePage } from '@inertiajs/react';
-
-import DeleteUser from '@/components/delete-user';
-import HeadingSmall from '@/components/heading-small';
+import { Form, Link, usePage } from '@inertiajs/react';
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/app-layout';
-import SettingsLayout from '@/layouts/settings/layout';
-import { edit } from '@/routes/profile';
+import LayoutSettings from './layout-settings';
+import Heading from '@/components/heading';
+import { Separator } from '@/components/ui/separator';
+import { AppSidebarHeader } from '@/components/app-sidebar-header';
 
 const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Profile settings',
-        href: edit().url,
-    },
+    {title: 'Pengaturan', href: "#"},
+    {title: 'Profil', href: "#"}
 ];
 
 export default function Profile({
@@ -31,118 +28,163 @@ export default function Profile({
     const { auth } = usePage<SharedData>().props;
 
     return (
-        <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Profile settings" />
+        <>
+        <AppSidebarHeader breadcrumbs={breadcrumbs} trigger={true} />
+            <div className="flex-1 w-full overflow-hidden">
+                <div className="bg-background shadow-sm rounded-xl p-4 border border-sidebar-border/70 sm:max-w-lg dark:border-sidebar-border">
+                        <div className="flex flex-1">
+                            <Heading
+                                title="Profil"
+                            />
+                        </div>
+                        <Separator className="mb-6" />
 
-            <SettingsLayout>
-                <div className="space-y-6">
-                    <HeadingSmall
-                        title="Profile information"
-                        description="Update your name and email address"
-                    />
+                        <Form
+                            {...ProfileController.update.form()}
+                            options={{
+                                preserveScroll: true,
+                            }}
+                            className="space-y-6"
+                            noValidate
+                        >
+                            {({ processing, recentlySuccessful, errors }) => (
+                                <>
+                                    <div className="grid gap-2">
+                                        <Label htmlFor="name">Nama</Label>
 
-                    <Form
-                        {...ProfileController.update.form()}
-                        options={{
-                            preserveScroll: true,
-                        }}
-                        className="space-y-6"
-                    >
-                        {({ processing, recentlySuccessful, errors }) => (
-                            <>
-                                <div className="grid gap-2">
-                                    <Label htmlFor="name">Name</Label>
+                                        <Input
+                                            id="name"
+                                            className="mt-1 block w-full"
+                                            defaultValue={auth.user.name}
+                                            name="name"
+                                            required
+                                            autoComplete="name"
+                                            placeholder="Nama"
+                                        />
 
-                                    <Input
-                                        id="name"
-                                        className="mt-1 block w-full"
-                                        defaultValue={auth.user.name}
-                                        name="name"
-                                        required
-                                        autoComplete="name"
-                                        placeholder="Full name"
-                                    />
+                                        <InputError
+                                            className="mt-2"
+                                            message={errors.name}
+                                        />
+                                    </div>
 
-                                    <InputError
-                                        className="mt-2"
-                                        message={errors.name}
-                                    />
-                                </div>
+                                    <div className="grid gap-2">
+                                        <Label htmlFor="nip">Nip</Label>
 
-                                <div className="grid gap-2">
-                                    <Label htmlFor="email">Email address</Label>
+                                        <Input
+                                            id="nip"
+                                            className="mt-1 block w-full"
+                                            defaultValue={auth.user.nip}
+                                            name="nip"
+                                            required
+                                            autoComplete="nip"
+                                            placeholder="Nip"
+                                        />
 
-                                    <Input
-                                        id="email"
-                                        type="email"
-                                        className="mt-1 block w-full"
-                                        defaultValue={auth.user.email}
-                                        name="email"
-                                        required
-                                        autoComplete="username"
-                                        placeholder="Email address"
-                                    />
+                                        <InputError
+                                            className="mt-2"
+                                            message={errors.nip}
+                                        />
+                                    </div>
 
-                                    <InputError
-                                        className="mt-2"
-                                        message={errors.email}
-                                    />
-                                </div>
+                                    <div className="grid gap-2">
+                                        <Label htmlFor="no_hp">No. Hp</Label>
 
-                                {mustVerifyEmail &&
-                                    auth.user.email_verified_at === null && (
-                                        <div>
-                                            <p className="-mt-4 text-sm text-muted-foreground">
-                                                Your email address is
-                                                unverified.{' '}
-                                                <Link
-                                                    href={send()}
-                                                    as="button"
-                                                    className="text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
-                                                >
-                                                    Click here to resend the
-                                                    verification email.
-                                                </Link>
+                                        <Input
+                                            id="no_hp"
+                                            className="mt-1 block w-full"
+                                            defaultValue={auth.user.no_hp}
+                                            name="no_hp"
+                                            required
+                                            autoComplete="no_hp"
+                                            placeholder="No. Hp"
+                                        />
+
+                                        <InputError
+                                            className="mt-2"
+                                            message={errors.no_hp}
+                                        />
+                                    </div>
+
+                                    <div className="grid gap-2">
+                                        <Label htmlFor="email">Email</Label>
+
+                                        <Input
+                                            id="email"
+                                            type="email"
+                                            className="mt-1 block w-full"
+                                            defaultValue={auth.user.email}
+                                            name="email"
+                                            required
+                                            autoComplete="username"
+                                            placeholder="Email"
+                                        />
+
+                                        <InputError
+                                            className="mt-2"
+                                            message={errors.email}
+                                        />
+                                    </div>
+
+                                    {mustVerifyEmail &&
+                                        auth.user.email_verified_at === null && (
+                                            <div>
+                                                <p className="-mt-4 text-sm text-muted-foreground">
+                                                    Your email address is
+                                                    unverified.{' '}
+                                                    <Link
+                                                        href={send()}
+                                                        as="button"
+                                                        className="text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
+                                                    >
+                                                        Click here to resend the
+                                                        verification email.
+                                                    </Link>
+                                                </p>
+
+                                                {status ===
+                                                    'verification-link-sent' && (
+                                                    <div className="mt-2 text-sm font-medium text-green-600">
+                                                        A new verification link has
+                                                        been sent to your email
+                                                        address.
+                                                    </div>
+                                                )}
+                                            </div>
+                                        )}
+
+                                    <div className="flex items-center gap-4">
+                                        <Button
+                                            disabled={processing}
+                                            data-test="update-profile-button"
+                                        >
+                                            Save
+                                        </Button>
+
+                                        <Transition
+                                            show={recentlySuccessful}
+                                            enter="transition ease-in-out"
+                                            enterFrom="opacity-0"
+                                            leave="transition ease-in-out"
+                                            leaveTo="opacity-0"
+                                        >
+                                            <p className="text-sm text-neutral-600">
+                                                Tersimpan
                                             </p>
-
-                                            {status ===
-                                                'verification-link-sent' && (
-                                                <div className="mt-2 text-sm font-medium text-green-600">
-                                                    A new verification link has
-                                                    been sent to your email
-                                                    address.
-                                                </div>
-                                            )}
-                                        </div>
-                                    )}
-
-                                <div className="flex items-center gap-4">
-                                    <Button
-                                        disabled={processing}
-                                        data-test="update-profile-button"
-                                    >
-                                        Save
-                                    </Button>
-
-                                    <Transition
-                                        show={recentlySuccessful}
-                                        enter="transition ease-in-out"
-                                        enterFrom="opacity-0"
-                                        leave="transition ease-in-out"
-                                        leaveTo="opacity-0"
-                                    >
-                                        <p className="text-sm text-neutral-600">
-                                            Saved
-                                        </p>
-                                    </Transition>
-                                </div>
-                            </>
-                        )}
-                    </Form>
+                                        </Transition>
+                                    </div>
+                                </>
+                            )}
+                        </Form>
+                    {/* <DeleteUser /> */}
                 </div>
-
-                <DeleteUser />
-            </SettingsLayout>
-        </AppLayout>
+            </div>
+        </>
     );
 }
+
+Profile.layout = (page: React.ReactNode) => (
+    <AppLayout>
+        <LayoutSettings children={page} />
+    </AppLayout>
+)

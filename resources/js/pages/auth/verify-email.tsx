@@ -10,15 +10,14 @@ import { Form, Head } from '@inertiajs/react';
 export default function VerifyEmail({ status }: { status?: string }) {
     return (
         <AuthLayout
-            title="Verify email"
-            description="Please verify your email address by clicking on the link we just emailed to you."
+            title="Verifikasi email"
+            description="Silakan verifikasi alamat email Anda dengan mengklik tautan yang baru saja kami kirimkan melalui email kepada Anda."
         >
-            <Head title="Email verification" />
+            <Head title="Verifikasi email" />
 
             {status === 'verification-link-sent' && (
                 <div className="mb-4 text-center text-sm font-medium text-green-600">
-                    A new verification link has been sent to the email address
-                    you provided during registration.
+                    Tautan verifikasi baru telah dikirim ke alamat email yang Anda berikan saat pendaftaran.
                 </div>
             )}
 
@@ -27,7 +26,7 @@ export default function VerifyEmail({ status }: { status?: string }) {
                     <>
                         <Button disabled={processing} variant="secondary">
                             {processing && <Spinner />}
-                            Resend verification email
+                            Kirim ulang email verifikasi
                         </Button>
 
                         <TextLink
