@@ -177,7 +177,7 @@ addriwayat.form = addriwayatForm
 
 /**
 * @see \App\Http\Controllers\Berkas\BerkasController::getverifikator
-* @see app/Http/Controllers/Berkas/BerkasController.php:686
+* @see app/Http/Controllers/Berkas/BerkasController.php:694
 * @route '/get-verifikator/{berka}'
 */
 export const getverifikator = (args: { berka: number | { id: number } } | [berka: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -192,7 +192,7 @@ getverifikator.definition = {
 
 /**
 * @see \App\Http\Controllers\Berkas\BerkasController::getverifikator
-* @see app/Http/Controllers/Berkas/BerkasController.php:686
+* @see app/Http/Controllers/Berkas/BerkasController.php:694
 * @route '/get-verifikator/{berka}'
 */
 getverifikator.url = (args: { berka: number | { id: number } } | [berka: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -225,7 +225,7 @@ getverifikator.url = (args: { berka: number | { id: number } } | [berka: number 
 
 /**
 * @see \App\Http\Controllers\Berkas\BerkasController::getverifikator
-* @see app/Http/Controllers/Berkas/BerkasController.php:686
+* @see app/Http/Controllers/Berkas/BerkasController.php:694
 * @route '/get-verifikator/{berka}'
 */
 getverifikator.get = (args: { berka: number | { id: number } } | [berka: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -235,7 +235,7 @@ getverifikator.get = (args: { berka: number | { id: number } } | [berka: number 
 
 /**
 * @see \App\Http\Controllers\Berkas\BerkasController::getverifikator
-* @see app/Http/Controllers/Berkas/BerkasController.php:686
+* @see app/Http/Controllers/Berkas/BerkasController.php:694
 * @route '/get-verifikator/{berka}'
 */
 getverifikator.head = (args: { berka: number | { id: number } } | [berka: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -245,7 +245,7 @@ getverifikator.head = (args: { berka: number | { id: number } } | [berka: number
 
 /**
 * @see \App\Http\Controllers\Berkas\BerkasController::getverifikator
-* @see app/Http/Controllers/Berkas/BerkasController.php:686
+* @see app/Http/Controllers/Berkas/BerkasController.php:694
 * @route '/get-verifikator/{berka}'
 */
 const getverifikatorForm = (args: { berka: number | { id: number } } | [berka: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -255,7 +255,7 @@ const getverifikatorForm = (args: { berka: number | { id: number } } | [berka: n
 
 /**
 * @see \App\Http\Controllers\Berkas\BerkasController::getverifikator
-* @see app/Http/Controllers/Berkas/BerkasController.php:686
+* @see app/Http/Controllers/Berkas/BerkasController.php:694
 * @route '/get-verifikator/{berka}'
 */
 getverifikatorForm.get = (args: { berka: number | { id: number } } | [berka: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -265,7 +265,7 @@ getverifikatorForm.get = (args: { berka: number | { id: number } } | [berka: num
 
 /**
 * @see \App\Http\Controllers\Berkas\BerkasController::getverifikator
-* @see app/Http/Controllers/Berkas/BerkasController.php:686
+* @see app/Http/Controllers/Berkas/BerkasController.php:694
 * @route '/get-verifikator/{berka}'
 */
 getverifikatorForm.head = (args: { berka: number | { id: number } } | [berka: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -282,7 +282,7 @@ getverifikator.form = getverifikatorForm
 
 /**
 * @see \App\Http\Controllers\Berkas\BerkasController::gethistory
-* @see app/Http/Controllers/Berkas/BerkasController.php:698
+* @see app/Http/Controllers/Berkas/BerkasController.php:706
 * @route '/get-history/{berka}'
 */
 export const gethistory = (args: { berka: number | { id: number } } | [berka: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -297,7 +297,7 @@ gethistory.definition = {
 
 /**
 * @see \App\Http\Controllers\Berkas\BerkasController::gethistory
-* @see app/Http/Controllers/Berkas/BerkasController.php:698
+* @see app/Http/Controllers/Berkas/BerkasController.php:706
 * @route '/get-history/{berka}'
 */
 gethistory.url = (args: { berka: number | { id: number } } | [berka: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -330,7 +330,7 @@ gethistory.url = (args: { berka: number | { id: number } } | [berka: number | { 
 
 /**
 * @see \App\Http\Controllers\Berkas\BerkasController::gethistory
-* @see app/Http/Controllers/Berkas/BerkasController.php:698
+* @see app/Http/Controllers/Berkas/BerkasController.php:706
 * @route '/get-history/{berka}'
 */
 gethistory.get = (args: { berka: number | { id: number } } | [berka: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -340,7 +340,7 @@ gethistory.get = (args: { berka: number | { id: number } } | [berka: number | { 
 
 /**
 * @see \App\Http\Controllers\Berkas\BerkasController::gethistory
-* @see app/Http/Controllers/Berkas/BerkasController.php:698
+* @see app/Http/Controllers/Berkas/BerkasController.php:706
 * @route '/get-history/{berka}'
 */
 gethistory.head = (args: { berka: number | { id: number } } | [berka: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -350,7 +350,7 @@ gethistory.head = (args: { berka: number | { id: number } } | [berka: number | {
 
 /**
 * @see \App\Http\Controllers\Berkas\BerkasController::gethistory
-* @see app/Http/Controllers/Berkas/BerkasController.php:698
+* @see app/Http/Controllers/Berkas/BerkasController.php:706
 * @route '/get-history/{berka}'
 */
 const gethistoryForm = (args: { berka: number | { id: number } } | [berka: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -360,7 +360,7 @@ const gethistoryForm = (args: { berka: number | { id: number } } | [berka: numbe
 
 /**
 * @see \App\Http\Controllers\Berkas\BerkasController::gethistory
-* @see app/Http/Controllers/Berkas/BerkasController.php:698
+* @see app/Http/Controllers/Berkas/BerkasController.php:706
 * @route '/get-history/{berka}'
 */
 gethistoryForm.get = (args: { berka: number | { id: number } } | [berka: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -370,7 +370,7 @@ gethistoryForm.get = (args: { berka: number | { id: number } } | [berka: number 
 
 /**
 * @see \App\Http\Controllers\Berkas\BerkasController::gethistory
-* @see app/Http/Controllers/Berkas/BerkasController.php:698
+* @see app/Http/Controllers/Berkas/BerkasController.php:706
 * @route '/get-history/{berka}'
 */
 gethistoryForm.head = (args: { berka: number | { id: number } } | [berka: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -623,7 +623,7 @@ destroy.form = destroyForm
 
 /**
 * @see \App\Http\Controllers\Berkas\BerkasController::edit
-* @see app/Http/Controllers/Berkas/BerkasController.php:710
+* @see app/Http/Controllers/Berkas/BerkasController.php:718
 * @route '/edit-berkas/{id}'
 */
 export const edit = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -638,7 +638,7 @@ edit.definition = {
 
 /**
 * @see \App\Http\Controllers\Berkas\BerkasController::edit
-* @see app/Http/Controllers/Berkas/BerkasController.php:710
+* @see app/Http/Controllers/Berkas/BerkasController.php:718
 * @route '/edit-berkas/{id}'
 */
 edit.url = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -665,7 +665,7 @@ edit.url = (args: { id: string | number } | [id: string | number ] | string | nu
 
 /**
 * @see \App\Http\Controllers\Berkas\BerkasController::edit
-* @see app/Http/Controllers/Berkas/BerkasController.php:710
+* @see app/Http/Controllers/Berkas/BerkasController.php:718
 * @route '/edit-berkas/{id}'
 */
 edit.get = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -675,7 +675,7 @@ edit.get = (args: { id: string | number } | [id: string | number ] | string | nu
 
 /**
 * @see \App\Http\Controllers\Berkas\BerkasController::edit
-* @see app/Http/Controllers/Berkas/BerkasController.php:710
+* @see app/Http/Controllers/Berkas/BerkasController.php:718
 * @route '/edit-berkas/{id}'
 */
 edit.head = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -685,7 +685,7 @@ edit.head = (args: { id: string | number } | [id: string | number ] | string | n
 
 /**
 * @see \App\Http\Controllers\Berkas\BerkasController::edit
-* @see app/Http/Controllers/Berkas/BerkasController.php:710
+* @see app/Http/Controllers/Berkas/BerkasController.php:718
 * @route '/edit-berkas/{id}'
 */
 const editForm = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -695,7 +695,7 @@ const editForm = (args: { id: string | number } | [id: string | number ] | strin
 
 /**
 * @see \App\Http\Controllers\Berkas\BerkasController::edit
-* @see app/Http/Controllers/Berkas/BerkasController.php:710
+* @see app/Http/Controllers/Berkas/BerkasController.php:718
 * @route '/edit-berkas/{id}'
 */
 editForm.get = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -705,7 +705,7 @@ editForm.get = (args: { id: string | number } | [id: string | number ] | string 
 
 /**
 * @see \App\Http\Controllers\Berkas\BerkasController::edit
-* @see app/Http/Controllers/Berkas/BerkasController.php:710
+* @see app/Http/Controllers/Berkas/BerkasController.php:718
 * @route '/edit-berkas/{id}'
 */
 editForm.head = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -722,7 +722,7 @@ edit.form = editForm
 
 /**
 * @see \App\Http\Controllers\Berkas\BerkasController::find
-* @see app/Http/Controllers/Berkas/BerkasController.php:735
+* @see app/Http/Controllers/Berkas/BerkasController.php:743
 * @route '/find-berkas/{id}'
 */
 export const find = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -737,7 +737,7 @@ find.definition = {
 
 /**
 * @see \App\Http\Controllers\Berkas\BerkasController::find
-* @see app/Http/Controllers/Berkas/BerkasController.php:735
+* @see app/Http/Controllers/Berkas/BerkasController.php:743
 * @route '/find-berkas/{id}'
 */
 find.url = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -764,7 +764,7 @@ find.url = (args: { id: string | number } | [id: string | number ] | string | nu
 
 /**
 * @see \App\Http\Controllers\Berkas\BerkasController::find
-* @see app/Http/Controllers/Berkas/BerkasController.php:735
+* @see app/Http/Controllers/Berkas/BerkasController.php:743
 * @route '/find-berkas/{id}'
 */
 find.get = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -774,7 +774,7 @@ find.get = (args: { id: string | number } | [id: string | number ] | string | nu
 
 /**
 * @see \App\Http\Controllers\Berkas\BerkasController::find
-* @see app/Http/Controllers/Berkas/BerkasController.php:735
+* @see app/Http/Controllers/Berkas/BerkasController.php:743
 * @route '/find-berkas/{id}'
 */
 find.head = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -784,7 +784,7 @@ find.head = (args: { id: string | number } | [id: string | number ] | string | n
 
 /**
 * @see \App\Http\Controllers\Berkas\BerkasController::find
-* @see app/Http/Controllers/Berkas/BerkasController.php:735
+* @see app/Http/Controllers/Berkas/BerkasController.php:743
 * @route '/find-berkas/{id}'
 */
 const findForm = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -794,7 +794,7 @@ const findForm = (args: { id: string | number } | [id: string | number ] | strin
 
 /**
 * @see \App\Http\Controllers\Berkas\BerkasController::find
-* @see app/Http/Controllers/Berkas/BerkasController.php:735
+* @see app/Http/Controllers/Berkas/BerkasController.php:743
 * @route '/find-berkas/{id}'
 */
 findForm.get = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -804,7 +804,7 @@ findForm.get = (args: { id: string | number } | [id: string | number ] | string 
 
 /**
 * @see \App\Http\Controllers\Berkas\BerkasController::find
-* @see app/Http/Controllers/Berkas/BerkasController.php:735
+* @see app/Http/Controllers/Berkas/BerkasController.php:743
 * @route '/find-berkas/{id}'
 */
 findForm.head = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -821,7 +821,7 @@ find.form = findForm
 
 /**
 * @see \App\Http\Controllers\Berkas\BerkasController::detail
-* @see app/Http/Controllers/Berkas/BerkasController.php:722
+* @see app/Http/Controllers/Berkas/BerkasController.php:730
 * @route '/detail-berkas/{id}'
 */
 export const detail = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -836,7 +836,7 @@ detail.definition = {
 
 /**
 * @see \App\Http\Controllers\Berkas\BerkasController::detail
-* @see app/Http/Controllers/Berkas/BerkasController.php:722
+* @see app/Http/Controllers/Berkas/BerkasController.php:730
 * @route '/detail-berkas/{id}'
 */
 detail.url = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -863,7 +863,7 @@ detail.url = (args: { id: string | number } | [id: string | number ] | string | 
 
 /**
 * @see \App\Http\Controllers\Berkas\BerkasController::detail
-* @see app/Http/Controllers/Berkas/BerkasController.php:722
+* @see app/Http/Controllers/Berkas/BerkasController.php:730
 * @route '/detail-berkas/{id}'
 */
 detail.get = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -873,7 +873,7 @@ detail.get = (args: { id: string | number } | [id: string | number ] | string | 
 
 /**
 * @see \App\Http\Controllers\Berkas\BerkasController::detail
-* @see app/Http/Controllers/Berkas/BerkasController.php:722
+* @see app/Http/Controllers/Berkas/BerkasController.php:730
 * @route '/detail-berkas/{id}'
 */
 detail.head = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -883,7 +883,7 @@ detail.head = (args: { id: string | number } | [id: string | number ] | string |
 
 /**
 * @see \App\Http\Controllers\Berkas\BerkasController::detail
-* @see app/Http/Controllers/Berkas/BerkasController.php:722
+* @see app/Http/Controllers/Berkas/BerkasController.php:730
 * @route '/detail-berkas/{id}'
 */
 const detailForm = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -893,7 +893,7 @@ const detailForm = (args: { id: string | number } | [id: string | number ] | str
 
 /**
 * @see \App\Http\Controllers\Berkas\BerkasController::detail
-* @see app/Http/Controllers/Berkas/BerkasController.php:722
+* @see app/Http/Controllers/Berkas/BerkasController.php:730
 * @route '/detail-berkas/{id}'
 */
 detailForm.get = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -903,7 +903,7 @@ detailForm.get = (args: { id: string | number } | [id: string | number ] | strin
 
 /**
 * @see \App\Http\Controllers\Berkas\BerkasController::detail
-* @see app/Http/Controllers/Berkas/BerkasController.php:722
+* @see app/Http/Controllers/Berkas/BerkasController.php:730
 * @route '/detail-berkas/{id}'
 */
 detailForm.head = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

@@ -267,10 +267,11 @@ class BerkasController extends Controller
                             if ($beforeLastCurrentStatus->status_berka_id === 2) {
                                 $newData = [
                                     'action' => "updateStatus",
-                                    'info' => "berkas",
                                     'berka_id' => $berkas->id,
+                                    'info' => "berkas",
                                     'user_id' => $request->user()->id,
                                     'data' => [
+                                        'berka_id' => $berkas->id,
                                         'id' => $filteredUsers->value('id'),
                                         'status_berka_id' => $beforeLastCurrentStatus->status_berka_id,
                                     ]
@@ -318,7 +319,12 @@ class BerkasController extends Controller
                                 return back()->with([
                                     'type' => 'success',
                                     'message' => 'Status berkas berhasil diupdate',
-                                    'datas' => $newData,
+                                    'datas' => [
+                                        'berka_id' => $berkas->id,
+                                        'data' => [
+                                            'status_berka_id' => $beforeLastCurrentStatus->status_berka_id,
+                                        ]
+                                    ],
                                 ]);
 
                             }
@@ -331,8 +337,8 @@ class BerkasController extends Controller
 
                             $newData = [
                                 'action' => "updateStatus",
-                                'info' => "berkas",
                                 'berka_id' => $berkas->id,
+                                'info' => "berkas",
                                 'user_id' => $addRiwayat->user_id,
                                 'data' => [
                                     'berka_id' => $addRiwayat->berka_id,
@@ -349,7 +355,7 @@ class BerkasController extends Controller
                             ]);
                         }
                     } else { 
-                        // return dd("pertama verifikasi");
+
                         // update status berkas pada tabel berkas
                         $berkas->update(['status_berka_id' => 2]);
                         // tambahkan riwayat status baru pada tabel riwayat
@@ -400,9 +406,11 @@ class BerkasController extends Controller
                             'type' => 'success',
                             'message' => 'Status berkas berhasil diupdate',
                             'datas' => [
+                                'berka_id' => $addRiwayat->berka_id,
                                 'data' => [
-                                    'id' => $berkas->id,
+                                    'id' => $addRiwayat->id,
                                     'status_berka_id' => 2,
+                                    'user_id' => $addRiwayat->user_id,
                                 ]
                             ],
                         ]);
