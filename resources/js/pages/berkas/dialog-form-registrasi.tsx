@@ -386,7 +386,7 @@ export default function FormRegistrasiBerkas({ modalCrud, addNew, dataState, mod
         {isLoadingUpdate ? (
           <div className="flex items-center text-sm text-foreground gap-1 p-6"><Spinner /> Loading...</div>
         ):(
-          <form onSubmit={handleSubmit} className="mt-4" noValidate>
+          <form onSubmit={handleSubmit} className="mt-4">
             <div className="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-6 p-6">
               <div className="col-span-full sm:col-span-3">
                 <div className="grid gap-2">
