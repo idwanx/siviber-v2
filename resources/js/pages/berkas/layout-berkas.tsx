@@ -304,6 +304,9 @@ const LayoutBerkas = ({ auth, daftarberkas, menuOption }: IndexBerkasProps) => {
         }
         
     }, [menuOption]);
+    
+    console.log(stateBerkas);
+    
 
     return (
         <>

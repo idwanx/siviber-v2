@@ -349,7 +349,7 @@ class BerkasController extends Controller
                             ]);
                         }
                     } else { 
-                        
+                        // return dd("pertama verifikasi");
                         // update status berkas pada tabel berkas
                         $berkas->update(['status_berka_id' => 2]);
                         // tambahkan riwayat status baru pada tabel riwayat
@@ -392,14 +392,14 @@ class BerkasController extends Controller
                             ]
                         ];
 
-                        // $newData['data']['riwayats']->push($newRiwayat);
+                        $newData['data']['riwayats']->push($newRiwayat);
 
                         broadcast(new StatusBerkasEvent($berkas->instansi_id, $newData))->toOthers();
 
                         return back()->with([
                             'type' => 'success',
                             'message' => 'Status berkas berhasil diupdate',
-                            'datas' => $newData,
+                            'datas' => "$newData",
                         ]);
                     }
                 // jika berkas sudah penolakan atau sp2d
