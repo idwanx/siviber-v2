@@ -388,18 +388,23 @@ class BerkasController extends Controller
                                 'status_berka_id' => 2,
                                 'tgl_registrasi' => $berkas->created_at->isoFormat('D MMMM Y'),
                                 'tgl_spm' => $berkas->tgl_spm->isoFormat('D MMMM Y'),
-                                // 'riwayats' => $berkas->riwayats
+                                'riwayats' => $berkas->riwayats
                             ]
                         ];
 
-                        // $newData['data']['riwayats']->push($newRiwayat);
+                        $newData['data']['riwayats']->push($newRiwayat);
 
                         broadcast(new StatusBerkasEvent($berkas->instansi_id, $newData))->toOthers();
 
                         return back()->with([
                             'type' => 'success',
                             'message' => 'Status berkas berhasil diupdate',
-                            'datas' => $newData,
+                            'datas' => [
+                                'data' => [
+                                    'id' => $berkas->id,
+                                    'status_berka_id' => 2,
+                                ]
+                            ],
                         ]);
                     }
                 // jika berkas sudah penolakan atau sp2d
