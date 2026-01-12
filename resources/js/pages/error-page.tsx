@@ -32,4 +32,4 @@ export default function ErrorPage({ status }: ErrorProps) {
     );
 }
 
-ErrorPage.layout = (page: React.ReactNode) => <AppLayout children={page} />
+// ErrorPage.layout = (page: React.ReactNode) => <AppLayout children={page} />
