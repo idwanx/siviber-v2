@@ -392,7 +392,7 @@ class BerkasController extends Controller
                             ]
                         ];
 
-                        $newData['data']['riwayats']->push($newRiwayat);
+                        // $newData['data']['riwayats']->push($newRiwayat);
 
                         broadcast(new StatusBerkasEvent($berkas->instansi_id, $newData))->toOthers();
 
