@@ -61,7 +61,8 @@ class BerkasController extends Controller
             $daftarberkas->where('berkas.instansi_id', $this->roleuser->instansi_id);
         }
         
-        $daftarberkas->whereYear('berkas.tgl_spm', $tahun)->where('berkas.status_berka_id', $status)->orderBy('id', 'desc');
+        $daftarberkas->whereYear('berkas.tgl_spm', $tahun)->where('berkas.status_berka_id', $status)
+        ->latest();
 
         $data = BerkasResource::collection($daftarberkas->paginate($request->load ?? $this->loadDefault)->withQueryString());
 
@@ -423,7 +424,6 @@ class BerkasController extends Controller
                     ]);
                 }
             break;
-
             case 3:
                 $berkas = Berka::select(['berkas.id', 'berkas.instansi_id', 'berkas.kode', 'berkas.no_spm', 'berkas.tgl_spm', 'berkas.kegiatan', 'berkas.created_at', 'instansis.nama_instansi', 'jenis_berkas.nama_jenis_berkas', 'sumber_danas.nama_sumber_dana'])
                 ->leftJoin('instansis', 'berkas.instansi_id', '=', 'instansis.id')
@@ -458,7 +458,7 @@ class BerkasController extends Controller
                         $hariIni = Carbon::now();
                         $formatHariIni = Carbon::parse($hariIni)->format('Y-m-d');
 
-                        $resource = [
+                        $newData = [
                             'action' => "updateStatus",
                             'berka_id' => $berkas->id,
                             'info' => "berkas",
@@ -482,14 +482,17 @@ class BerkasController extends Controller
                             ]
                         ];
 
-                        $newData = collect($resource);
-
                         broadcast(new StatusBerkasEvent($berkas->instansi_id, $newData))->toOthers();
 
                         return back()->with([
                             'type' => 'success',
                             'message' => 'Status berkas berhasil diupdate',
-                            'datas' => $newData,
+                            'datas' => [
+                                'berka_id' => $berkas->id,
+                                'data' => [
+                                    'status_berka_id' => $beforeLastCurrentStatus->status_berka_id,
+                                ]
+                            ],
                         ]);
                     } else {
                         // update status berkas pada tabel berkas
@@ -510,7 +513,7 @@ class BerkasController extends Controller
                         $hariIni = Carbon::now();
                         $formatHariIni = Carbon::parse($hariIni)->format('Y-m-d');
 
-                        $resource = [
+                        $newData = [
                             'action' => "updateStatus",
                             'berka_id' => $berkas->id,
                             'info' => "berkas",
@@ -534,20 +537,19 @@ class BerkasController extends Controller
                             ]
                         ];
 
-                        $resource['data']['riwayats'][] = $newRiwayat;
-
-                        $newData = collect($resource);
+                        $newData['data']['riwayats']->push($newRiwayat);
 
                         broadcast(new StatusBerkasEvent($berkas->instansi_id, $newData))->toOthers();
 
                         return back()->with([
                             'type' => 'success',
                             'message' => 'Status berkas berhasil diupdate',
-                            'datas' => $newData,
+                            'datas' => [
+                                'berka_id' => $berkas->id,
+                                'data' => $newRiwayat
+                            ],
                         ]);
                     }
-
-                    
                 // jika berkas sudah penolakan atau sp2d
                 } else {  
                     return back()->with([
@@ -590,7 +592,7 @@ class BerkasController extends Controller
                         $hariIni = Carbon::now();
                         $formatHariIni = Carbon::parse($hariIni)->format('Y-m-d');
 
-                        $resource = [
+                        $newData = [
                             'action' => "updateStatus",
                             'berka_id' => $berkas->id,
                             'info' => "berkas",
@@ -614,14 +616,17 @@ class BerkasController extends Controller
                             ]
                         ];
 
-                        $newData = collect($resource);
-
                         broadcast(new StatusBerkasEvent($berkas->instansi_id, $newData))->toOthers();
 
                         return back()->with([
                             'type' => 'success',
                             'message' => 'Status berkas berhasil diupdate',
-                            'datas' => $newData,
+                            'datas' => [
+                                'berka_id' => $berkas->id,
+                                'data' => [
+                                    'status_berka_id' => $beforeLastCurrentStatus->status_berka_id,
+                                ]
+                            ],
                         ]);
                     } else {
                         // update status berkas pada tabel berkas
@@ -642,7 +647,7 @@ class BerkasController extends Controller
                         $hariIni = Carbon::now();
                         $formatHariIni = Carbon::parse($hariIni)->format('Y-m-d');
 
-                        $resource = [
+                         $newData = [
                             'action' => "updateStatus",
                             'berka_id' => $berkas->id,
                             'info' => "berkas",
@@ -666,16 +671,17 @@ class BerkasController extends Controller
                             ]
                         ];
 
-                        $resource['data']['riwayats'][] = $newRiwayat;
-
-                        $newData = collect($resource);
+                        $newData['data']['riwayats']->push($newRiwayat);
 
                         broadcast(new StatusBerkasEvent($berkas->instansi_id, $newData))->toOthers();
 
                         return back()->with([
                             'type' => 'success',
                             'message' => 'Status berkas berhasil diupdate',
-                            'datas' => $newData,
+                            'datas' => [
+                                'berka_id' => $berkas->id,
+                                'data' => $newRiwayat
+                            ],
                         ]);
                     }
                 // jika berkas sudah penolakan atau sp2d
@@ -686,7 +692,6 @@ class BerkasController extends Controller
                     ]);
                 }
             break;
-
             default: abort(404); break;
         }
     }

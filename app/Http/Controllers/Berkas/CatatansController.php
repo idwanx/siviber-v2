@@ -16,6 +16,11 @@ class CatatansController extends Controller
 {
     public function index(Berka $berka)
     {
+        // $catatans = Berka::with(['catatans' => function ($query) {
+        //     $query->select(['catatan_berkas.id', 'catatan_berkas.berka_id', 'catatan_berkas.berka_id', 'catatan_berkas.created_at', 'catatan_berkas.is_okey', 'catatan_berkas.user_id', 'users.foto', 'users.name'])
+        //     ->leftJoin('users', 'catatan_berkas.user_id', '=', 'users.id'); 
+        // }])->where('id', 116)->get();
+
         $catatans = CatatanBerka::select(['catatan_berkas.id', 'catatan_berkas.berka_id', 'catatan_berkas.catatan', 'catatan_berkas.created_at', 'catatan_berkas.is_okey', 'catatan_berkas.user_id', 'users.foto', 'users.name'])
         ->leftJoin('users', 'catatan_berkas.user_id', '=', 'users.id')
         ->where('berka_id', $berka->id)
@@ -85,6 +90,8 @@ class CatatansController extends Controller
                 'action' => "updatecatatan",
                 'catatan' => $request->catatan,
                 'created_at' => Carbon::parse($catatanBerka->updated_at)->diffForHumans(),
+                'kegiatan' => $berkas->kegiatan,
+                'no_spm' => $berkas->no_spm,
             ];
 
             broadcast(new StatusBerkasEvent($berkas->instansi_id, $newData))->toOthers();
@@ -149,7 +156,9 @@ class CatatansController extends Controller
                 'id' => $catatanBerka->id,
                 'info' => "catatan",
                 'action' => "destroycatatan",
-                'jumlah_catatan' => $count
+                'jumlah_catatan' => $count,
+                'kegiatan' => $berkas->kegiatan,
+                'no_spm' => $berkas->no_spm,
             ];
 
             broadcast(new StatusBerkasEvent($berkas->instansi_id, $newData))->toOthers();

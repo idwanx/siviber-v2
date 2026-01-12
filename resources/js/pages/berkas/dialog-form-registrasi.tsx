@@ -258,11 +258,33 @@ export default function FormRegistrasiBerkas({ modalCrud, addNew, dataState, mod
                 closeModal(false);
                 reset();
                 if (response.props.flash?.type === 'success') {
-                    toast.success(response.props.flash?.message);
+                    toast.success(response.props.flash?.message, {
+                      position: 'top-right',
+                      style: {
+                        '--normal-bg':
+                          'color-mix(in oklab, light-dark(var(--color-green-600), var(--color-green-400)) 10%, var(--background))',
+                        '--normal-text': 'light-dark(var(--color-green-600), var(--color-green-400))',
+                        '--normal-border': 'light-dark(var(--color-green-600), var(--color-green-400))'
+                      } as React.CSSProperties
+                    });
                 } else if (response.props.flash?.type === 'error') {
-                    toast.error(response.props.flash?.message);
+                    toast.error(response.props.flash?.message, {
+                      position: 'top-right',
+                      style: {
+                        '--normal-bg': 'color-mix(in oklab, var(--destructive) 10%, var(--background))',
+                        '--normal-text': 'var(--destructive)',
+                        '--normal-border': 'var(--destructive)'
+                      } as React.CSSProperties
+                    })
                 } else {
-                    toast.info(response.props.flash?.message);
+                    toast.warning(response.props.flash?.message, {
+                      position: 'top-right',
+                      style: {
+                        '--normal-bg': 'var(--background)',
+                        '--normal-text': 'light-dark(var(--color-amber-600), var(--color-amber-400))',
+                        '--normal-border': 'light-dark(var(--color-amber-600), var(--color-amber-400))'
+                      } as React.CSSProperties
+                    })
                 }
               },
             });
@@ -277,11 +299,33 @@ export default function FormRegistrasiBerkas({ modalCrud, addNew, dataState, mod
                   reset('no_spm', 'kegiatan');
                   clearErrors();
                   if (response.props.flash?.type === 'success') {
-                      toast.success(response.props.flash?.message);
+                      toast.success(response.props.flash?.message, {
+                        position: 'top-right',
+                        style: {
+                          '--normal-bg':
+                            'color-mix(in oklab, light-dark(var(--color-green-600), var(--color-green-400)) 10%, var(--background))',
+                          '--normal-text': 'light-dark(var(--color-green-600), var(--color-green-400))',
+                          '--normal-border': 'light-dark(var(--color-green-600), var(--color-green-400))'
+                        } as React.CSSProperties
+                      });
                   } else if (response.props.flash?.type === 'error') {
-                      toast.error(response.props.flash?.message);
+                      toast.error(response.props.flash?.message, {
+                        position: 'top-right',
+                        style: {
+                          '--normal-bg': 'color-mix(in oklab, var(--destructive) 10%, var(--background))',
+                          '--normal-text': 'var(--destructive)',
+                          '--normal-border': 'var(--destructive)'
+                        } as React.CSSProperties
+                      });
                   } else {
-                      toast.info(response.props.flash?.message);
+                      toast.warning(response.props.flash?.message, {
+                        position: 'top-right',
+                        style: {
+                          '--normal-bg': 'var(--background)',
+                          '--normal-text': 'light-dark(var(--color-amber-600), var(--color-amber-400))',
+                          '--normal-border': 'light-dark(var(--color-amber-600), var(--color-amber-400))'
+                        } as React.CSSProperties
+                      });
                   }
               },
             });

@@ -1,7 +1,7 @@
 import { BerkasSidebar } from '@/components/berkas-sidebar';
 import { SidebarInset } from '@/components/ui/sidebar';
 import AppLayout from '@/layouts/app-layout';
-import { CatatanMap, FieldDataBerkas, IndexBerkasProps, StatusType } from './types';
+import { FieldDataBerkas, IndexBerkasProps, StatusType } from './types';
 import { Head } from '@inertiajs/react';
 import { useEcho } from '@laravel/echo-react';
 import { BreadcrumbItem } from '@/types';

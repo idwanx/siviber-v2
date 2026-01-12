@@ -30,7 +30,7 @@ import {
 import { UserMenuContent } from '@/components/user-menu-content';
 import { useInitials } from '@/hooks/use-initials';
 import { cn, resolveUrl } from '@/lib/utils';
-import { dashboard } from '@/routes';
+import { dashboard, datapendukung } from '@/routes';
 import { type BreadcrumbItem, type NavItem, type SharedData } from '@/types';
 import { Link, router, usePage } from '@inertiajs/react';
 import { BookOpen, Folder, LayoutGrid, Menu, Search, Settings } from 'lucide-react';
@@ -59,7 +59,6 @@ export function AppHeader({
     const getInitials = useInitials();
     const currentYear: number = new Date().getFullYear();
 
-
     const mainNavItems: NavItem[] = [
         {
             title: 'Dashboard',
@@ -76,7 +75,7 @@ export function AppHeader({
         {
             
             title: 'Data Pendukung',
-            href: instansi.index(),
+            href: datapendukung(),
             isActive: page.url.startsWith('/data-pendukung'),
             // icon: Settings,
         }, 

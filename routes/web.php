@@ -3,6 +3,7 @@
 use App\Http\Controllers\Berkas\BerkasController;
 use App\Http\Controllers\Berkas\CatatansController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DataPendukung\DataPendukungController;
 use App\Http\Controllers\DataPendukung\FetchDataController;
 use App\Http\Controllers\DataPendukung\InstansiController;
 use App\Http\Controllers\DataPendukung\JenisBelanjaController;
@@ -53,14 +54,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('fetch/data-pendukung-regis', [FetchDataController::class, 'getDataPendkungRegis'])->name('fetch.datapendukungregis');
 });
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::resource('data-pendukung/penerima', PenerimaController::class)->except(['create', 'show', 'edit']);
+
+Route::get('data-pendukung', DataPendukungController::class)->name('datapendukung');
+
+Route::middleware(['auth', 'verified', 'can:isAdmin'])->group(function () {
     // Data Pendukung
     Route::resource('data-pendukung/instansi', InstansiController::class)->except(['create', 'show', 'edit']);
     Route::resource('data-pendukung/jenis-berkas', JenisBerkasController::class)->except(['create', 'show', 'edit']);
     Route::resource('data-pendukung/jenis-belanja', JenisBelanjaController::class)->except(['create', 'show', 'edit']);
     Route::resource('data-pendukung/rincian-belanja', RincianBelanjaController::class)->except(['create', 'show', 'edit']);
     Route::resource('data-pendukung/sumber-dana', SumberDanaController::class)->except(['create', 'show', 'edit']);
-    Route::resource('data-pendukung/penerima', PenerimaController::class)->except(['create', 'show', 'edit']);
     Route::get('fetch/jenis-belanja', [FetchDataController::class, 'getJenisBelanja'])->name('fetch.jenisbelanja');
 });
 
