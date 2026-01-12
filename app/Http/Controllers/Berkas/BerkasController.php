@@ -399,7 +399,7 @@ class BerkasController extends Controller
                         return back()->with([
                             'type' => 'success',
                             'message' => 'Status berkas berhasil diupdate',
-                            'datas' => "$newData",
+                            'datas' => "sdasdas",
                         ]);
                     }
                 // jika berkas sudah penolakan atau sp2d
