@@ -1,0 +1,33 @@
+.print {
+	display: none;
+}
+
+@media print {
+	@page {
+    margin: 1cm; /* Standard margins for top, right, bottom, left */
+  }
+	
+	body {
+    -webkit-print-color-adjust: exact; /* Ensures background colors/images print */
+    print-color-adjust: exact;
+  }
+  
+	.print, .print * {
+	  visibility: visible;
+	}
+  
+	.print {
+		display: block;
+		position: absolute;
+		left: 0;
+		top: 2rem;
+		font-size: 11px;
+	}
+
+	table, tr, th, td {
+		width:100%;
+    table-layout:fixed;
+		border-collapse:collapse;
+		border: 1px solid !important;
+	}
+}

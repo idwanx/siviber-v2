@@ -64,16 +64,20 @@ export interface Meta {
 
 export interface DataBerkas {
     data: FieldDataBerkas[];
-    meta: Meta;
     links: Links;
-    tahun: number;
-    menuOption: string;
+    meta: Meta;
 }
 
 export interface IndexBerkasProps extends Record<string, any> {
     daftarberkas: DataBerkas;
     tahun: number;
     menuOption: string;
+    filtered: FilteredValue;
+}
+
+interface FilteredValue {
+    cari: string;
+    load: string;
 }
 
 export interface FlashUpdateStatusProps extends Record<string, any> {

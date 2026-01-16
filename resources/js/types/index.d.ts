@@ -15,6 +15,13 @@ export interface NavGroup {
     items: NavItem[];
 }
 
+export interface NavCollapse {
+    title: string;
+    icon?: LucideIcon | null;
+    isActive?: boolean;
+    items?: NavItem[];
+}
+
 export interface NavItem {
     title: string;
     href: NonNullable<InertiaLinkProps['href']>;

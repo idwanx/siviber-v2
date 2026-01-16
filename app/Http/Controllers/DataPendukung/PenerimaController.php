@@ -30,11 +30,17 @@ class PenerimaController extends Controller
 
     public function index(Request $request): Response
     {
-        $penerimas = Penerima::query()->select('id', 'nama_penerima', 'norek', 'npwp', 'alamat')
+        $penerimas = Penerima::query()->select('penerimas.id', 'penerimas.nama_penerima', 'penerimas.norek', 'penerimas.npwp', 'penerimas.alamat', 'instansis.nama_instansi', 'users.name')
+        ->leftJoin('instansis', 'penerimas.instansi_id', '=', 'instansis.id')
+        ->leftJoin('users', 'penerimas.user_id', '=', 'users.id')
         ->when(request('cari'), function ($q) use ($request) {
-            $q->where('nama_penerima', 'like', "%{$request->cari}%");
+            $q->where('penerimas.nama_penerima', 'like', "%{$request->cari}%");
         });
-        $penerimas->where('instansi_id', $this->roleuser->instansi_id)->orderBy('id', 'desc');
+        if ($this->roleuser->slug === "pengguna-anggaran" || $this->roleuser->slug === "ppkeu" || $this->roleuser->slug === "bendahara") {
+            $penerimas->where('penerimas.instansi_id', $this->roleuser->instansi_id);
+        }
+
+        $penerimas->orderBy('penerimas.created_at', 'desc');
 
         return Inertia::render('data-pendukung/penerima/main-penerima', [
             'penerimas' => PenerimaResource::collection($penerimas->paginate($request->load ?? $this->loadDefault)->withQueryString()),

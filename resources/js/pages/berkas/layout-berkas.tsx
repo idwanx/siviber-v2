@@ -2,10 +2,10 @@ import { BerkasSidebar } from '@/components/berkas-sidebar';
 import { SidebarInset } from '@/components/ui/sidebar';
 import AppLayout from '@/layouts/app-layout';
 import { FieldDataBerkas, IndexBerkasProps, StatusType } from './types';
-import { Head } from '@inertiajs/react';
+import { Head, router, usePage } from '@inertiajs/react';
 import { useEcho } from '@laravel/echo-react';
 import { BreadcrumbItem } from '@/types';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { AppSidebarHeader } from '@/components/app-sidebar-header';
 import Heading from '@/components/heading';
 import { Separator } from '@/components/ui/separator';
@@ -17,6 +17,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import Pagination from '@/components/pagination';
 import DropDownPilihan from './dropdown-action';
 import { LabelIconStatus } from './label-icon-status';
@@ -29,19 +37,41 @@ import { Dialog } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import DialogDestroy from './dialog-destroy';
 import DialogDetailBerkas from './dialog-detail-berkas';
+import { usePrevious } from 'react-use';
+import { debounce, pickBy } from 'lodash';
+import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/input-group';
+import { RefreshCcw, Search, X } from 'lucide-react';
+import berkas from '@/routes/berkas';
 
 type ModeType = "create" | "update";
 
-const LayoutBerkas = ({ auth, daftarberkas, menuOption }: IndexBerkasProps) => {
-    const [stateBerkas, setStateBerkas] = useState<FieldDataBerkas[] | []>([]);
+const loads = [
+    {
+        name: "15",
+        value: "15",
+    },
+    {
+        name: "30",
+        value: "30",
+    },
+    {
+        name: "60",
+        value: "60",
+    },
+    {
+        name: "100",
+        value: "100",
+    },
+]
+
+const LayoutBerkas = ({ auth, daftarberkas, tahun, menuOption, filtered }: IndexBerkasProps) => {
+    const [stateBerkas, setStateBerkas] = useState<FieldDataBerkas[] | []>(daftarberkas.data);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [modalCrud, setModalCrud] = useState<boolean>(false);
     const [dialogDestroy, setDialogDestroy] = useState<boolean>(false);
     const [modeType, setModeType] = useState<ModeType>("create");
     const [dataState, setDataState] = useState<number>(0);
-
     const [dialogDetail, setDialogDetail] = useState<boolean>(false);
-
     const [stateCatatans, setStateCatatans] = useState<any | null>(null);
 
     const userChannel = (): string | undefined => {
@@ -54,48 +84,52 @@ const LayoutBerkas = ({ auth, daftarberkas, menuOption }: IndexBerkasProps) => {
         }
     };
 
-    const breadcrumbs: BreadcrumbItem[] = [
-        {title: 'Berkas', href: "#"},
-        {title: menuOption, href: "#"}
-    ];
+    const [valueCari, setValueCari] = useState({
+        cari: filtered.cari || '',
+        load: filtered.load || '',
+    });
 
-    function expired(hari: number, statusNow: StatusType) {
-        switch (statusNow) {
-        case 1:
-            if (hari === 2) {
-                return (
-                    <>(hari ini expired)</>
-                )
-            } else if (hari > 2) {
-                return (
-                    <>(expired)</>
-                )
-            } else {
-                return (
-                    <>{null}</>
-                )
-            }
-        case 2:
-            if (hari === 2) {
-                return (
-                    <>(hari ini expired)</>
-                )
-            } else if (hari > 2) {
-                return (
-                    <>(expired)</>
-                )
-            } else {
-                return (
-                    <>{null}</>
-                )
-            }
-        default:
-            <>{null}</>
+    const prevValues = usePrevious(valueCari);
+    
+    const reload = useCallback(
+        debounce((query) => {
+            router.get(berkas.main({tahun: tahun, statusberkas: menuOption}), query, {
+                replace: true,
+                preserveScroll: true,
+                preserveState: true
+            });
+        }, 500)
+    , []);
+
+    useEffect(() => {
+        if (prevValues) {
+            const query: any = Object.keys(pickBy(valueCari)).length ? pickBy(valueCari) : '';
+            reload(query);
         }
-    }
+    }, [valueCari]);
+
+    function handleInputCari(e: React.ChangeEvent<HTMLInputElement>) {
+        setValueCari(values => ({
+            ...values,
+            cari: e.target.value
+        }));
+    };
+
+    function handleSelectLoad(e: string) {
+        setValueCari(values => ({
+            ...values, load: e
+        }));
+    };
+
+    function refresh() {
+        setValueCari({
+            load: '',
+            cari: '',
+        });
+    };
+    
 
     const updateStatusBerkas = (newData: any) => {
-
         const statusBerkas = () => {
             switch (newData.data.status_berka_id) {
                 case 1:
@@ -258,6 +292,41 @@ const LayoutBerkas = ({ auth, daftarberkas, menuOption }: IndexBerkasProps) => {
         };
     };
 
+    function expired(hari: number, statusNow: StatusType) {
+        switch (statusNow) {
+        case 1:
+            if (hari === 2) {
+                return (
+                    <>(hari ini expired)</>
+                )
+            } else if (hari > 2) {
+                return (
+                    <>(expired)</>
+                )
+            } else {
+                return (
+                    <>{null}</>
+                )
+            }
+        case 2:
+            if (hari === 2) {
+                return (
+                    <>(hari ini expired)</>
+                )
+            } else if (hari > 2) {
+                return (
+                    <>(expired)</>
+                )
+            } else {
+                return (
+                    <>{null}</>
+                )
+            }
+        default:
+            <>{null}</>
+        }
+    }
+
     useEcho<{newData:any}>(`${userChannel()}`, 'StatusBerkasEvent', (e: {newData:any}) => {
         const checkAuth: boolean = e.newData.user_id === auth.user.id;
         switch (e.newData.info) {
@@ -292,19 +361,23 @@ const LayoutBerkas = ({ auth, daftarberkas, menuOption }: IndexBerkasProps) => {
     });
 
     useEffect(() => {
-        setIsLoading(true);
         
-        if (menuOption) {
-            setStateBerkas(daftarberkas?.data);
-            setIsLoading(false);
+        if (daftarberkas) {
+            setStateBerkas(daftarberkas.data);
         }
         
         return () => {
             menuOption;
         }
         
-    }, [menuOption]);
+    }, [daftarberkas]);
     
+
+    const breadcrumbs: BreadcrumbItem[] = [
+        {title: 'Berkas', href: "#"},
+        {title: menuOption, href: "#"}
+    ];
+
     return (
         <>
             <Dialog open={modalCrud} onOpenChange={handleDialogToggle} modal>
@@ -353,13 +426,36 @@ const LayoutBerkas = ({ auth, daftarberkas, menuOption }: IndexBerkasProps) => {
                         <Separator className="mb-4" />
                         <div className="flex items-center py-4 gap-2">
                             <div>
-                                -
+                                <Select 
+                                    name="load"
+                                    value={valueCari.load === '' ? filtered.load : valueCari.load} 
+                                    onValueChange={(e) => handleSelectLoad(e)}
+                                >
+                                    <SelectTrigger tabIndex={1} className="w-full">
+                                        <SelectValue placeholder={filtered.load} />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectGroup>
+                                            {loads.map((load, key) => (
+                                            <SelectItem key={key} value={load.value}>{load.name}</SelectItem>
+                                            ))}
+                                        </SelectGroup>
+                                    </SelectContent>
+                                </Select>
                             </div>
                             <div>
-                                -
+                                <InputGroup>
+                                    <InputGroupInput id='cari' name='cari' value={valueCari.cari} onChange={handleInputCari} placeholder="Cari..." />
+                                        <InputGroupAddon>
+                                            <Search />
+                                        </InputGroupAddon>
+                                    {/* <InputGroupAddon align="inline-end"><X /></InputGroupAddon> */}
+                                </InputGroup>
                             </div>
                             <div>
-                                -
+                                <Button onClick={refresh} variant="outline" size="icon" aria-label="Refresh">
+                                    <RefreshCcw />
+                                </Button>
                             </div>
                             <div className="ml-auto">
                                 <div className='flex gap-2'>
@@ -381,70 +477,63 @@ const LayoutBerkas = ({ auth, daftarberkas, menuOption }: IndexBerkasProps) => {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {isLoading ? (
-                                    <TableRow>
-                                        <TableCell colSpan={7}>
-                                            <div className="flex gap-2 items-center"><Spinner />Loading...</div>
-                                        </TableCell>
-                                    </TableRow>
-                                ):(
-                                    stateBerkas?.length! > 0 ? (
-                                        stateBerkas?.map((item, index) => (
-                                            <TableRow key={index}>
-                                                <TableCell className="text-center">
-                                                    {daftarberkas?.meta.from ? daftarberkas?.meta.from + index : index + 1}
-                                                </TableCell>
-                                                <TableCell className="text-center">
-                                                    {item.hari}<br />
-                                                    {item.tgl_registrasi}<br />
-                                                    {item.jam}
-                                                </TableCell>
-                                                <TableCell className="text-center">{item.nama_jenis_berkas}</TableCell>
-                                                <TableCell className="whitespace-normal">
-                                                    <div className='2xl:hidden md:w-100 text-muted-foreground mb-0.5 md:truncate'>
-                                                        {item.nama_instansi}
+                                {stateBerkas.length > 0 ? (
+                                    stateBerkas.map((item, index) => (
+                                        <TableRow key={index}>
+                                            <TableCell className="text-center">
+                                                {daftarberkas?.meta.from ? daftarberkas?.meta.from + index : index + 1}
+                                            </TableCell>
+                                            <TableCell className="text-center">
+                                                {item.hari}<br />
+                                                {item.tgl_registrasi}<br />
+                                                {item.jam}
+                                            </TableCell>
+                                            <TableCell className="text-center">{item.nama_jenis_berkas}</TableCell>
+                                            <TableCell className="whitespace-normal">
+                                                <div className='2xl:hidden md:w-100 text-muted-foreground mb-0.5 md:truncate'>
+                                                    {item.nama_instansi}
+                                                </div>
+                                                <p className='text-sm/6 font-medium'>{item.kegiatan}</p>
+                                                <div className="text-muted-foreground sm:grid sm:grid-cols-6">
+                                                    <div>No. Spm</div>
+                                                    <div className="sm:col-span-5">: {item.no_spm}</div>
+                                                </div>
+                                                <div className="text-muted-foreground sm:grid sm:grid-cols-6">
+                                                    <div>Tgl. Spm</div>
+                                                    <span className="sm:col-span-2">:  {item.tgl_spm}</span>
+                                                    <span className="sm:col-span-2 text-destructive">
+                                                        {expired(item.hari_ke, item.status_berka_id)}
+                                                    </span>
+                                                </div>
+                                                <div className="flex items-center pt-3">
+                                                    <div className="flex">
+                                                        <ButtonHistory dataValue={item} />
+                                                        <ButtonCatatan stateCatatans={stateCatatans} user={auth.user} updateJumlahCatatan={updateJumlahCatatan} dataValue={item} />
                                                     </div>
-                                                    <p className='text-sm/6 font-medium'>{item.kegiatan}</p>
-                                                    <div className="text-muted-foreground sm:grid sm:grid-cols-6">
-                                                        <div>No. Spm</div>
-                                                        <div className="sm:col-span-5">: {item.no_spm}</div>
-                                                    </div>
-                                                    <div className="text-muted-foreground sm:grid sm:grid-cols-6">
-                                                        <div>Tgl. Spm</div>
-                                                        <span className="sm:col-span-2">:  {item.tgl_spm}</span>
-                                                        <span className="sm:col-span-2 text-destructive">
-                                                            {expired(item.hari_ke, item.status_berka_id)}
-                                                        </span>
-                                                    </div>
-                                                    <div className="flex items-center pt-3">
-                                                        <div className="flex">
-                                                            <ButtonHistory dataValue={item} />
-                                                            <ButtonCatatan stateCatatans={stateCatatans} user={auth.user} updateJumlahCatatan={updateJumlahCatatan} dataValue={item} />
-                                                        </div>
-                                                        <ButtonUpdateStatus 
-                                                            updateStatusBerkas={updateStatusBerkas}
-                                                            dataValue={item}
-                                                        />
-                                                    </div>
-                                                </TableCell>
-                                                <TableCell className="hidden 2xl:table-cell text-center whitespace-normal">{item.nama_instansi}</TableCell>
-                                                <TableCell className="text-center">{item.nama_sumber_dana}</TableCell>
-                                                <TableCell>
-                                                    <LabelIconStatus status={item.status_berka_id} />
-                                                </TableCell>
-                                                <TableCell>
-                                                    <div className='flex justify-center'>
-                                                        <DropDownPilihan openModalCrud={openModalCrud} openDialogDestroy={openDialogDestroy} openDialogDetail={openDialogDetail} dataValue={item.id} />
-                                                    </div>
-                                                </TableCell>
-                                            </TableRow>
-                                        ))
-                                    ):(
-                                        <TableRow>
-                                            <TableCell colSpan={7} className="font-normal">Tidak ada data.</TableCell>
+                                                    <ButtonUpdateStatus 
+                                                        updateStatusBerkas={updateStatusBerkas}
+                                                        dataValue={item}
+                                                    />
+                                                </div>
+                                            </TableCell>
+                                            <TableCell className="hidden 2xl:table-cell text-center whitespace-normal">{item.nama_instansi}</TableCell>
+                                            <TableCell className="text-center">{item.nama_sumber_dana}</TableCell>
+                                            <TableCell>
+                                                <LabelIconStatus status={item.status_berka_id} />
+                                            </TableCell>
+                                            <TableCell>
+                                                <div className='flex justify-center'>
+                                                    <DropDownPilihan openModalCrud={openModalCrud} openDialogDestroy={openDialogDestroy} openDialogDetail={openDialogDetail} dataValue={item.id} />
+                                                </div>
+                                            </TableCell>
                                         </TableRow>
-                                    )
-                                )}
+                                    ))
+                                ):(
+                                    <TableRow>
+                                        <TableCell colSpan={7} className="font-normal">Tidak ada data. Silahkan klik tombol Tambah untuk menambah.</TableCell>
+                                    </TableRow>
+                                )
+                                }
                             </TableBody>
                         </Table>
                         <div className="grid items-center auto-rows-min gap-4 md:grid-cols-2 py-4">

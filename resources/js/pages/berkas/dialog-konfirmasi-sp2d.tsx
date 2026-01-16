@@ -108,7 +108,7 @@ export default function DialogKonfirmasiSp2d({
                 </TableBody>
               </Table>
           </div>
-            <div className="border-t bg-muted rounded-b-md px-4 py-4">
+            <div className="border-t bg-muted dark:bg-background rounded-b-md px-4 py-4">
               <div className="flex justify-between gap-2 flex-col-reverse sm:flex-row">
                 <span className="text-sm text-foreground">
                   Jika tetap akan melanjutkan ke status berkas Sp2d maka klik tombol Sp2d, jika tidak klik tombol batal.

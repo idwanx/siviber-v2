@@ -69,15 +69,12 @@ interface DataInstansi {
 
 interface IndexInstansiProps {
     instansis: DataInstansi;
+    filtered: FilteredValue;
 }
 
 interface FilteredValue {
     cari: string;
     load: string;
-}
-
-interface FilteredData {
-    filtered: FilteredValue;
     [key: string]: unknown;
 }
 
@@ -88,11 +85,9 @@ const breadcrumbs: BreadcrumbItem[] = [
     {title: 'Instansi', href: "#"}
 ];
 
-export default function MainInstansi({ instansis }: IndexInstansiProps) {
-    const page = usePage<FilteredData>();
+export default function MainInstansi({ instansis, filtered }: IndexInstansiProps) {
     const [modalCrud, setModalCrud] = useState<boolean>(false);
     const [modeType, setModeType] = useState<ModeType>("create");
-    const { filtered } = page.props;
 
     const { data, setData, post, put, processing, reset, errors, clearErrors } = useForm<FieldData>({
         nama_instansi: '',
@@ -126,17 +121,18 @@ export default function MainInstansi({ instansis }: IndexInstansiProps) {
         };
     };
     
-    const [valuesActions, setValuesActions] = useState({
+    const [values, setValues] = useState({
         cari: filtered.cari || '',
         load: filtered.load || '',
     });
 
-    const prevValues = usePrevious(valuesActions);
+    const prevValues = usePrevious(values);
 
     const reload = useCallback(
         debounce((query) => {
-            router.get(page.url, query, {
+            router.get(instansi.index(), query, {
                 preserveState: true,
+                preserveScroll: true,
                 replace: true
             });
         }, 500)
@@ -144,28 +140,28 @@ export default function MainInstansi({ instansis }: IndexInstansiProps) {
 
     useEffect(() => {
         if (prevValues) {
-            const query = Object.keys(pickBy(valuesActions)).length ? pickBy(valuesActions) : '';
+            const query = Object.keys(pickBy(values)).length ? pickBy(values) : '';
             reload(query);
         }
-    }, [valuesActions]);
+    }, [values]);
 
     function handleInputCari(e: React.ChangeEvent<HTMLInputElement>) {
-        setValuesActions(values => ({
+        setValues(values => ({
             ...values,
             cari: e.target.value
         }));
     };
 
     function handleSelectLoad(e: string) {
-        setValuesActions(values => ({
+        setValues(values => ({
             ...values, load: e
         }));
     };
 
     function refresh() {
-        setValuesActions({
+        setValues({
             load: '',
-            cari: ''
+            cari: '',
         });
     };
 
@@ -202,7 +198,7 @@ export default function MainInstansi({ instansis }: IndexInstansiProps) {
                     <div>
                         <Select 
                             name="load"
-                            value={valuesActions.load === '' ? filtered.load : valuesActions.load} 
+                            value={values.load === '' ? filtered.load : values.load} 
                             onValueChange={(e) => handleSelectLoad(e)}
                         >
                             <SelectTrigger tabIndex={1} className="w-full">
@@ -219,7 +215,7 @@ export default function MainInstansi({ instansis }: IndexInstansiProps) {
                     </div>
                     <div>
                         <InputGroup>
-                            <InputGroupInput id='cari' name='cari' value={valuesActions.cari} onChange={handleInputCari} placeholder="Cari..." />
+                            <InputGroupInput id='cari' name='cari' value={values.cari} onChange={handleInputCari} placeholder="Cari..." />
                                 <InputGroupAddon>
                                     <Search />
                                 </InputGroupAddon>

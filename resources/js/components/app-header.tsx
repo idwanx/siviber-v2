@@ -62,22 +62,22 @@ export function AppHeader({
     const mainNavItems: NavItem[] = [
         {
             title: 'Dashboard',
-            href: dashboard(),
+            href: dashboard({ tahun: tahun ? tahun : '' }),
             isActive: page.url.startsWith('/dashboard'),
-            // icon: LayoutGrid,
+            icon: null,
         },
         {
             title: 'Berkas',
-            href: berkas.main( { tahun: !tahun ? currentYear : tahun, statusberkas: "registrasi" }),
+            href: berkas.main({ tahun: !tahun ? currentYear : tahun, statusberkas: "registrasi" }),
             isActive: page.url.startsWith('/berkas'),
-            // icon: Settings,
+            icon: null,
         },
         {
             
             title: 'Data Pendukung',
             href: datapendukung(),
             isActive: page.url.startsWith('/data-pendukung'),
-            // icon: Settings,
+            icon: null,
         }, 
 
     ];
@@ -132,12 +132,12 @@ export function AppHeader({
                                                     href={item.href}
                                                     className="flex items-center space-x-2 font-medium"
                                                 >
-                                                    {/* {item.icon && (
+                                                    {item.icon && (
                                                         <Icon
                                                             iconNode={item.icon}
                                                             className="h-5 w-5"
                                                         />
-                                                    )} */}
+                                                    )}
                                                     <span>{item.title}</span>
                                                 </Link>
                                             ))}
@@ -263,7 +263,6 @@ export function AppHeader({
                                             {getInitials(auth.user.name)}
                                         </AvatarFallback>
                                          }
-                                        
                                     </Avatar>
                                 </Button>
                             </DropdownMenuTrigger>

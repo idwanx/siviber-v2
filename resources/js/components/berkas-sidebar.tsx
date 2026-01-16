@@ -2,6 +2,7 @@ import {
     Sidebar,
     SidebarContent,
     SidebarGroup,
+    SidebarGroupLabel,
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
@@ -11,6 +12,7 @@ import { type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { resolveUrl } from "@/lib/utils";
 import { Check, CircleCheckBig, CircleSlash2, FileInput } from 'lucide-react';
+import { NavLaporanBerkas } from './nav-laporan-berkas';
 
 interface PropsTahun {
     tahun: number;
@@ -55,7 +57,7 @@ export function BerkasSidebar() {
             <SidebarContent>
                 {/* <NavMain items={mainNavItems} /> */}
                 <SidebarGroup className="mt-2 py-0">
-            {/* <SidebarGroupLabel>Platform</SidebarGroupLabel> */}
+                    <SidebarGroupLabel>Status</SidebarGroupLabel>
                     <SidebarMenu>
                         {mainNavItems.map((item) => (
                             <SidebarMenuItem key={item.title}>
@@ -66,15 +68,17 @@ export function BerkasSidebar() {
                                     )}
                                     tooltip={{ children: item.title }}
                                 >
-                                    <Link href={item.href} only={['daftarberkas', 'menuOption']}>
+                                    <Link href={item.href} only={['daftarberkas', 'tahun', 'menuOption', 'filtered']}>
                                         {item.icon && <item.icon />}
                                         <span>{item.title}</span>
                                     </Link>
                                 </SidebarMenuButton>
                             </SidebarMenuItem>
                         ))}
+                        
                     </SidebarMenu>
                 </SidebarGroup>
+                <NavLaporanBerkas />
             </SidebarContent>
         </Sidebar>
     );

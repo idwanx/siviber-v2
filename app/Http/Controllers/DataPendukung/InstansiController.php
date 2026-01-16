@@ -22,7 +22,7 @@ class InstansiController extends Controller
 
     public function index(Request $request): Response
     {
-        $instansi = Instansi::query()->select('nama_instansi', 'slug')
+        $instansi = Instansi::select('nama_instansi', 'slug')
         ->when(request('cari'), function ($q) use ($request) {
             $q->where('nama_instansi', 'like', "%{$request->cari}%");
         })->orderBy('id', 'desc');

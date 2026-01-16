@@ -84,20 +84,16 @@ interface DataRincianBelanja {
 
 interface IndexRincianBelanjaProps {
     rincianbelanjas: DataRincianBelanja;
+    filtered: FilteredValue;
 }
 
 interface FilteredValue {
     cari: string;
     load: string;
-}
-
-interface FilteredData {
-    filtered: FilteredValue;
     [key: string]: unknown;
 }
 
-
-export default function MainRincianBelanja({ rincianbelanjas }: IndexRincianBelanjaProps) {
+export default function MainRincianBelanja({ rincianbelanjas, filtered }: IndexRincianBelanjaProps) {
 
     const [modalCrud, setModalCrud] = useState<boolean>(false);
     const [mode, setMode] = useState<'create' | 'update' | 'destroy'>('create');
@@ -137,10 +133,6 @@ export default function MainRincianBelanja({ rincianbelanjas }: IndexRincianBela
         };
     };
 
-    const page = usePage<FilteredData>();
-
-    const { filtered } = page.props;
-
     const [valuesActions, setValuesActions] = useState({
         cari: filtered.cari || '',
         load: filtered.load || '',
@@ -150,7 +142,7 @@ export default function MainRincianBelanja({ rincianbelanjas }: IndexRincianBela
 
     const reload = useCallback(
         debounce((query) => {
-            router.get(page.url, query, {
+            router.get(rincianBelanja.index(), query, {
                 preserveState: true,
                 replace: true
             });

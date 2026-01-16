@@ -20,7 +20,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Http\Request;
 
 class BerkasController extends Controller
 {
@@ -33,7 +33,7 @@ class BerkasController extends Controller
         $this->roleuser = Auth::user()->roleuser()->firstOrFail();
     }
 
-    public function index(int $tahun, string $statusberkas): Response
+    public function index(int $tahun, string $statusberkas, Request $request): Response
     {
         switch ($statusberkas) {
             case 'registrasi': 
@@ -60,16 +60,21 @@ class BerkasController extends Controller
         if ($this->roleuser->slug === "pengguna-anggaran" || $this->roleuser->slug === "ppkeu" || $this->roleuser->slug === "bendahara") {
             $daftarberkas->where('berkas.instansi_id', $this->roleuser->instansi_id);
         }
-        
-        $daftarberkas->whereYear('berkas.tgl_spm', $tahun)->where('berkas.status_berka_id', $status)
+        $daftarberkas->when(request('cari'), function ($q) use ($request) {
+            $q->where('berkas.kegiatan', 'like', "%{$request->cari}%");
+        })
+        ->whereYear('berkas.tgl_spm', $tahun)
+        ->where('berkas.status_berka_id', $status)
         ->latest();
 
-        $data = BerkasResource::collection($daftarberkas->paginate($request->load ?? $this->loadDefault)->withQueryString());
+        // $data = BerkasResource::collection($daftarberkas->paginate($request->load ?? $this->loadDefault)->withQueryString());
 
         return Inertia::render('berkas/layout-berkas', [
-            'daftarberkas' => $data,
+            'daftarberkas' => BerkasResource::collection($daftarberkas->paginate($request->load ?? $this->loadDefault)->withQueryString()),
+            // 'daftarberkas' => $data,
             'tahun' => $tahun,
-            'menuOption' => $statusberkas
+            'menuOption' => $statusberkas,
+            'filtered' => $request->load ? $request->only(['load','cari','page']) : ['load' => $this->loadDefault],
         ]);
     }
 

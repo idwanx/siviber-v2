@@ -36,7 +36,7 @@ export default function AuthCardLayout({
                         </CardContent>
                     </Card>
                     <div className="px-6 text-xs text-center text-muted-foreground">
-                        Copyright © 2025 - {new Date().getFullYear()} Badan Pengelolaan Keuangan dan Pendapatan Daerah (BPKPD)<br />
+                        Copyright © 2026 - {new Date().getFullYear()} <br />Badan Pengelolaan Keuangan dan Pendapatan Daerah (BPKPD)<br />
                         Kabupaten Bolaang Mongondow Selatan
                     </div>
                 </div>

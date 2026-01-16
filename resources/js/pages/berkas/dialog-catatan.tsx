@@ -497,7 +497,7 @@ export default function DialogCatatan({
           </div>
       {isAdminVerifikator ? (
         <form onSubmit={submitForm}>
-          <div className="border-t bg-muted rounded-b-md px-4 py-4">
+          <div className="border-t bg-muted dark:bg-background rounded-b-md px-4 py-4">
             <div className="pb-2">
               <InputError
                   message={errors.catatan}
@@ -534,7 +534,7 @@ export default function DialogCatatan({
           </div>
         </form>
       ): (
-        <div className="flex border-t bg-muted rounded-b-md px-4 py-4">
+        <div className="flex border-t bg-muted dark:bg-background rounded-b-md px-4 py-4">
           <div className="ml-auto">
             <DialogClose asChild>
               <Button variant="outline" tabIndex={3} disabled={processing}>Tutup</Button>

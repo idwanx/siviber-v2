@@ -1,6 +1,6 @@
 import Heading from '@/components/heading';
 import AppLayout from '@/layouts/app-layout';
-import { type BreadcrumbItem } from '@/types';
+import { SharedData, type BreadcrumbItem } from '@/types';
 import { Head, router, useForm, usePage } from '@inertiajs/react';
 import { useCallback, useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
@@ -27,7 +27,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Pagination from '@/components/pagination';
-import { Edit2Icon, RefreshCcw, Search, Trash } from 'lucide-react';
+import { Edit2Icon, RefreshCcw, Search, Trash, User } from 'lucide-react';
 import { usePrevious } from 'react-use';
 import penerima from '@/routes/penerima';
 import { Dialog } from '@/components/ui/dialog';
@@ -67,6 +67,8 @@ interface FieldData {
     npwp?: string
     alamat?: string
     slug?: string
+    nama_instansi?: string
+    name?: string
 }
 
 interface DataPenerima {
@@ -77,20 +79,17 @@ interface DataPenerima {
 
 interface IndexPenerimaProps {
     penerimas: DataPenerima;
+    filtered: FilteredValue;
 }
 
 interface FilteredValue {
     cari: string;
     load: string;
-}
-
-interface FilteredData {
-    filtered: FilteredValue;
     [key: string]: unknown;
 }
 
-
-export default function MainPenerima({ penerimas }: IndexPenerimaProps) {
+export default function MainPenerima({ penerimas, filtered }: IndexPenerimaProps) {
+    const { auth } = usePage<SharedData>().props;
     const [modalCrud, setModalCrud] = useState<boolean>(false);
     const [mode, setMode] = useState<'create' | 'update' | 'destroy'>('create');
     const { data, setData, post, put, processing, reset, errors, clearErrors } = useForm<FieldData>({
@@ -127,10 +126,6 @@ export default function MainPenerima({ penerimas }: IndexPenerimaProps) {
         };
     };
 
-    const page = usePage<FilteredData>();
-
-    const { filtered } = page.props;
-
     const [valuesActions, setValuesActions] = useState({
         cari: filtered.cari || '',
         load: filtered.load || '',
@@ -140,7 +135,7 @@ export default function MainPenerima({ penerimas }: IndexPenerimaProps) {
 
     const reload = useCallback(
         debounce((query) => {
-            router.get(page.url, query, {
+            router.get(penerima.index(), query, {
                 preserveState: true,
                 replace: true
             });
@@ -265,7 +260,16 @@ export default function MainPenerima({ penerimas }: IndexPenerimaProps) {
                                     </TableCell>
                                     <TableCell>{item.norek}</TableCell>
                                     <TableCell>{item.npwp}</TableCell>
-                                    <TableCell>-</TableCell>
+                                    <TableCell>
+                                        {auth.user.roleuser.slug === "admin" ? (
+                                            <div>{item.nama_instansi}</div>
+                                        ):(
+                                            ''
+                                        )}
+                                        <div className='flex items-center gap-1 text-muted-foreground'>
+                                            <User size={14} /> {item.name}
+                                        </div>
+                                    </TableCell>
                                     <TableCell>
                                         <div className='flex gap-3 justify-center'>
                                             <Button variant="outline" size="icon-sm" aria-label="Edit" onClick={() => openModalCrud('update', item)}>
