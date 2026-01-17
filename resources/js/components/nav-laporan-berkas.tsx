@@ -29,7 +29,7 @@ export function NavLaporanBerkas({ tahun }: { tahun?: number | null }) {
       isActive: url.startsWith('/berkas'),
       items: [
         {
-          title: "Jenis Berkas",
+          title: "Jenis SPM",
           href: "#",
         },
         {

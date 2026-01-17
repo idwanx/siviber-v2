@@ -28,16 +28,16 @@ import { router, useForm } from "@inertiajs/react";
 import { Spinner } from "@/components/ui/spinner";
 import { toast } from "sonner";
 import InputError from "@/components/input-error";
-import { CatatanMap, ChekedProps, FieldDataBerkas, FlashCatatanProps, FormFieldCatatan, ModeSubmit } from "./types";
 import catatan from "@/routes/catatan";
 import { User } from "@/types";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useInitials } from "@/hooks/use-initials";
+import { CatatanMap, ChekedProps, FieldDataBerkas, FlashCatatanProps, FormFieldCatatan, ModeType, UpdateJumlahCatatan } from "@/types/berkas";
 
 interface DialogProps {
     dialogOpen: boolean;
     user: User;
-    updateJumlahCatatan: (data: any) => void;
+    updateJumlahCatatan: (data: UpdateJumlahCatatan) => void;
     dataValue: FieldDataBerkas;
     stateCatatans: any | null;
 }
@@ -54,7 +54,7 @@ export default function DialogCatatan({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [hasUpdated, setHasUpdated] = useState<boolean>(false);
   const scrollRef = useRef<HTMLDivElement | null>(null);
-  const [submitMode, setSubmitMode] = useState<ModeSubmit>("create");
+  const [submitMode, setSubmitMode] = useState<ModeType>("create");
   const [onDestroy, setOnDestroy] = useState<boolean>(false);
   const [selectedItems, setSelectedItems] = useState<ChekedProps[]>([]);
   const isAdminVerifikator: boolean = user.roleuser.slug === "admin" || user.roleuser.slug === "verifikator";

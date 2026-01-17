@@ -1,45 +1,7 @@
 import { Link } from '@inertiajs/react';
+import { Links, Meta } from '@/types/berkas';
 
-// interface LinksType {
-//     active: boolean
-//     label: string;
-//     page: number | null;
-//     url: string | null;
-// }
-
-// interface LinksTypeProps {
-//     from: number;
-//     links: LinksType[];
-//     to: number;
-//     total: number;
-// }
-
-export interface Links {
-    first: string | null;
-    last: string | null;
-    next: string | null;
-    prev: string | null;
-}
-
-export interface Meta {
-    current_page: number;
-    from: number;
-    last_page: number;
-    links: MetaLinks[];
-    path: string;
-    per_page: number;
-    to: number;
-    total: number;
-}
-
-export interface MetaLinks {
-    active: boolean;
-    label: string;
-    page: number;
-    url: string;
-}
-
-export interface IndexProps {
+interface IndexProps {
     links: Links;
     meta: Meta;
 }
@@ -57,7 +19,6 @@ export default function Pagination({ links, meta }: IndexProps ) {
                         className={`${link.active ? 'text-foreground font-semibold border-foreground' : 'text-foreground/80 border-foreground/50'} lg:text-sm px-3 py-1 border rounded-lg`}
                         href={link.url}
                         dangerouslySetInnerHTML={{ __html: link.label }} 
-                        
                     />
                 )
             })}

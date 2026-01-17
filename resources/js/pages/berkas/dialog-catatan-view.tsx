@@ -17,10 +17,10 @@ import {
 } from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox"
 import { Spinner } from "@/components/ui/spinner";
-import { CatatanMap } from "./types";
 import catatan from "@/routes/catatan";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useInitials } from "@/hooks/use-initials";
+import { CatatanMap } from "@/types/berkas";
 
 interface DialogProps {
     dialogOpen: boolean;

@@ -1,6 +1,5 @@
+import { StatusType } from "@/types/berkas";
 import { Check, CircleCheckBig, CircleSlash2, FileInput } from "lucide-react";
-
-type StatusType = 1 | 2 | 3 | 4;
 
 function LabelIconStatus({ status }: { status: StatusType }) {
   switch (status) {

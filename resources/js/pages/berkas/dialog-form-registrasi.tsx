@@ -43,39 +43,7 @@ import { useForm } from "@inertiajs/react";
 import { datapendukungregis } from "@/routes/fetch";
 import berkas from "@/routes/berkas";
 import { toast } from "sonner";
-import { FieldDataBerkas } from "./types";
-
-interface DataJenisBerkas {
-    id: string;
-    nama_jenis_berkas: string;
-}
-
-interface DataPenerima {
-    id: number;
-    nama_penerima: string;
-    norek: string;
-    npwp: string;
-}
-
-interface DataSumberDana {
-    id: string
-    nama_sumber_dana: string
-}
-
-interface PropsDataPendukung {
-    jenisberkas: DataJenisBerkas[];
-    penerimas: DataPenerima[];
-    sumberdanas: DataSumberDana[];
-}
-
-interface FlashProps extends Record<string, any> {
-    flash?: {
-        type?: string; 
-        message?: string
-    }
-}
-
-type ModeType = "create" | "update";
+import { DataJenisBerkas, DataPenerima, DataSumberDana, FieldDataBerkas, FlashProps, ModeType, PropsDataPendukung } from "@/types/berkas";
 
 interface BerkasProps {
     modalCrud: boolean;
@@ -156,6 +124,7 @@ export default function FormRegistrasiBerkas({ modalCrud, addNew, dataState, mod
           });
           setDate(new Date(result.tgl_spm));
           setIsLoadingUpdate(false);
+
       } catch (error) {
           setIsLoadingUpdate(false);
           throw error;
@@ -248,7 +217,7 @@ export default function FormRegistrasiBerkas({ modalCrud, addNew, dataState, mod
         e.preventDefault();
 
         switch (modeType) {
-        case 'update':
+        case 'edit':
             put(berkas.update(dataState!).url, {
               preserveScroll: true,
               onSuccess: (response: { props: FlashProps }) => {

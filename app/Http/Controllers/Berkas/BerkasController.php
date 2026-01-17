@@ -12,7 +12,10 @@ use App\Http\Resources\Berkas\DetailBerkasResource;
 use App\Http\Resources\Berkas\FindBerkasResource;
 use App\Http\Resources\Berkas\RiwayatBerkasResource;
 use App\Models\Berka;
+use App\Models\Instansi;
+use App\Models\JenisBerka;
 use App\Models\RiwayatBerka;
+use App\Models\SumberDana;
 use App\Models\User;
 use Carbon\Carbon;
 use Exception;
@@ -56,25 +59,35 @@ class BerkasController extends Controller
         ->leftJoin('jenis_berkas', 'berkas.jenis_berka_id', '=', 'jenis_berkas.id')
         ->leftJoin('sumber_danas', 'berkas.sumber_dana_id', '=', 'sumber_danas.id')
         ->withCount('catatans')
-        ->with('riwayats:berka_id,id,status_berka_id,user_id');
+        ->with('riwayats:berka_id,id,status_berka_id,user_id')
+        ->when(request('jenisspm'), function ($q) use ($request) {
+            $q->where('jenis_berkas.slug', $request->jenisspm);
+        })
+        ->when(request('sumberdana'), function ($q) use ($request) {
+            $q->where('sumber_danas.slug', $request->sumberdana);
+        })
+        ->when(request('instansi'), function ($q) use ($request) {
+            $q->where('instansis.slug', $request->instansi);
+        })
+        ->when(request('cari'), function ($q) use ($request) {
+            $q->where('berkas.kegiatan', 'like', "%{$request->cari}%");
+        })
+        ;
         if ($this->roleuser->slug === "pengguna-anggaran" || $this->roleuser->slug === "ppkeu" || $this->roleuser->slug === "bendahara") {
             $daftarberkas->where('berkas.instansi_id', $this->roleuser->instansi_id);
         }
-        $daftarberkas->when(request('cari'), function ($q) use ($request) {
-            $q->where('berkas.kegiatan', 'like', "%{$request->cari}%");
-        })
-        ->whereYear('berkas.tgl_spm', $tahun)
+        $daftarberkas->whereYear('berkas.tgl_spm', $tahun)
         ->where('berkas.status_berka_id', $status)
         ->latest();
 
-        // $data = BerkasResource::collection($daftarberkas->paginate($request->load ?? $this->loadDefault)->withQueryString());
-
         return Inertia::render('berkas/layout-berkas', [
             'daftarberkas' => BerkasResource::collection($daftarberkas->paginate($request->load ?? $this->loadDefault)->withQueryString()),
-            // 'daftarberkas' => $data,
             'tahun' => $tahun,
             'menuOption' => $statusberkas,
-            'filtered' => $request->load ? $request->only(['load','cari','page']) : ['load' => $this->loadDefault],
+            'filtered' => $request->only(['load','cari','instansi', 'jenisspm', 'sumberdana','page']),
+            'instansi' => Instansi::get(),
+            'jenisberkas' => JenisBerka::get(),
+            'sumberdana' => SumberDana::get()
         ]);
     }
 
@@ -739,7 +752,7 @@ class BerkasController extends Controller
 
     public function detailBerkas(int $id)
     {
-        $findberkas = Berka::select(['berkas.id', 'berkas.jenis_berka_id', 'berkas.kode', 'berkas.no_spm', 'berkas.nilai_spm', 'berkas.penerima_id', 'berkas.tgl_spm', 'berkas.kegiatan', 'berkas.created_at', 'berkas.status_berka_id', 'berkas.sumber_dana_id', 'instansis.nama_instansi', 'jenis_berkas.nama_jenis_berkas', 'penerimas.norek', 'penerimas.npwp', 'sumber_danas.nama_sumber_dana'])
+        $findberkas = Berka::select(['berkas.id', 'berkas.jenis_berka_id', 'berkas.kode', 'berkas.no_spm', 'berkas.nilai_spm', 'berkas.penerima_id', 'berkas.tgl_spm', 'berkas.kegiatan', 'berkas.created_at', 'berkas.status_berka_id', 'berkas.sumber_dana_id', 'instansis.nama_instansi', 'jenis_berkas.nama_jenis_berkas', 'penerimas.nama_penerima', 'penerimas.norek', 'penerimas.npwp', 'sumber_danas.nama_sumber_dana'])
         ->with('detailberka')
         ->leftJoin('instansis', 'berkas.instansi_id', '=', 'instansis.id')
         ->leftJoin('jenis_berkas', 'berkas.jenis_berka_id', '=', 'jenis_berkas.id')
@@ -750,15 +763,15 @@ class BerkasController extends Controller
         return new DetailBerkasResource($findberkas);
     }
 
-    public function findBerkas(int $id)
-    {
-        $findberkas = Berka::select(['berkas.id', 'berkas.jenis_berka_id', 'berkas.kode', 'berkas.no_spm', 'berkas.nilai_spm', 'berkas.penerima_id', 'berkas.tgl_spm', 'berkas.kegiatan', 'berkas.created_at', 'berkas.status_berka_id', 'berkas.sumber_dana_id', 'instansis.nama_instansi', 'jenis_berkas.nama_jenis_berkas', 'penerimas.norek', 'penerimas.npwp', 'sumber_danas.nama_sumber_dana'])
-        ->leftJoin('instansis', 'berkas.instansi_id', '=', 'instansis.id')
-        ->leftJoin('jenis_berkas', 'berkas.jenis_berka_id', '=', 'jenis_berkas.id')
-        ->leftJoin('penerimas', 'berkas.penerima_id', '=', 'penerimas.id')
-        ->leftJoin('sumber_danas', 'berkas.sumber_dana_id', '=', 'sumber_danas.id')
-        ->find($id);
+    // public function findBerkas(int $id)
+    // {
+    //     $findberkas = Berka::select(['berkas.id', 'berkas.jenis_berka_id', 'berkas.kode', 'berkas.no_spm', 'berkas.nilai_spm', 'berkas.penerima_id', 'berkas.tgl_spm', 'berkas.kegiatan', 'berkas.created_at', 'berkas.status_berka_id', 'berkas.sumber_dana_id', 'instansis.nama_instansi', 'jenis_berkas.nama_jenis_berkas', 'penerimas.norek', 'penerimas.npwp', 'sumber_danas.nama_sumber_dana'])
+    //     ->leftJoin('instansis', 'berkas.instansi_id', '=', 'instansis.id')
+    //     ->leftJoin('jenis_berkas', 'berkas.jenis_berka_id', '=', 'jenis_berkas.id')
+    //     ->leftJoin('penerimas', 'berkas.penerima_id', '=', 'penerimas.id')
+    //     ->leftJoin('sumber_danas', 'berkas.sumber_dana_id', '=', 'sumber_danas.id')
+    //     ->find($id);
 
-        return new FindBerkasResource($findberkas);
-    }
+    //     return new FindBerkasResource($findberkas);
+    // }
 }

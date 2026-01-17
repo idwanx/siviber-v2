@@ -17,25 +17,33 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Spinner } from "@/components/ui/spinner";
-import { CekVerifikatorKonfirmasi, FieldDataBerkas, StatusType } from "./types";
 import berkas from "@/routes/berkas";
+import { FieldDataBerkas, StatusType } from "@/types/berkas";
 
 interface DialogProps {
     dialogOpen: boolean;
     dataValue: FieldDataBerkas;
     handleAction: (berkasId: number, newStatus: StatusType) => void;
+    busy: boolean;
+}
+
+interface CekVerifikatorKonfirmasi {
+    id: number;
+    name: string
+    jumlah_riwayat: number
 }
 
 export default function DialogKonfirmasiSp2d({ 
   dialogOpen, 
   dataValue,
-  handleAction
+  handleAction,
+  busy
 } : DialogProps) {
 
   const [daftarVerifikator, setDaftarVerifikator] = useState<CekVerifikatorKonfirmasi[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const getCatatan = useCallback(async (): Promise<void> => {
+  const getVerifikator = useCallback(async (): Promise<void> => {
     setIsLoading(true);
     try {
         const response = await fetch(berkas.getverifikator(dataValue.id).url);
@@ -50,7 +58,7 @@ export default function DialogKonfirmasiSp2d({
 
   useEffect(() => {
     if (dialogOpen) {
-        getCatatan();
+        getVerifikator();
     } else {
       setDaftarVerifikator(daftarVerifikator);
     }
@@ -119,6 +127,7 @@ export default function DialogKonfirmasiSp2d({
                       type="button" 
                       tabIndex={1}
                       onClick={() => handleAction(dataValue.id, 4)}
+                      disabled={busy}
                       autoFocus
                     >
                       Sp2d

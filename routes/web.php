@@ -38,7 +38,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('edit-berkas/{id}', [BerkasController::class, 'editBerkas'])->name('berkas.edit');
 
-    Route::get('find-berkas/{id}', [BerkasController::class, 'findBerkas'])->name('berkas.find');
+    // Route::get('find-berkas/{id}', [BerkasController::class, 'findBerkas'])->name('berkas.find');
 
     Route::get('detail-berkas/{id}', [BerkasController::class, 'detailBerkas'])->name('berkas.detail');
 

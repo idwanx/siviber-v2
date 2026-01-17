@@ -33,8 +33,7 @@ export default function DialogDetailBerkas({ isDialog, dataState, closeModal } :
   const [dataBerkas, setDataBerkas] = useState();
   const [isLoadingUpdate, setIsLoadingUpdate] = useState<boolean>(false);
 
-const getDetailBerkas = useCallback(async (id: number): Promise<void> => {
-  
+  const getDetailBerkas = useCallback(async (id: number): Promise<void> => {
     setIsLoadingUpdate(true);
       try {
           const response = await fetch(berkas.detail(id).url);
@@ -48,7 +47,7 @@ const getDetailBerkas = useCallback(async (id: number): Promise<void> => {
   }, []);
 
   useEffect(() => {
-      getDetailBerkas(dataState);
+    getDetailBerkas(dataState);
     return () => {
         isDialog;
     }

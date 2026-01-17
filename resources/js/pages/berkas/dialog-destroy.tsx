@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { Spinner } from "@/components/ui/spinner";
 import berkas from "@/routes/berkas";
+import { FlashProps } from "@/types/berkas";
 import { router } from "@inertiajs/react";
 import { AlertTriangleIcon } from "lucide-react";
 import { useState } from "react";
@@ -18,13 +19,6 @@ interface BerkasProps {
     dataState?: number;
     closeModal: (open: boolean) => void;
     destroyBerkas: (data: any) => void;
-}
-
-interface FlashProps extends Record<string, any> {
-    flash?: {
-        type?: string; 
-        message?: string
-    }
 }
 
 export default function DialogDestroy({ dataState, closeModal, destroyBerkas } : BerkasProps) {

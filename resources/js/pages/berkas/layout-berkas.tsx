@@ -1,49 +1,49 @@
-import { BerkasSidebar } from '@/components/berkas-sidebar';
-import { SidebarInset } from '@/components/ui/sidebar';
-import AppLayout from '@/layouts/app-layout';
-import { FieldDataBerkas, IndexBerkasProps, StatusType } from './types';
-import { Head, router, usePage } from '@inertiajs/react';
-import { useEcho } from '@laravel/echo-react';
-import { BreadcrumbItem } from '@/types';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { AppSidebarHeader } from '@/components/app-sidebar-header';
-import Heading from '@/components/heading';
-import { Separator } from '@/components/ui/separator';
+import { Button } from "@/components/ui/button";
+import { RefreshCcw, Search } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   Table,
   TableBody,
+  TableCaption,
   TableCell,
+  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/components/ui/table"
+import AppLayout from "@/layouts/app-layout";
+import { BerkasSidebar } from "@/components/berkas-sidebar";
+import { Head, router, usePage } from "@inertiajs/react";
+import { SidebarInset } from "@/components/ui/sidebar";
+import { AppSidebarHeader } from "@/components/app-sidebar-header";
+import { Separator } from "@radix-ui/react-dropdown-menu";
+import { usePrevious } from 'react-use';
+import { debounce, pickBy } from 'lodash';
+import berkas from "@/routes/berkas";
+import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
 import {
   Select,
   SelectContent,
   SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import Pagination from '@/components/pagination';
-import DropDownPilihan from './dropdown-action';
-import { LabelIconStatus } from './label-icon-status';
-import { Spinner } from '@/components/ui/spinner';
-import ButtonUpdateStatus from './button-update-status';
-import ButtonCatatan from './button-catatan';
-import ButtonHistory from './button-history';
-import FormRegistrasiBerkas from './dialog-form-registrasi';
-import { Dialog } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import DialogDestroy from './dialog-destroy';
-import DialogDetailBerkas from './dialog-detail-berkas';
-import { usePrevious } from 'react-use';
-import { debounce, pickBy } from 'lodash';
-import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/input-group';
-import { RefreshCcw, Search, X } from 'lucide-react';
-import berkas from '@/routes/berkas';
-
-type ModeType = "create" | "update";
+import { BreadcrumbItem, SharedData } from "@/types";
+import Heading from "@/components/heading";
+import { Dialog } from "@/components/ui/dialog";
+import FormRegistrasiBerkas from "./dialog-form-registrasi";
+import { useEcho } from "@laravel/echo-react";
+import DialogDetailBerkas from "./dialog-detail-berkas";
+import DialogDestroy from "./dialog-destroy";
+import { BerkasProps, FieldDataBerkas, FilteredValues, ModeType, Riwayats, StatusType, UpdateJumlahCatatan } from "@/types/berkas";
+import ButtonUpdateStatus from "./button-update-status";
+import ButtonCatatan from "./button-catatan";
+import ButtonHistory from "./button-history";
+import { LabelIconStatus } from "./label-icon-status";
+import DropDownPilihan from "./dropdown-action";
+import Pagination from "@/components/pagination";
 
 const loads = [
     {
@@ -64,15 +64,16 @@ const loads = [
     },
 ]
 
-const LayoutBerkas = ({ auth, daftarberkas, tahun, menuOption, filtered }: IndexBerkasProps) => {
+export default function LayoutBerkas({ daftarberkas, tahun, menuOption, filtered, instansi, jenisberkas, sumberdana }: BerkasProps) {
+    const { auth } = usePage<SharedData>().props;
     const [stateBerkas, setStateBerkas] = useState<FieldDataBerkas[] | []>(daftarberkas.data);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
     const [modalCrud, setModalCrud] = useState<boolean>(false);
     const [dialogDestroy, setDialogDestroy] = useState<boolean>(false);
     const [modeType, setModeType] = useState<ModeType>("create");
     const [dataState, setDataState] = useState<number>(0);
     const [dialogDetail, setDialogDetail] = useState<boolean>(false);
     const [stateCatatans, setStateCatatans] = useState<any | null>(null);
+    
 
     const userChannel = (): string | undefined => {
         if (auth.user.roleuser.slug === "admin" || auth.user.roleuser.slug === "verifikator") {
@@ -84,50 +85,48 @@ const LayoutBerkas = ({ auth, daftarberkas, tahun, menuOption, filtered }: Index
         }
     };
 
-    const [valueCari, setValueCari] = useState({
+    const [values, setValues] = useState<FilteredValues>({
         cari: filtered.cari || '',
-        load: filtered.load || '',
+        load: filtered.load || '15',
+        instansi: filtered.instansi || '',
+        jenisspm: filtered.jenisspm || '',
+        sumberdana: filtered.sumberdana || '',
     });
 
-    const prevValues = usePrevious(valueCari);
+    const prevValues = usePrevious(values);
     
     const reload = useCallback(
         debounce((query) => {
-            router.get(berkas.main({tahun: tahun, statusberkas: menuOption}), query, {
-                replace: true,
+            router.get(berkas.main({tahun: tahun, statusberkas: menuOption}), query, { 
+                only: ['daftarberkas', 'filtered'], 
                 preserveScroll: true,
-                preserveState: true
             });
-        }, 500)
-    , []);
+        }, 500), 
+    []);
 
     useEffect(() => {
         if (prevValues) {
-            const query: any = Object.keys(pickBy(valueCari)).length ? pickBy(valueCari) : '';
+            const query: any = Object.keys(pickBy(values)).length ? pickBy(values) : '';
             reload(query);
         }
-    }, [valueCari]);
+    }, [values]);
 
     function handleInputCari(e: React.ChangeEvent<HTMLInputElement>) {
-        setValueCari(values => ({
+        setValues(values => ({
             ...values,
             cari: e.target.value
         }));
     };
 
-    function handleSelectLoad(e: string) {
-        setValueCari(values => ({
-            ...values, load: e
-        }));
-    };
-
     function refresh() {
-        setValueCari({
-            load: '',
+        setValues({
+            load: '15',
             cari: '',
+            instansi: '',
+            jenisspm: '',
+            sumberdana: '',
         });
     };
-    
 
     const updateStatusBerkas = (newData: any) => {
         const statusBerkas = () => {
@@ -156,10 +155,10 @@ const LayoutBerkas = ({ auth, daftarberkas, tahun, menuOption, filtered }: Index
                             item.id === newData.data.id
                         );
 
-                        let updatedItems: any[];
+                        let updatedItems: Riwayats[];
 
                         if (!existingItemIndex) {
-                            const newItem = { 
+                            const newItem: Riwayats = { 
                                 berka_id: newData.data.berka_id, 
                                 id: newData.data.id, 
                                 status_berka_id: newData.data.status_berka_id, 
@@ -193,7 +192,7 @@ const LayoutBerkas = ({ auth, daftarberkas, tahun, menuOption, filtered }: Index
         }
     };
 
-    const updateJumlahCatatan = (jumlahCatatan: any) => {
+    const updateJumlahCatatan = (jumlahCatatan: UpdateJumlahCatatan) => {
         setStateBerkas(prevItems =>
             prevItems.map(item =>
                 item.id === jumlahCatatan.berka_id ? { ...item, jumlah_catatan: jumlahCatatan.jumlah_catatan } : item
@@ -250,7 +249,7 @@ const LayoutBerkas = ({ auth, daftarberkas, tahun, menuOption, filtered }: Index
         setModeType(mode);
         
         switch (mode) {
-        case 'update':
+        case 'edit':
             setDataState(item!);
             setModalCrud(true);
             break;
@@ -334,14 +333,21 @@ const LayoutBerkas = ({ auth, daftarberkas, tahun, menuOption, filtered }: Index
                 if (e.newData.action === "newBerkas") {
                     if (menuOption === "registrasi" && auth.user.roleuser.slug === "admin" || auth.user.roleuser.slug === "verifikator") {
                         addNew(e.newData.data);
-                        
                     } else {
                         return () => e.newData.info;
                     }
                 } else if (e.newData.action === "updateBerkas") {
-                    updateBerkas(e.newData);
+                    if (auth.user.roleuser.slug !== "bendahara") {
+                        updateBerkas(e.newData);
+                    } else {
+                        return () => e.newData.info;
+                    }
                 } else if (e.newData.action === "destroyBerkas") {
-                    destroyBerkas(e.newData.id);
+                    if (auth.user.roleuser.slug !== "bendahara") {
+                        destroyBerkas(e.newData.id);
+                    } else {
+                        return () => e.newData.info;
+                    }
                 } else if (e.newData.action === "updateStatus") {
                     updateStatusBerkas(e.newData);
                 }
@@ -360,23 +366,11 @@ const LayoutBerkas = ({ auth, daftarberkas, tahun, menuOption, filtered }: Index
         }
     });
 
-    useEffect(() => {
-        
-        if (daftarberkas) {
-            setStateBerkas(daftarberkas.data);
-        }
-        
-        return () => {
-            menuOption;
-        }
-        
-    }, [daftarberkas]);
-    
-
     const breadcrumbs: BreadcrumbItem[] = [
         {title: 'Berkas', href: "#"},
         {title: menuOption, href: "#"}
     ];
+
 
     return (
         <>
@@ -404,10 +398,10 @@ const LayoutBerkas = ({ auth, daftarberkas, tahun, menuOption, filtered }: Index
                     destroyBerkas={destroyBerkas}
                 />
             </Dialog>
-            <BerkasSidebar />
             <Head title="Berkas" />
+            <BerkasSidebar />
             <SidebarInset className="py-1">
-                <main className="flex flex-1 flex-col space-y-2 pl-2 mt-(--header-height) h-[calc(100svh-var(--header-height))]!">
+                <div className="flex flex-1 flex-col space-y-2 pl-2 mt-(--header-height) h-[calc(100svh-var(--header-height))]!">
                     <AppSidebarHeader breadcrumbs={breadcrumbs} trigger={true} />
                     <div className="min-h-screen p-4 flex-1 overflow-hidden bg-background shadow-sm rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
                         <div className="flex flex-1">
@@ -427,17 +421,71 @@ const LayoutBerkas = ({ auth, daftarberkas, tahun, menuOption, filtered }: Index
                         <div className="flex items-center py-4 gap-2">
                             <div>
                                 <Select 
-                                    name="load"
-                                    value={valueCari.load === '' ? filtered.load : valueCari.load} 
-                                    onValueChange={(e) => handleSelectLoad(e)}
+                                    name="jenisspm"
+                                    value={values.jenisspm} 
+                                    onValueChange={(e) => 
+                                        setValues(values => ({
+                                            ...values,
+                                            jenisspm: e,
+                                        }))
+                                    }
                                 >
                                     <SelectTrigger tabIndex={1} className="w-full">
-                                        <SelectValue placeholder={filtered.load} />
+                                        <SelectValue placeholder="Jenis SPM" />
                                     </SelectTrigger>
                                     <SelectContent>
                                         <SelectGroup>
-                                            {loads.map((load, key) => (
-                                            <SelectItem key={key} value={load.value}>{load.name}</SelectItem>
+                                            <SelectLabel>Jenis SPM</SelectLabel>
+                                            {jenisberkas.map(item => (
+                                                <SelectItem key={item.slug} value={item.slug}>{item.nama_jenis_berkas}</SelectItem>
+                                            ))}
+                                        </SelectGroup>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                            <div>
+                                <Select 
+                                    name="sumberdana"
+                                    value={values.sumberdana} 
+                                    onValueChange={(e) => 
+                                        setValues(values => ({
+                                            ...values,
+                                            sumberdana: e,
+                                        }))
+                                    }
+                                >
+                                    <SelectTrigger tabIndex={1} className="w-full">
+                                        <SelectValue placeholder="Sumber Dana" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectGroup>
+                                            <SelectLabel>Sumber Dana</SelectLabel>
+                                            {sumberdana.map(item => (
+                                                <SelectItem key={item.slug} value={item.slug}>{item.nama_sumber_dana}</SelectItem>
+                                            ))}
+                                        </SelectGroup>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                            <div>
+                                <Select 
+                                    name="instansi"
+                                    value={values.instansi} 
+                                    onValueChange={(e) => 
+                                        setValues(values => ({
+                                            ...values,
+                                            instansi: e,
+                                        }))
+                                    }
+                                >
+                                    <SelectTrigger tabIndex={1} className="w-full">
+                                        <SelectValue placeholder="Instansi" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectGroup>
+                                            <SelectLabel>Instansi</SelectLabel>
+                                            {instansi.map(item => (
+                                            <SelectItem key={item.slug} value={item.slug}>{item.nama_instansi}</SelectItem>
                                             ))}
                                         </SelectGroup>
                                     </SelectContent>
@@ -445,11 +493,10 @@ const LayoutBerkas = ({ auth, daftarberkas, tahun, menuOption, filtered }: Index
                             </div>
                             <div>
                                 <InputGroup>
-                                    <InputGroupInput id='cari' name='cari' value={valueCari.cari} onChange={handleInputCari} placeholder="Cari..." />
+                                    <InputGroupInput id='cari' name='cari' value={values.cari} onChange={handleInputCari} placeholder="Cari..." autoFocus />
                                         <InputGroupAddon>
                                             <Search />
                                         </InputGroupAddon>
-                                    {/* <InputGroupAddon align="inline-end"><X /></InputGroupAddon> */}
                                 </InputGroup>
                             </div>
                             <div>
@@ -459,7 +506,29 @@ const LayoutBerkas = ({ auth, daftarberkas, tahun, menuOption, filtered }: Index
                             </div>
                             <div className="ml-auto">
                                 <div className='flex gap-2'>
-                                    -
+                                    <div>
+                                        <Select 
+                                            name="load"
+                                            value={values.load === '' ? filtered.load : values.load} 
+                                            onValueChange={(e) => 
+                                                setValues(values => ({
+                                                    ...values,
+                                                    load: e,
+                                                }))
+                                            }
+                                        >
+                                            <SelectTrigger tabIndex={1} className="w-full">
+                                                <SelectValue placeholder={filtered.load} />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectGroup>
+                                                    {loads.map((load, key) => (
+                                                    <SelectItem key={key} value={load.value}>{load.name}</SelectItem>
+                                                    ))}
+                                                </SelectGroup>
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -493,7 +562,7 @@ const LayoutBerkas = ({ auth, daftarberkas, tahun, menuOption, filtered }: Index
                                                 <div className='2xl:hidden md:w-100 text-muted-foreground mb-0.5 md:truncate'>
                                                     {item.nama_instansi}
                                                 </div>
-                                                <p className='text-sm/6 font-medium'>{item.kegiatan}</p>
+                                                <p className='text-sm/6 font-normal'>{item.kegiatan}</p>
                                                 <div className="text-muted-foreground sm:grid sm:grid-cols-6">
                                                     <div>No. Spm</div>
                                                     <div className="sm:col-span-5">: {item.no_spm}</div>
@@ -523,7 +592,7 @@ const LayoutBerkas = ({ auth, daftarberkas, tahun, menuOption, filtered }: Index
                                             </TableCell>
                                             <TableCell>
                                                 <div className='flex justify-center'>
-                                                    <DropDownPilihan openModalCrud={openModalCrud} openDialogDestroy={openDialogDestroy} openDialogDetail={openDialogDetail} dataValue={item.id} />
+                                                    <DropDownPilihan user={auth.user} openModalCrud={openModalCrud} openDialogDestroy={openDialogDestroy} openDialogDetail={openDialogDetail} dataValue={item.id} />
                                                 </div>
                                             </TableCell>
                                         </TableRow>
@@ -541,16 +610,14 @@ const LayoutBerkas = ({ auth, daftarberkas, tahun, menuOption, filtered }: Index
                                 {daftarberkas?.meta.from} sampai {daftarberkas?.meta.to} dari total: {daftarberkas?.meta.total}
                             </div>
                             <div className="flex flex-1 flex-row-reverse">
-                                <Pagination links={daftarberkas?.links} meta={daftarberkas?.meta} />
+                                <Pagination links={daftarberkas.links} meta={daftarberkas.meta} />
                             </div>
                         </div>
                     </div>
-                </main>
+                </div>
             </SidebarInset>
         </>
-    )
+    );
 }
 
 LayoutBerkas.layout = (page: React.ReactNode) => <AppLayout children={page} />
-
-export default LayoutBerkas;

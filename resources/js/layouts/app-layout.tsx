@@ -80,64 +80,71 @@ export default ({ children }: AppLayoutProps) => {
     useEcho<{newData:any}>(`${userChannel()}`, 'StatusBerkasEvent', (e: {newData:any}) => {
         switch (e.newData.info) {
             case 'berkas':
-                if (auth.user.roleuser.instansi_id !== null) {
-                    switch (e.newData.data.status_berka_id) {
-                        case 3:
-                            toast(
-                                <div className="flex py-4 first:pt-0 last:pb-0">
-                                    <CircleSlash2 className='size-5.5 shrink-0 text-red-600' />
-                                <div className="ml-3 overflow-hidden">
-                                    <p className="text-sm font-medium text-red-600">Berkas Penolakan</p>
-                                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                                        {e.newData.data.kegiatan}
-                                    </p>
-                                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                                        No.Spm: {e.newData.data.no_spm}
-                                    </p>
-                                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                                        Tgl.Spm: {e.newData.data.tgl_spm}
-                                    </p>
-                                </div>
-                                </div>
-                                ,{
-                                position: "top-center",
-                                duration: 10000,
-                                style: {
-                                    '--normal-bg': 'var(--background)',
-                                    '--normal-border': 'var(--destructive)'
-                                } as React.CSSProperties
-                            });
-                        break;
-                        case 4:
-                            toast(
-                                <div className="flex py-4 first:pt-0 last:pb-0">
-                                    <CircleCheckBig className='size-5.5 shrink-0 text-green-600' />
-                                <div className="ml-3 overflow-hidden">
-                                    <p className="text-sm font-medium text-green-600">Berkas Sp2d</p>
-                                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                                        {e.newData.data.kegiatan}
-                                    </p>
-                                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                                        No.Spm: {e.newData.data.no_spm}
-                                    </p>
-                                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                                        Tgl.Spm: {e.newData.data.tgl_spm}
-                                    </p>
-                                </div>
-                                </div>
-                                ,{
-                                position: "top-center",
-                                duration: 10000,
-                                style: {
-                                    '--normal-bg': 'var(--background)',
-                                    '--normal-border': 'light-dark(var(--color-green-600), var(--color-green-400))'
-                                } as React.CSSProperties
-                            });
-                        break;
-                        default:
-                        return () => e.newData.data.status_berka_id;
+                if (e.newData.action === "updateStatus") {
+                    if (auth.user.roleuser.instansi_id !== null) {
+                        switch (e.newData.data.status_berka_id) {
+                            case 3:
+                                toast(
+                                    <div className="flex py-4 first:pt-0 last:pb-0">
+                                        <CircleSlash2 className='size-5.5 shrink-0 text-red-600' />
+                                    <div className="ml-3 overflow-hidden">
+                                        <p className="text-sm font-medium text-red-600">Berkas Penolakan</p>
+                                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                                            {e.newData.data.kegiatan}
+                                        </p>
+                                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                                            No.Spm: {e.newData.data.no_spm}
+                                        </p>
+                                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                                            Tgl.Spm: {e.newData.data.tgl_spm}
+                                        </p>
+                                    </div>
+                                    </div>
+                                    ,{
+                                    position: "top-center",
+                                    duration: 10000,
+                                    style: {
+                                        '--normal-bg': 'var(--background)',
+                                        '--normal-border': 'var(--destructive)'
+                                    } as React.CSSProperties
+                                });
+                            break;
+                            case 4:
+                                toast(
+                                    <div className="flex py-4 first:pt-0 last:pb-0">
+                                        <CircleCheckBig className='size-5.5 shrink-0 text-green-600' />
+                                    <div className="ml-3 overflow-hidden">
+                                        <p className="text-sm font-medium text-green-600">Berkas Sp2d</p>
+                                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                                            {e.newData.data.kegiatan}
+                                        </p>
+                                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                                            No.Spm: {e.newData.data.no_spm}
+                                        </p>
+                                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                                            Tgl.Spm: {e.newData.data.tgl_spm}
+                                        </p>
+                                    </div>
+                                    </div>
+                                    ,{
+                                    position: "top-center",
+                                    duration: 10000,
+                                    style: {
+                                        '--normal-bg': 'var(--background)',
+                                        '--normal-border': 'light-dark(var(--color-green-600), var(--color-green-400))'
+                                    } as React.CSSProperties
+                                });
+                            break;
+                            default:
+                            return () => e.newData.data.status_berka_id;
+                        }
+                    } else {
+                        return () => e.newData.info
                     }
+                } else {
+                    return () => e.newData.info
                 }
+                    
             break;
             case 'catatan':
                 if (e.newData.action === "addcatatan" && auth.user.roleuser.instansi_id !== null) {
@@ -178,8 +185,6 @@ export default ({ children }: AppLayoutProps) => {
                 } else {
                     return setDataCatatan(e.newData);
                 }
-                
-                break;
             default:
                 return () => e.newData.info;
             }

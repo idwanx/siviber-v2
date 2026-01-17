@@ -68,7 +68,11 @@ export function BerkasSidebar() {
                                     )}
                                     tooltip={{ children: item.title }}
                                 >
-                                    <Link href={item.href} only={['daftarberkas', 'tahun', 'menuOption', 'filtered']}>
+                                    {/* <Link href={item.href} only={['daftarberkas', 'tahun', 'menuOption', 'filtered']}>
+                                        {item.icon && <item.icon />}
+                                        <span>{item.title}</span>
+                                    </Link> */}
+                                    <Link href={item.href}>
                                         {item.icon && <item.icon />}
                                         <span>{item.title}</span>
                                     </Link>

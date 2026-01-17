@@ -12,9 +12,9 @@ import { router, usePage } from "@inertiajs/react";
 import { useState } from "react";
 import { toast } from "sonner";
 import berkas from "@/routes/berkas";
-import { FieldDataBerkas, FlashUpdateStatusProps, Riwayats, StatusType } from "./types";
 import DialogKonfirmasiSp2d from "./dialog-konfirmasi-sp2d";
 import { Dialog } from "@/components/ui/dialog";
+import { FieldDataBerkas, FlashProps, Riwayats, StatusType } from "@/types/berkas";
 
 interface ActionProps {
     updateStatusBerkas: (newData: any) => void;
@@ -44,7 +44,7 @@ export default function ButtonUpdateStatus({ updateStatusBerkas, dataValue }: Ac
 
         router.post(berkas.addriwayat(berkasId), { berkasid: berkasId, statusberkas: newStatus }, {
             preserveScroll: true,
-            onSuccess: (response: { props: FlashUpdateStatusProps }) => {
+            onSuccess: (response: { props: FlashProps }) => {
                 if (response.props.flash?.type === 'success') {
                     const newData: any = response.props.newdata?.datas;
                     updateStatusBerkas(newData);
@@ -156,10 +156,6 @@ export default function ButtonUpdateStatus({ updateStatusBerkas, dataValue }: Ac
 
     const handleDialogToggle = (dialogIsOpen: boolean) => {
         setDialogIsOpen(dialogIsOpen);
-
-        if (!dialogIsOpen) {
-            
-        };
     };
 
     return (
@@ -169,6 +165,7 @@ export default function ButtonUpdateStatus({ updateStatusBerkas, dataValue }: Ac
                 dialogOpen={dialogIsOpen} 
                 dataValue={dataValue}
                 handleAction={handleAction}
+                busy={busy}
             />
         </Dialog>
         {isAdminVerifikator ? (
