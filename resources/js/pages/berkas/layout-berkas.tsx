@@ -1,12 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { RefreshCcw, Search } from "lucide-react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -16,7 +14,6 @@ import { BerkasSidebar } from "@/components/berkas-sidebar";
 import { Head, router, usePage } from "@inertiajs/react";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { AppSidebarHeader } from "@/components/app-sidebar-header";
-import { Separator } from "@radix-ui/react-dropdown-menu";
 import { usePrevious } from 'react-use';
 import { debounce, pickBy } from 'lodash';
 import berkas from "@/routes/berkas";
@@ -40,10 +37,11 @@ import DialogDestroy from "./dialog-destroy";
 import { BerkasProps, FieldDataBerkas, FilteredValues, ModeType, Riwayats, StatusType, UpdateJumlahCatatan } from "@/types/berkas";
 import ButtonUpdateStatus from "./button-update-status";
 import ButtonCatatan from "./button-catatan";
-import ButtonHistory from "./button-history";
 import { LabelIconStatus } from "./label-icon-status";
 import DropDownPilihan from "./dropdown-action";
 import Pagination from "@/components/pagination";
+import ButtonHistory from "./button-history";
+import { Separator } from "@/components/ui/separator";
 
 const loads = [
     {
@@ -73,8 +71,6 @@ export default function LayoutBerkas({ daftarberkas, tahun, menuOption, filtered
     const [dataState, setDataState] = useState<number>(0);
     const [dialogDetail, setDialogDetail] = useState<boolean>(false);
     const [stateCatatans, setStateCatatans] = useState<any | null>(null);
-    
-
     const userChannel = (): string | undefined => {
         if (auth.user.roleuser.slug === "admin" || auth.user.roleuser.slug === "verifikator") {
             return "admin-verifikator";
@@ -98,8 +94,10 @@ export default function LayoutBerkas({ daftarberkas, tahun, menuOption, filtered
     const reload = useCallback(
         debounce((query) => {
             router.get(berkas.main({tahun: tahun, statusberkas: menuOption}), query, { 
-                only: ['daftarberkas', 'filtered'], 
+                // only: ['daftarberkas', 'filtered'], 
                 preserveScroll: true,
+                preserveState: false, 
+                replace: true
             });
         }, 500), 
     []);
@@ -411,7 +409,7 @@ export default function LayoutBerkas({ daftarberkas, tahun, menuOption, filtered
                             />
                             {auth.user.roleuser.slug === 'bendahara' && menuOption === "registrasi" ? (
                                 <div className="ml-auto">
-                                    <Button onClick={() => openModalCrud('create')}>Registrasi</Button>
+                                    <Button onClick={() => openModalCrud('create')} tabIndex={1}>Registrasi</Button>
                                 </div>
                             ):(
                                 ''
@@ -430,7 +428,7 @@ export default function LayoutBerkas({ daftarberkas, tahun, menuOption, filtered
                                         }))
                                     }
                                 >
-                                    <SelectTrigger tabIndex={1} className="w-full">
+                                    <SelectTrigger tabIndex={2} className="w-full">
                                         <SelectValue placeholder="Jenis SPM" />
                                     </SelectTrigger>
                                     <SelectContent>
@@ -454,7 +452,7 @@ export default function LayoutBerkas({ daftarberkas, tahun, menuOption, filtered
                                         }))
                                     }
                                 >
-                                    <SelectTrigger tabIndex={1} className="w-full">
+                                    <SelectTrigger tabIndex={3} className="w-full">
                                         <SelectValue placeholder="Sumber Dana" />
                                     </SelectTrigger>
                                     <SelectContent>
@@ -478,7 +476,7 @@ export default function LayoutBerkas({ daftarberkas, tahun, menuOption, filtered
                                         }))
                                     }
                                 >
-                                    <SelectTrigger tabIndex={1} className="w-full">
+                                    <SelectTrigger tabIndex={4} className="w-full">
                                         <SelectValue placeholder="Instansi" />
                                     </SelectTrigger>
                                     <SelectContent>
@@ -493,14 +491,14 @@ export default function LayoutBerkas({ daftarberkas, tahun, menuOption, filtered
                             </div>
                             <div>
                                 <InputGroup>
-                                    <InputGroupInput id='cari' name='cari' value={values.cari} onChange={handleInputCari} placeholder="Cari..." autoFocus />
+                                    <InputGroupInput id='cari' name='cari' value={values.cari} onChange={handleInputCari} tabIndex={5} placeholder="Cari..." autoFocus />
                                         <InputGroupAddon>
                                             <Search />
                                         </InputGroupAddon>
                                 </InputGroup>
                             </div>
                             <div>
-                                <Button onClick={refresh} variant="outline" size="icon" aria-label="Refresh">
+                                <Button onClick={refresh} variant="outline" size="icon" aria-label="Refresh" tabIndex={6}>
                                     <RefreshCcw />
                                 </Button>
                             </div>
@@ -517,7 +515,7 @@ export default function LayoutBerkas({ daftarberkas, tahun, menuOption, filtered
                                                 }))
                                             }
                                         >
-                                            <SelectTrigger tabIndex={1} className="w-full">
+                                            <SelectTrigger tabIndex={7} className="w-full">
                                                 <SelectValue placeholder={filtered.load} />
                                             </SelectTrigger>
                                             <SelectContent>
@@ -532,6 +530,7 @@ export default function LayoutBerkas({ daftarberkas, tahun, menuOption, filtered
                                 </div>
                             </div>
                         </div>
+                        
                         <Table>
                             <TableHeader>
                                 <TableRow>

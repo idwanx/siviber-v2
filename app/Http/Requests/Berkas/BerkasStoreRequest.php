@@ -22,7 +22,7 @@ class BerkasStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'no_spm' => ['required', 'string', 'max:250'],
+            'no_spm' => ['required', 'string', 'max:250', 'unique:berkas,no_spm,' . optional($this->berka)->id,],
             'tgl_spm' => ['required', 'date_format:Y-m-d'],
             'jenis_berka_id' => ['required', 'exists:jenis_berkas,id'],
             'jenis_spm_text' => ['required', 'string', 'max:250'],
@@ -38,6 +38,7 @@ class BerkasStoreRequest extends FormRequest
         return [
             'no_spm.required' => 'No. Spm wajib di isi',
             'no_spm.max' => 'No. Spm maksimal 250 karakter',
+            'no_spm.unique' => 'No. Spm sudah ada',
             'tgl_spm.required' => 'Tanggal spm wajib di pilih',
             'tgl_spm.date_format' => 'Format tanggal spm harus yyyy-MM-dd',
             'jenis_spm.required' => 'Jenis spm wajib di pilih',

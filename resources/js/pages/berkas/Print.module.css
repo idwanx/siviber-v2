@@ -4,7 +4,9 @@
 
 @media print {
 	@page {
-    margin: 1cm; /* Standard margins for top, right, bottom, left */
+    /* margin: 2cm;  */
+	/* Standard margins for top, right, bottom, left */
+	margin: 1cm 1.5cm 1cm 2cm;
   }
 	
 	body {

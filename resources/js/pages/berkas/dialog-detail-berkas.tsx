@@ -30,7 +30,7 @@ interface BerkasProps {
 }
 
 export default function DialogDetailBerkas({ isDialog, dataState, closeModal } : BerkasProps) {
-  const [dataBerkas, setDataBerkas] = useState();
+  const [dataBerkas, setDataBerkas] = useState([]);
   const [isLoadingUpdate, setIsLoadingUpdate] = useState<boolean>(false);
 
   const getDetailBerkas = useCallback(async (id: number): Promise<void> => {
@@ -47,7 +47,12 @@ export default function DialogDetailBerkas({ isDialog, dataState, closeModal } :
   }, []);
 
   useEffect(() => {
-    getDetailBerkas(dataState);
+    if (isDialog) {
+      getDetailBerkas(dataState);
+    } else {
+      setDataBerkas([]);
+    }
+
     return () => {
         isDialog;
     }

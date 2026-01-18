@@ -39,24 +39,19 @@ class Berka extends Model
         return $this->belongsTo(JenisBerka::class);
     }
 
-    public function riwayatberkas(): HasMany
+    public function sumberdana(): BelongsTo
     {
-        return $this->hasMany(RiwayatBerka::class)
-        // ->select(['riwayat_berkas.id', 'riwayat_berkas.berka_id', 'status_berkas.slug', 'riwayat_berkas.status_berka_id', 'riwayat_berkas.user_id'])
-        // ->leftJoin('status_berkas', 'riwayat_berkas.status_berka_id', '=', 'status_berkas.id');
-        ->select('riwayat_berkas.id', 'riwayat_berkas.berka_id', 'riwayat_berkas.status_berka_id', 'riwayat_berkas.created_at', 'riwayat_berkas.user_id', 'users.foto', 'users.name', 'status_berkas.slug')
-        ->leftJoin('status_berkas', 'riwayat_berkas.status_berka_id', '=', 'status_berkas.id')
-        ->leftJoin('users', 'riwayat_berkas.user_id', '=', 'users.id');
+        return $this->belongsTo(SumberDana::class);
+    }
+
+    public function statusberka(): BelongsTo
+    {
+        return $this->belongsTo(StatusBerka::class);
     }
 
     public function riwayats(): HasMany
     {
         return $this->hasMany(RiwayatBerka::class);
-    }
-
-    public function riwayat(): HasOne
-    {
-        return $this->hasOne(RiwayatBerka::class);
     }
 
     public function catatans(): HasMany

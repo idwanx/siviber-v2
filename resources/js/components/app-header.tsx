@@ -255,7 +255,7 @@ export function AppHeader({
                                     <Avatar className="size-8 overflow-hidden rounded-full">
                                         {auth.user.foto ?
                                             <AvatarImage
-                                                src={`/storage/${auth.user.foto}`}
+                                                src={`/storage/foto/small/${auth.user.foto}`}
                                                 alt={auth.user.name}
                                             />
                                         :

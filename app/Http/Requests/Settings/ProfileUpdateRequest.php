@@ -6,9 +6,15 @@ use App\Models\User;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\File;
 
 class ProfileUpdateRequest extends FormRequest
 {
+    public function authorize(): bool
+    {
+        return true;
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -28,7 +34,33 @@ class ProfileUpdateRequest extends FormRequest
                 'max:255',
                 Rule::unique(User::class)->ignore($this->user()->id),
             ],
+            'foto' => [
+                'nullable',
+                'mimes:jpg,jpeg,png,bmp,gif,avif,heic,heif',
+                'image', 
+                'max:5120',
+            ],
         ];
+
+        // $rules = [
+        //     'name' => ['required', 'string', 'max:255'],
+        //     'nip' => ['required', 'string', 'max:18', 'min:18',Rule::unique(User::class)->ignore($this->user()->id),],
+        //     'no_hp' => ['required','regex:/^[0-9]+$/','min:11','max:12',Rule::unique(User::class)->ignore($this->user()->id),],
+        //     'email' => [
+        //         'required',
+        //         'string',
+        //         'lowercase',
+        //         'email',
+        //         'max:255',
+        //         Rule::unique(User::class)->ignore($this->user()->id),
+        //     ],
+        // ];
+
+        // if($this->hasFile('foto')) {
+        //     $rules['foto'] = 'mimes:jpg,jpeg,png,bmp,gif,avif,heic,heif|image|max:2048';
+        // }
+
+        // return $rules;
     }
 
     public function messages(): array
@@ -50,6 +82,9 @@ class ProfileUpdateRequest extends FormRequest
             'no_hp.regex' => 'No Hp tidak valid',
             'no_hp.min' => 'No Hp minimal 11 angka',
             'no_hp.max' => 'No Hp maksimal 12 angka',
+            'foto.mimes' => 'Format foto tidak valid',
+            'foto.image' => 'Foto tidak valid',
+            'foto.max' => 'Foto maksimal 5 Mb',
         ];
     }
 }

@@ -80,6 +80,7 @@ export default function ButtonUpdateStatus({ updateStatusBerkas, dataValue }: Ac
                             className={`h-7 w-7 ${checkUserVerifikasi ? 'bg-ring/50 dark:bg-sidebar-primary/20' : 'text-muted-foreground'}`}
                             onClick={() => handleAction(dataValue.id, 2)}
                             disabled={busy || statusBerkas === 3 || statusBerkas === 4}
+                            tabIndex={10}
                         >
                             {verifikasiPending ? (
                                 <Spinner />
@@ -108,6 +109,7 @@ export default function ButtonUpdateStatus({ updateStatusBerkas, dataValue }: Ac
                             className={`h-7 w-7 ${checkUserPenolakan ? 'bg-ring/50 dark:bg-sidebar-primary/20 text-muted-foreground' : 'text-muted-foreground'}`}
                             onClick={() => handleAction(dataValue.id, 3)}
                             disabled={busy || statusBerkas === 3 && !checkUserPenolakan || statusBerkas === 4}
+                            tabIndex={11}
                         >
                             {penolakanPending ? (
                                 <Spinner />
@@ -136,6 +138,7 @@ export default function ButtonUpdateStatus({ updateStatusBerkas, dataValue }: Ac
                             className={`h-7 w-7 ${checkUserSp2d ? 'bg-ring/50 dark:bg-sidebar-primary/20' : 'text-muted-foreground'}`}
                             onClick={statusBerkas === 4 && checkUserSp2d ? () => handleAction(dataValue.id, 4) : handleKonfirmasiSp2d}
                             disabled={busy || statusBerkas === 4 && !checkUserSp2d || statusBerkas === 3}
+                            tabIndex={12}
                         >
                             {sp2dPending ? (
                                 <Spinner />

@@ -9,6 +9,7 @@ use Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Inertia\Inertia;
+use Illuminate\Http\Exceptions\PostTooLargeException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -28,7 +29,14 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->respond(function (Response $response, Throwable $exception, Request $request) {
-            if (! app()->environment(['local', 'testing']) && in_array($response->getStatusCode(), [500, 503, 404, 403])) {
+            if (! app()->environment(['local', 'testing']) && in_array($response->getStatusCode(), [500, 503, 404, 403, 413])) {
+                return Inertia::render('error-page', ['status' => $response->getStatusCode()])
+                    ->toResponse($request)
+                    ->setStatusCode($response->getStatusCode());
+            }
+
+            if ($exception instanceof PostTooLargeException) {
+                // return Inertia::render('error-page', ['status' => 413, 'message' => 'The post data is too large.'])->toResponse($request)->setStatusCode(413);
                 return Inertia::render('error-page', ['status' => $response->getStatusCode()])
                     ->toResponse($request)
                     ->setStatusCode($response->getStatusCode());
@@ -36,10 +44,11 @@ return Application::configure(basePath: dirname(__DIR__))
 
             if ($response->getStatusCode() === 419) {
                 return back()->with([
-                    'message' => 'Halaman telah kedaluwarsa, silakan coba lagi.',
+                    'message' => 'Halaman telah kedaluwarsa, silakan login kembali.',
                 ]);
             }
 
             return $response;
         });
+
     })->create();

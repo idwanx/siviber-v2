@@ -188,7 +188,7 @@ export default function DialogCatatanView({
                             <div key={index} className="flex items-center space-x-3">
                               <Avatar className="h-9 w-9 overflow-hidden rounded-full">
                                 {item.foto ?
-                                <AvatarImage src={`/storage/${item.foto}`} alt={item.name} />
+                                <AvatarImage src={`/storage/foto/small/${item.foto}`} alt={item.name} />
                                 :
                                 <AvatarFallback className="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
                                     {getInitials(item.name)}
@@ -214,7 +214,7 @@ export default function DialogCatatanView({
             <div className="flex border-t bg-muted dark:bg-background rounded-b-md px-4 py-4">
               <div className="ml-auto">
                 <DialogClose asChild>
-                  <Button variant="outline" tabIndex={1}>Tutup</Button>
+                  <Button variant="outline" tabIndex={1} autoFocus>Tutup</Button>
                 </DialogClose>
               </div>
             </div>

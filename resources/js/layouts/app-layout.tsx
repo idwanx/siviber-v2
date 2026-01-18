@@ -155,7 +155,7 @@ export default ({ children }: AppLayoutProps) => {
                             <div className="flex py-4 first:pt-0 last:pb-0">
                                 <Avatar className="h-9 w-9 overflow-hidden rounded-full">
                                     <AvatarImage 
-                                    src={`/storage/${e.newData.foto}`}
+                                    src={`/storage/foto/small/${e.newData.foto}`}
                                     alt={auth.user.name} />
                                     <AvatarFallback className="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
                                         {getInitials(e.newData.name)}

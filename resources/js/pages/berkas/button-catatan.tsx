@@ -8,12 +8,12 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { NotebookPen } from "lucide-react";
 import DialogCatatan from "./dialog-catatan";
-import { FieldDataBerkas } from "./types";
 import { Dialog } from "@/components/ui/dialog";
 import { User } from "@/types";
+import { FieldDataBerkas, UpdateJumlahCatatan } from "@/types/berkas";
 
 interface DialogProps {
-    updateJumlahCatatan: (data: any) => void;
+    updateJumlahCatatan: (data: UpdateJumlahCatatan) => void;
     dataValue: FieldDataBerkas;
     user: User;
     stateCatatans: any | null;
@@ -40,8 +40,8 @@ export default function ButtonCatatan({ user, updateJumlahCatatan, dataValue, st
                         variant="ghost"
                         size="sm"
                         className="h-7 text-muted-foreground"
+                        tabIndex={9}
                     >
-                        {/* <MessageSquare /> */}
                         <NotebookPen />
                         <span className="text-destructive">{dataValue.jumlah_catatan}</span>
                     </Button>

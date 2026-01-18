@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('sumber_dana_id')->index()->constrained('sumber_danas')->onDelete('restrict');
             $table->foreignId('penerima_id')->index()->constrained('penerimas')->onDelete('restrict');
             $table->foreignId('status_berka_id')->index()->constrained('status_berkas')->onDelete('restrict');
-            $table->string('no_spm');
+            $table->string('no_spm')->index()->unique();
             $table->date('tgl_spm');
             $table->double('nilai_spm');
             $table->string('kegiatan')->index();

@@ -7,22 +7,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Eye, MoreHorizontal, Pencil, Printer, Trash2 } from "lucide-react";
-import { forwardRef, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useReactToPrint } from "react-to-print";
-import styles from './Print.module.css';
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
 import { LembarVerifikasi } from "./lembar-verifikasi";
-import { ModeType } from "@/types/berkas";
+import { FieldDataBerkas, ModeType } from "@/types/berkas";
 import { User } from "@/types";
+import berkas from "@/routes/berkas";
 
 interface SelectProps {
   user: User;
@@ -34,14 +24,47 @@ interface SelectProps {
 
 export default function DropDownPilihan({ user, openModalCrud, openDialogDestroy, openDialogDetail, dataValue }: SelectProps) {
   const componentRef = useRef<HTMLDivElement>(null);
-  
-  const handlePrint = useReactToPrint({
+  const [dataBerkas, setDataBerkas] = useState<FieldDataBerkas | null>(null);
+
+  const handlePrint = (id: number) => {
+    getDetailBerkas(id)
+  };
+
+  const handleAfterPrint = () => {
+    setDataBerkas(null);
+  };
+
+  const printing = useReactToPrint({
     contentRef: componentRef,
+    onAfterPrint: handleAfterPrint,
   });
+
+  const getDetailBerkas = useCallback(async (idBerkas: number): Promise<void> => {
+      try {
+          const response = await fetch(berkas.find(idBerkas).url);
+          const result: any = await response.json();
+          setDataBerkas(result);
+
+      } catch (error) {
+          throw error;
+      }
+  }, []);
+
+
+  useEffect(() => {
+    if (dataBerkas) {
+      printing();
+    }
+
+    return () => {
+        setDataBerkas(null);
+    }
+
+  }, [dataBerkas]);
 
   return (
     <>
-    <LembarVerifikasi ref={componentRef} data={dataValue} />
+      <LembarVerifikasi ref={componentRef} data={dataBerkas} />
       <div className="text-right">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -56,7 +79,7 @@ export default function DropDownPilihan({ user, openModalCrud, openDialogDestroy
               Detail
             </DropdownMenuItem>
 
-            <DropdownMenuItem onClick={handlePrint}>
+            <DropdownMenuItem onClick={() => handlePrint(dataValue)}>
               <Printer className="mr-2 h-4 w-4" />
               Print
             </DropdownMenuItem>

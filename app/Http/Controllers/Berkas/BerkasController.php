@@ -10,6 +10,7 @@ use App\Http\Resources\Berkas\BerkasResource;
 use App\Http\Resources\Berkas\CekVerifikatorKonfirmasiResource;
 use App\Http\Resources\Berkas\DetailBerkasResource;
 use App\Http\Resources\Berkas\FindBerkasResource;
+use App\Http\Resources\Berkas\PrintBerkasResource;
 use App\Http\Resources\Berkas\RiwayatBerkasResource;
 use App\Models\Berka;
 use App\Models\Instansi;
@@ -24,6 +25,7 @@ use Inertia\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class BerkasController extends Controller
 {
@@ -96,11 +98,14 @@ class BerkasController extends Controller
         $explodeJenisSpm = explode('-', $request->jenis_spm_text);
         $explodeSumberDana = explode('-', $request->sumber_dana_text);
 
+        // $timeStamp = now()->format('YmdHisu');
+        $uniqueKode = Str::random(5) . now()->format('YmdHisu');
+
         try {
             $berkas = Berka::create([
                 'user_id' => $request->user()->id,
                 'instansi_id' => $this->roleuser->instansi_id,
-                'kode' => now()->format('YmdHisu'),
+                'kode' => $uniqueKode,
                 'jenis_berka_id' => $request->jenis_berka_id,
                 'penerima_id' =>$request->penerima_id,
                 'sumber_dana_id' => $request->sumber_dana_id,
@@ -111,7 +116,7 @@ class BerkasController extends Controller
                 'status_berka_id' => 1,
             ]);
 
-            $riwayatBaru = $berkas->riwayatberkas()->create([
+            $riwayatBaru = $berkas->riwayats()->create([
                 'user_id' => $request->user()->id,
                 'status_berka_id' => 1,
             ]);
@@ -349,7 +354,7 @@ class BerkasController extends Controller
                             }
                         } else {
                             
-                            $addRiwayat = $berkas->riwayatberkas()->create([
+                            $addRiwayat = $berkas->riwayats()->create([
                                 'status_berka_id' => 2,
                                 'user_id' => $request->user()->id,
                             ]);
@@ -378,7 +383,7 @@ class BerkasController extends Controller
                         // update status berkas pada tabel berkas
                         $berkas->update(['status_berka_id' => 2]);
                         // tambahkan riwayat status baru pada tabel riwayat
-                        $addRiwayat = $berkas->riwayatberkas()->create([
+                        $addRiwayat = $berkas->riwayats()->create([
                             'status_berka_id' => 2,
                             'user_id' => $request->user()->id,
                         ]);
@@ -516,7 +521,7 @@ class BerkasController extends Controller
                         // update status berkas pada tabel berkas
                         $berkas->update(['status_berka_id' => 3]);
                         // tambahkan riwayat status baru pada tabel riwayat
-                        $addRiwayat = $berkas->riwayatberkas()->create([
+                        $addRiwayat = $berkas->riwayats()->create([
                             'status_berka_id' => 3,
                             'user_id' => $request->user()->id,
                         ]);
@@ -650,7 +655,7 @@ class BerkasController extends Controller
                         // update status berkas pada tabel berkas
                         $berkas->update(['status_berka_id' => 4]);
                         // tambahkan riwayat status baru pada tabel riwayat
-                        $addRiwayat = $berkas->riwayatberkas()->create([
+                        $addRiwayat = $berkas->riwayats()->create([
                             'status_berka_id' => 4,
                             'user_id' => $request->user()->id,
                         ]);
@@ -763,15 +768,15 @@ class BerkasController extends Controller
         return new DetailBerkasResource($findberkas);
     }
 
-    // public function findBerkas(int $id)
-    // {
-    //     $findberkas = Berka::select(['berkas.id', 'berkas.jenis_berka_id', 'berkas.kode', 'berkas.no_spm', 'berkas.nilai_spm', 'berkas.penerima_id', 'berkas.tgl_spm', 'berkas.kegiatan', 'berkas.created_at', 'berkas.status_berka_id', 'berkas.sumber_dana_id', 'instansis.nama_instansi', 'jenis_berkas.nama_jenis_berkas', 'penerimas.norek', 'penerimas.npwp', 'sumber_danas.nama_sumber_dana'])
-    //     ->leftJoin('instansis', 'berkas.instansi_id', '=', 'instansis.id')
-    //     ->leftJoin('jenis_berkas', 'berkas.jenis_berka_id', '=', 'jenis_berkas.id')
-    //     ->leftJoin('penerimas', 'berkas.penerima_id', '=', 'penerimas.id')
-    //     ->leftJoin('sumber_danas', 'berkas.sumber_dana_id', '=', 'sumber_danas.id')
-    //     ->find($id);
+    public function findBerkas(int $id)
+    {
+        $findberkas = Berka::select(['berkas.created_at', 'berkas.id', 'berkas.kode', 'berkas.no_spm', 'berkas.nilai_spm', 'berkas.tgl_spm', 'berkas.kegiatan', 'berkas.created_at', 'instansis.nama_instansi', 'jenis_berkas.nama_jenis_berkas', 'penerimas.nama_penerima', 'penerimas.norek', 'penerimas.npwp', 'sumber_danas.nama_sumber_dana'])
+        ->leftJoin('instansis', 'berkas.instansi_id', '=', 'instansis.id')
+        ->leftJoin('jenis_berkas', 'berkas.jenis_berka_id', '=', 'jenis_berkas.id')
+        ->leftJoin('penerimas', 'berkas.penerima_id', '=', 'penerimas.id')
+        ->leftJoin('sumber_danas', 'berkas.sumber_dana_id', '=', 'sumber_danas.id')
+        ->find($id);
 
-    //     return new FindBerkasResource($findberkas);
-    // }
+        return new PrintBerkasResource($findberkas);
+    }
 }

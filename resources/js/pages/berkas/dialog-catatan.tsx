@@ -430,7 +430,7 @@ export default function DialogCatatan({
         <div>No. Spm</div>
         <div className="col-span-7">: {dataValue.no_spm}</div>
       </div>
-          <div ref={scrollRef} className="xl:max-h-120 max-h-80 overflow-y-auto mx-4 border rounded-md">
+          <div ref={scrollRef} className="sm:max-h-80 2xl:max-h-120 overflow-y-auto mx-4 border rounded-md">
             <Table>
               <TableHeader>
                 <TableRow>
@@ -464,7 +464,7 @@ export default function DialogCatatan({
                           <div key={index} className="flex items-center space-x-3">
                             <Avatar className="h-9 w-9 overflow-hidden rounded-full">
                               {item.foto ?
-                              <AvatarImage src={`/storage/${item.foto}`} alt={item.name} />
+                              <AvatarImage src={`/storage/foto/small/${item.foto}`} alt={item.name} />
                               :
                               <AvatarFallback className="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
                                   {getInitials(item.name)}
@@ -509,13 +509,13 @@ export default function DialogCatatan({
                 id="catatan"
                 name="catatan"
                 className="bg-background"
-                tabIndex={1}
                 value={data.catatan || ''}
                 onChange={(e) => setData('catatan', e.target.value)}
-                required
-                autoFocus
                 placeholder="Tulis catatan."
                 disabled={selectedItems.length > 0}
+                required
+                tabIndex={1}
+                autoFocus
               />
               <div className="flex flex-col-reverse gap-2 sm:flex-row">
                   <Button 
@@ -533,11 +533,11 @@ export default function DialogCatatan({
             </div> 
           </div>
         </form>
-      ): (
+      ):(
         <div className="flex border-t bg-muted dark:bg-background rounded-b-md px-4 py-4">
           <div className="ml-auto">
             <DialogClose asChild>
-              <Button variant="outline" tabIndex={3} disabled={processing}>Tutup</Button>
+              <Button variant="outline" tabIndex={1} disabled={processing}>Tutup</Button>
             </DialogClose>
           </div>
         </div>

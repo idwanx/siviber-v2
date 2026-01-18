@@ -10,6 +10,7 @@ export default function ErrorPage({ status }: ErrorProps) {
         500: '500: Server error',
         404: '404: Halaman tidak ditemukan',
         403: '403: Tidak bisa di akses',
+        413: '413: File terlalu besar',
     }[status] || 'Terjadi kesalahan';
 
     const description = {
@@ -17,6 +18,7 @@ export default function ErrorPage({ status }: ErrorProps) {
         500: 'Ups, terjadi kesalahan pada server kami..',
         404: 'Maaf, halaman yang Anda cari tidak dapat ditemukan.',
         403: 'Maaf, Halaman tidak bisa diakses.',
+        413: 'Maaf, File yang anda upload melebihi batas kapasitas upload.',
     }[status] || 'Kami mengalami kesalahan';
     
     return (

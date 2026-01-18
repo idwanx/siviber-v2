@@ -2,7 +2,7 @@ import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileCo
 import { send } from '@/routes/verification';
 import { type BreadcrumbItem, type SharedData } from '@/types';
 import { Transition } from '@headlessui/react';
-import { Form, Link, usePage } from '@inertiajs/react';
+import { Form, Link, useForm, usePage } from '@inertiajs/react';
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -12,6 +12,7 @@ import LayoutSettings from './layout-settings';
 import Heading from '@/components/heading';
 import { Separator } from '@/components/ui/separator';
 import { AppSidebarHeader } from '@/components/app-sidebar-header';
+import profile from '@/routes/profile';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {title: 'Pengaturan', href: "#"},
@@ -27,6 +28,33 @@ export default function Profile({
 }) {
     const { auth } = usePage<SharedData>().props;
 
+    const { data, setData, patch, recentlySuccessful, processing, errors } = useForm({
+        name: auth.user.name || '',
+        nip: auth.user.nip || '',
+        no_hp: auth.user.no_hp || '',
+        email: auth.user.email || '',
+        foto: null as File | null
+    });
+
+    const submitForm = (e: React.FormEvent) => {
+        e.preventDefault();
+    
+        patch(profile.update().url, {
+            preserveScroll: true,
+            onSuccess: () => {},
+        });
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setData({ ...data, [e.target.name]: e.target.value });
+    };
+
+    const handleFileFoto = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files.length > 0) {
+            setData('foto', e.target.files[0]);
+        }
+    };
+
     return (
         <>
         <AppSidebarHeader breadcrumbs={breadcrumbs} trigger={true} />
@@ -38,143 +66,154 @@ export default function Profile({
                             />
                         </div>
                         <Separator className="mb-6" />
-
-                        <Form
-                            {...ProfileController.update.form()}
-                            options={{
-                                preserveScroll: true,
-                            }}
-                            className="space-y-6"
+                        <form onSubmit={submitForm} className="space-y-6"
                         >
-                            {({ processing, recentlySuccessful, errors }) => (
-                                <>
-                                    <div className="grid gap-2">
-                                        <Label htmlFor="name">Nama</Label>
+                            <div className="grid gap-2">
+                                <Label htmlFor="name">Nama</Label>
 
-                                        <Input
-                                            id="name"
-                                            className="mt-1 block w-full"
-                                            defaultValue={auth.user.name}
-                                            name="name"
-                                            required
-                                            autoComplete="name"
-                                            placeholder="Nama"
-                                        />
+                                <Input
+                                    id="name"
+                                    className="mt-1 block w-full"
+                                    defaultValue={data.name}
+                                    name="name"
+                                    onChange={handleChange}
+                                    required
+                                    autoComplete="name"
+                                    placeholder="Nama"
+                                />
 
-                                        <InputError
-                                            className="mt-2"
-                                            message={errors.name}
-                                        />
-                                    </div>
+                                <InputError
+                                    className="mt-2"
+                                    message={errors.name}
+                                />
+                            </div>
 
-                                    <div className="grid gap-2">
-                                        <Label htmlFor="nip">Nip</Label>
+                            <div className="grid gap-2">
+                                <Label htmlFor="nip">Nip</Label>
 
-                                        <Input
-                                            id="nip"
-                                            className="mt-1 block w-full"
-                                            defaultValue={auth.user.nip}
-                                            name="nip"
-                                            required
-                                            autoComplete="nip"
-                                            placeholder="Nip"
-                                        />
+                                <Input
+                                    id="nip"
+                                    className="mt-1 block w-full"
+                                    defaultValue={data.nip}
+                                    name="nip"
+                                    onChange={handleChange}
+                                    required
+                                    autoComplete="nip"
+                                    placeholder="Nip"
+                                />
 
-                                        <InputError
-                                            className="mt-2"
-                                            message={errors.nip}
-                                        />
-                                    </div>
+                                <InputError
+                                    className="mt-2"
+                                    message={errors.nip}
+                                />
+                            </div>
 
-                                    <div className="grid gap-2">
-                                        <Label htmlFor="no_hp">No. Hp</Label>
+                            <div className="grid gap-2">
+                                <Label htmlFor="no_hp">No. Hp</Label>
 
-                                        <Input
-                                            id="no_hp"
-                                            className="mt-1 block w-full"
-                                            defaultValue={auth.user.no_hp}
-                                            name="no_hp"
-                                            required
-                                            autoComplete="no_hp"
-                                            placeholder="No. Hp"
-                                        />
+                                <Input
+                                    id="no_hp"
+                                    className="mt-1 block w-full"
+                                    defaultValue={data.no_hp}
+                                    name="no_hp"
+                                    onChange={handleChange}
+                                    required
+                                    autoComplete="no_hp"
+                                    placeholder="No. Hp"
+                                />
 
-                                        <InputError
-                                            className="mt-2"
-                                            message={errors.no_hp}
-                                        />
-                                    </div>
+                                <InputError
+                                    className="mt-2"
+                                    message={errors.no_hp}
+                                />
+                            </div>
 
-                                    <div className="grid gap-2">
-                                        <Label htmlFor="email">Email</Label>
+                            <div className="grid gap-2">
+                                <Label htmlFor="email">Email</Label>
 
-                                        <Input
-                                            id="email"
-                                            type="email"
-                                            className="mt-1 block w-full"
-                                            defaultValue={auth.user.email}
-                                            name="email"
-                                            required
-                                            autoComplete="username"
-                                            placeholder="Email"
-                                        />
+                                <Input
+                                    id="email"
+                                    type="email"
+                                    className="mt-1 block w-full"
+                                    defaultValue={data.email}
+                                    name="email"
+                                    onChange={handleChange}
+                                    required
+                                    autoComplete="username"
+                                    placeholder="Email"
+                                />
 
-                                        <InputError
-                                            className="mt-2"
-                                            message={errors.email}
-                                        />
-                                    </div>
+                                <InputError
+                                    className="mt-2"
+                                    message={errors.email}
+                                />
+                            </div>
 
-                                    {mustVerifyEmail &&
-                                        auth.user.email_verified_at === null && (
-                                            <div>
-                                                <p className="-mt-4 text-sm text-muted-foreground">
-                                                    Your email address is
-                                                    unverified.{' '}
-                                                    <Link
-                                                        href={send()}
-                                                        as="button"
-                                                        className="text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
-                                                    >
-                                                        Click here to resend the
-                                                        verification email.
-                                                    </Link>
-                                                </p>
+                            <div className="grid gap-2">
+                                <Label htmlFor="foto">Foto</Label>
 
-                                                {status ===
-                                                    'verification-link-sent' && (
-                                                    <div className="mt-2 text-sm font-medium text-green-600">
-                                                        A new verification link has
-                                                        been sent to your email
-                                                        address.
-                                                    </div>
-                                                )}
-                                            </div>
-                                        )}
+                                <Input
+                                    id="foto"
+                                    type="file"
+                                    className="mt-1 block w-full"
+                                    accept=".jpg,.jpeg,.png,.bmp,.gif,.avif,.heif"
+                                    // defaultValue={data.foto}
+                                    name="foto"
+                                    onChange={handleFileFoto}
+                                />
 
-                                    <div className="flex items-center gap-4">
-                                        <Button
-                                            disabled={processing}
-                                            data-test="update-profile-button"
+                                <InputError
+                                    className="mt-2"
+                                    message={errors.foto}
+                                />
+                            </div>
+
+                            {mustVerifyEmail &&
+                                auth.user.email_verified_at === null && (
+                                <div>
+                                    <p className="-mt-4 text-sm text-muted-foreground">
+                                        Email anda belum diverifikasi.{' '}
+                                        <Link
+                                            href={send()}
+                                            as="button"
+                                            className="text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
                                         >
-                                            Save
-                                        </Button>
+                                            Klik di sini untuk mengirim ulang email verifikasi.
+                                        </Link>
+                                    </p>
 
-                                        <Transition
-                                            show={recentlySuccessful}
-                                            enter="transition ease-in-out"
-                                            enterFrom="opacity-0"
-                                            leave="transition ease-in-out"
-                                            leaveTo="opacity-0"
-                                        >
-                                            <p className="text-sm text-neutral-600">
-                                                Tersimpan
-                                            </p>
-                                        </Transition>
-                                    </div>
-                                </>
+                                    {status ===
+                                        'verification-link-sent' && (
+                                        <div className="mt-2 text-sm font-medium text-green-600">
+                                            Tautan verifikasi baru telah
+                                            dikirim ke alamat email Anda.
+                                        </div>
+                                    )}
+                                </div>
                             )}
-                        </Form>
+
+                            <div className="flex items-center gap-4">
+                                <Button
+                                    type="submit"
+                                    disabled={processing}
+                                    data-test="update-profile-button"
+                                >
+                                    Simpan
+                                </Button>
+
+                                <Transition
+                                    show={recentlySuccessful}
+                                    enter="transition ease-in-out"
+                                    enterFrom="opacity-0"
+                                    leave="transition ease-in-out"
+                                    leaveTo="opacity-0"
+                                >
+                                    <p className="text-sm text-foreground">
+                                        Tersimpan
+                                    </p>
+                                </Transition>
+                            </div>
+                        </form>
                     {/* <DeleteUser /> */}
                 </div>
             </div>
