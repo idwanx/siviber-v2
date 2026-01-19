@@ -13,6 +13,7 @@ import Heading from '@/components/heading';
 import { Separator } from '@/components/ui/separator';
 import { AppSidebarHeader } from '@/components/app-sidebar-header';
 import profile from '@/routes/profile';
+import { useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {title: 'Pengaturan', href: "#"},
@@ -28,13 +29,15 @@ export default function Profile({
 }) {
     const { auth } = usePage<SharedData>().props;
 
-    const { data, setData, patch, recentlySuccessful, processing, errors } = useForm({
+    const { data, setData, patch, recentlySuccessful, processing, progress, errors } = useForm({
         name: auth.user.name || '',
         nip: auth.user.nip || '',
         no_hp: auth.user.no_hp || '',
         email: auth.user.email || '',
         foto: null as File | null
     });
+
+    const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
 
     const submitForm = (e: React.FormEvent) => {
         e.preventDefault();
@@ -50,8 +53,17 @@ export default function Profile({
     };
 
     const handleFileFoto = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files.length > 0) {
-            setData('foto', e.target.files[0]);
+        // if (e.target.files && e.target.files.length > 0) {
+        //     setData('foto', e.target.files[0]);
+        // }
+        const file = e.target.files?.[0] || null;
+        if (file) {
+            setData('foto', file);
+            // Create a URL for the image preview
+            setImagePreviewUrl(URL.createObjectURL(file));
+        } else {
+            setData('foto', null);
+            setImagePreviewUrl(null);
         }
     };
 
@@ -156,17 +168,31 @@ export default function Profile({
                                     id="foto"
                                     type="file"
                                     className="mt-1 block w-full"
-                                    accept=".jpg,.jpeg,.png,.bmp,.gif,.avif,.heif"
+                                    accept="image/*"
                                     // defaultValue={data.foto}
                                     name="foto"
                                     onChange={handleFileFoto}
                                 />
+                                <span className='text-xs text-muted-foreground'>Maksimal ukuran foto 5 mb</span>
 
                                 <InputError
                                     className="mt-2"
                                     message={errors.foto}
                                 />
                             </div>
+
+                            {imagePreviewUrl && (
+                                <div className="grid gap-2">
+                                    <Label htmlFor="foto">Preview Foto</Label>
+                                    <img src={imagePreviewUrl} alt="Preview" style={{ maxWidth: '200px', maxHeight: '300px' }} />
+                                </div>
+                            )}
+
+                            {progress && (
+                                <progress value={progress.percentage} max="100">
+                                    {progress.percentage}%
+                                </progress>
+                            )}
 
                             {mustVerifyEmail &&
                                 auth.user.email_verified_at === null && (
@@ -185,8 +211,8 @@ export default function Profile({
                                     {status ===
                                         'verification-link-sent' && (
                                         <div className="mt-2 text-sm font-medium text-green-600">
-                                            Tautan verifikasi baru telah
-                                            dikirim ke alamat email Anda.
+                                            Tautan verifikasi yang baru telah
+                                            dikirim ke email Anda.
                                         </div>
                                     )}
                                 </div>
