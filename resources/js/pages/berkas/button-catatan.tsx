@@ -32,7 +32,7 @@ export default function ButtonCatatan({ user, updateJumlahCatatan, dataValue, st
   
   return (
       <>
-        <Dialog open={dialogOpen}  onOpenChange={handleDialogToggle}>
+        <Dialog open={dialogOpen}  onOpenChange={handleDialogToggle} modal>
           <TooltipProvider>
             <Tooltip>
                 <TooltipTrigger asChild>

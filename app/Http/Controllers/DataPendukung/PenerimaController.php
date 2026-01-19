@@ -9,10 +9,10 @@ use App\Models\Penerima;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class PenerimaController extends Controller
 {
@@ -39,7 +39,6 @@ class PenerimaController extends Controller
         if ($this->roleuser->slug === "pengguna-anggaran" || $this->roleuser->slug === "ppkeu" || $this->roleuser->slug === "bendahara") {
             $penerimas->where('penerimas.instansi_id', $this->roleuser->instansi_id);
         }
-
         $penerimas->orderBy('penerimas.created_at', 'desc');
 
         return Inertia::render('data-pendukung/penerima/main-penerima', [
@@ -105,6 +104,10 @@ class PenerimaController extends Controller
      */
     public function update(PenerimaRequest $request, Penerima $penerima): RedirectResponse
     {
+        if(Gate::denies('isCurrentUser', $penerima)) {
+            abort(404);
+        }
+
         try {
             $penerima->update([
                 'nama_penerima' => $request->nama_penerima,
@@ -131,6 +134,10 @@ class PenerimaController extends Controller
      */
     public function destroy(Penerima $penerima): RedirectResponse
     {
+        if(Gate::denies('isCurrentUser', $penerima)) {
+            abort(404);
+        }
+        
         try {
             $penerima->delete();
 

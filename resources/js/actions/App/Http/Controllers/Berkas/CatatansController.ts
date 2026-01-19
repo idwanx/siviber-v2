@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Berkas\CatatansController::index
-* @see app/Http/Controllers/Berkas/CatatansController.php:17
+* @see app/Http/Controllers/Berkas/CatatansController.php:18
 * @route '/catatan/{berka}'
 */
 export const index = (args: { berka: number | { id: number } } | [berka: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\Berkas\CatatansController::index
-* @see app/Http/Controllers/Berkas/CatatansController.php:17
+* @see app/Http/Controllers/Berkas/CatatansController.php:18
 * @route '/catatan/{berka}'
 */
 index.url = (args: { berka: number | { id: number } } | [berka: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -49,7 +49,7 @@ index.url = (args: { berka: number | { id: number } } | [berka: number | { id: n
 
 /**
 * @see \App\Http\Controllers\Berkas\CatatansController::index
-* @see app/Http/Controllers/Berkas/CatatansController.php:17
+* @see app/Http/Controllers/Berkas/CatatansController.php:18
 * @route '/catatan/{berka}'
 */
 index.get = (args: { berka: number | { id: number } } | [berka: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -59,7 +59,7 @@ index.get = (args: { berka: number | { id: number } } | [berka: number | { id: n
 
 /**
 * @see \App\Http\Controllers\Berkas\CatatansController::index
-* @see app/Http/Controllers/Berkas/CatatansController.php:17
+* @see app/Http/Controllers/Berkas/CatatansController.php:18
 * @route '/catatan/{berka}'
 */
 index.head = (args: { berka: number | { id: number } } | [berka: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -69,7 +69,7 @@ index.head = (args: { berka: number | { id: number } } | [berka: number | { id: 
 
 /**
 * @see \App\Http\Controllers\Berkas\CatatansController::index
-* @see app/Http/Controllers/Berkas/CatatansController.php:17
+* @see app/Http/Controllers/Berkas/CatatansController.php:18
 * @route '/catatan/{berka}'
 */
 const indexForm = (args: { berka: number | { id: number } } | [berka: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -79,7 +79,7 @@ const indexForm = (args: { berka: number | { id: number } } | [berka: number | {
 
 /**
 * @see \App\Http\Controllers\Berkas\CatatansController::index
-* @see app/Http/Controllers/Berkas/CatatansController.php:17
+* @see app/Http/Controllers/Berkas/CatatansController.php:18
 * @route '/catatan/{berka}'
 */
 indexForm.get = (args: { berka: number | { id: number } } | [berka: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -89,7 +89,7 @@ indexForm.get = (args: { berka: number | { id: number } } | [berka: number | { i
 
 /**
 * @see \App\Http\Controllers\Berkas\CatatansController::index
-* @see app/Http/Controllers/Berkas/CatatansController.php:17
+* @see app/Http/Controllers/Berkas/CatatansController.php:18
 * @route '/catatan/{berka}'
 */
 indexForm.head = (args: { berka: number | { id: number } } | [berka: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -106,7 +106,7 @@ index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\Berkas\CatatansController::store
-* @see app/Http/Controllers/Berkas/CatatansController.php:32
+* @see app/Http/Controllers/Berkas/CatatansController.php:28
 * @route '/catatan/store'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -121,7 +121,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\Berkas\CatatansController::store
-* @see app/Http/Controllers/Berkas/CatatansController.php:32
+* @see app/Http/Controllers/Berkas/CatatansController.php:28
 * @route '/catatan/store'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -130,7 +130,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Berkas\CatatansController::store
-* @see app/Http/Controllers/Berkas/CatatansController.php:32
+* @see app/Http/Controllers/Berkas/CatatansController.php:28
 * @route '/catatan/store'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -140,7 +140,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Berkas\CatatansController::store
-* @see app/Http/Controllers/Berkas/CatatansController.php:32
+* @see app/Http/Controllers/Berkas/CatatansController.php:28
 * @route '/catatan/store'
 */
 const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -150,7 +150,7 @@ const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => 
 
 /**
 * @see \App\Http\Controllers\Berkas\CatatansController::store
-* @see app/Http/Controllers/Berkas/CatatansController.php:32
+* @see app/Http/Controllers/Berkas/CatatansController.php:28
 * @route '/catatan/store'
 */
 storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -246,7 +246,7 @@ update.form = updateForm
 
 /**
 * @see \App\Http\Controllers\Berkas\CatatansController::updateChecked
-* @see app/Http/Controllers/Berkas/CatatansController.php:113
+* @see app/Http/Controllers/Berkas/CatatansController.php:117
 * @route '/catatan/update-checked'
 */
 export const updateChecked = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -261,7 +261,7 @@ updateChecked.definition = {
 
 /**
 * @see \App\Http\Controllers\Berkas\CatatansController::updateChecked
-* @see app/Http/Controllers/Berkas/CatatansController.php:113
+* @see app/Http/Controllers/Berkas/CatatansController.php:117
 * @route '/catatan/update-checked'
 */
 updateChecked.url = (options?: RouteQueryOptions) => {
@@ -270,7 +270,7 @@ updateChecked.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Berkas\CatatansController::updateChecked
-* @see app/Http/Controllers/Berkas/CatatansController.php:113
+* @see app/Http/Controllers/Berkas/CatatansController.php:117
 * @route '/catatan/update-checked'
 */
 updateChecked.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -280,7 +280,7 @@ updateChecked.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => (
 
 /**
 * @see \App\Http\Controllers\Berkas\CatatansController::updateChecked
-* @see app/Http/Controllers/Berkas/CatatansController.php:113
+* @see app/Http/Controllers/Berkas/CatatansController.php:117
 * @route '/catatan/update-checked'
 */
 const updateCheckedForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -290,7 +290,7 @@ const updateCheckedForm = (options?: RouteQueryOptions): RouteFormDefinition<'po
 
 /**
 * @see \App\Http\Controllers\Berkas\CatatansController::updateChecked
-* @see app/Http/Controllers/Berkas/CatatansController.php:113
+* @see app/Http/Controllers/Berkas/CatatansController.php:117
 * @route '/catatan/update-checked'
 */
 updateCheckedForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -302,7 +302,7 @@ updateChecked.form = updateCheckedForm
 
 /**
 * @see \App\Http\Controllers\Berkas\CatatansController::destroy
-* @see app/Http/Controllers/Berkas/CatatansController.php:145
+* @see app/Http/Controllers/Berkas/CatatansController.php:153
 * @route '/catatan/destroy/{catatan_berka}'
 */
 export const destroy = (args: { catatan_berka: string | number } | [catatan_berka: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -317,7 +317,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Berkas\CatatansController::destroy
-* @see app/Http/Controllers/Berkas/CatatansController.php:145
+* @see app/Http/Controllers/Berkas/CatatansController.php:153
 * @route '/catatan/destroy/{catatan_berka}'
 */
 destroy.url = (args: { catatan_berka: string | number } | [catatan_berka: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -344,7 +344,7 @@ destroy.url = (args: { catatan_berka: string | number } | [catatan_berka: string
 
 /**
 * @see \App\Http\Controllers\Berkas\CatatansController::destroy
-* @see app/Http/Controllers/Berkas/CatatansController.php:145
+* @see app/Http/Controllers/Berkas/CatatansController.php:153
 * @route '/catatan/destroy/{catatan_berka}'
 */
 destroy.delete = (args: { catatan_berka: string | number } | [catatan_berka: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -354,7 +354,7 @@ destroy.delete = (args: { catatan_berka: string | number } | [catatan_berka: str
 
 /**
 * @see \App\Http\Controllers\Berkas\CatatansController::destroy
-* @see app/Http/Controllers/Berkas/CatatansController.php:145
+* @see app/Http/Controllers/Berkas/CatatansController.php:153
 * @route '/catatan/destroy/{catatan_berka}'
 */
 const destroyForm = (args: { catatan_berka: string | number } | [catatan_berka: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -369,7 +369,7 @@ const destroyForm = (args: { catatan_berka: string | number } | [catatan_berka: 
 
 /**
 * @see \App\Http\Controllers\Berkas\CatatansController::destroy
-* @see app/Http/Controllers/Berkas/CatatansController.php:145
+* @see app/Http/Controllers/Berkas/CatatansController.php:153
 * @route '/catatan/destroy/{catatan_berka}'
 */
 destroyForm.delete = (args: { catatan_berka: string | number } | [catatan_berka: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

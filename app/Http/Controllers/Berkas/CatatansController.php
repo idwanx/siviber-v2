@@ -11,16 +11,12 @@ use App\Models\Berka;
 use App\Models\CatatanBerka;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Support\Facades\Gate;
 
 class CatatansController extends Controller
 {
     public function index(Berka $berka)
     {
-        // $catatans = Berka::with(['catatans' => function ($query) {
-        //     $query->select(['catatan_berkas.id', 'catatan_berkas.berka_id', 'catatan_berkas.berka_id', 'catatan_berkas.created_at', 'catatan_berkas.is_okey', 'catatan_berkas.user_id', 'users.foto', 'users.name'])
-        //     ->leftJoin('users', 'catatan_berkas.user_id', '=', 'users.id'); 
-        // }])->where('id', 116)->get();
-
         $catatans = CatatanBerka::select(['catatan_berkas.id', 'catatan_berkas.berka_id', 'catatan_berkas.catatan', 'catatan_berkas.created_at', 'catatan_berkas.is_okey', 'catatan_berkas.user_id', 'users.foto', 'users.name'])
         ->leftJoin('users', 'catatan_berkas.user_id', '=', 'users.id')
         ->where('berka_id', $berka->id)
@@ -31,6 +27,10 @@ class CatatansController extends Controller
 
     public function store(CatatansStoreUpdateRequest $request)
     {
+        if(Gate::denies('isAdminVerifikator')) {
+            abort(404);
+        }
+
         try {
             $createcatatan = CatatanBerka::create([
                 'berka_id' => $request->berka_id,
@@ -77,6 +77,10 @@ class CatatansController extends Controller
 
     public function update(CatatanBerka $catatanBerka, CatatansStoreUpdateRequest $request)
     {
+        if(Gate::denies('isCurrentUser', $catatanBerka)) {
+            abort(404);
+        }
+
         try {
             $berkas = Berka::find($catatanBerka->berka_id);
 
@@ -112,6 +116,10 @@ class CatatansController extends Controller
 
     public function updateChecked(CatatansUpdateCheckRequest $request)
     {
+        if(Gate::denies('isAdminVerifikator')) {
+            abort(404);
+        }
+
         $itemsArray = $request->input('items_data');
 
         try {
@@ -144,6 +152,10 @@ class CatatansController extends Controller
 
     public function destroy(CatatanBerka $catatanBerka)
     {
+        if(Gate::denies('isCurrentUser', $catatanBerka)) {
+            abort(404);
+        }
+
         try {
             $catatanBerka->delete();
 

@@ -19,6 +19,8 @@ import {
 import { Spinner } from "@/components/ui/spinner";
 import berkas from "@/routes/berkas";
 import { FieldDataBerkas, StatusType } from "@/types/berkas";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useInitials } from "@/hooks/use-initials";
 
 interface DialogProps {
     dialogOpen: boolean;
@@ -28,9 +30,10 @@ interface DialogProps {
 }
 
 interface CekVerifikatorKonfirmasi {
+    foto: string;
     id: number;
-    name: string
-    jumlah_riwayat: number
+    name: string;
+    jumlah_riwayat: number;
 }
 
 export default function DialogKonfirmasiSp2d({ 
@@ -42,6 +45,7 @@ export default function DialogKonfirmasiSp2d({
 
   const [daftarVerifikator, setDaftarVerifikator] = useState<CekVerifikatorKonfirmasi[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const getInitials = useInitials();
 
   const getVerifikator = useCallback(async (): Promise<void> => {
     setIsLoading(true);
@@ -60,10 +64,11 @@ export default function DialogKonfirmasiSp2d({
     if (dialogOpen) {
         getVerifikator();
     } else {
-      setDaftarVerifikator(daftarVerifikator);
+      return () => setDaftarVerifikator([]);
     }
+    
   }, [dialogOpen]);
-  
+
   return (
       <>
         <DialogContent 
@@ -74,18 +79,19 @@ export default function DialogKonfirmasiSp2d({
         >
           <DialogHeader className="px-6 pt-4">
             <DialogTitle className="text-lg font-semibold text-foreground">
-              Konfirmasi
+              Konfirmasi SP2D
             </DialogTitle>
             <DialogDescription>
-              Tabel dibawah ini adalah daftar verifikator yang sudah/belum melakukan verifikasi berkas.
+              Kegiatan:{' '}{dataValue.kegiatan}<br />
+              No. SPM:{' '}{dataValue.no_spm}
             </DialogDescription>
           </DialogHeader>
           <div className="2xl:max-h-100 max-h-80 overflow-y-auto mx-4 border rounded-md">
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Nama</TableHead>
-                    <TableHead className="w-28 text-center">Verifikasi</TableHead>
+                    <TableHead>Verifikator</TableHead>
+                    <TableHead className="w-40 text-center">Cek</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -97,13 +103,28 @@ export default function DialogKonfirmasiSp2d({
                     daftarVerifikator.length > 0 ? (
                       daftarVerifikator.map((item, index) => (
                         <TableRow key={index}>
-                          <TableCell className={`whitespace-normal font-medium'}`}>{item.name}</TableCell>
+                          <TableCell className={`whitespace-normal font-medium'}`}>
+                            <div key={index} className="flex items-center space-x-3">
+                              <Avatar className="h-9 w-9 overflow-hidden rounded-full">
+                                {item.foto ?
+                                <AvatarImage src={`/storage/foto/small/${item.foto}`} alt={item.name} />
+                                :
+                                <AvatarFallback className="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
+                                    {getInitials(item.name)}
+                                </AvatarFallback>
+                                }
+                              </Avatar>
+                              <div className="text-sm font-medium text-foreground">
+                                {item.name}
+                              </div>
+                            </div>
+                          </TableCell>
                           <TableCell className="text-center">
                             {item.jumlah_riwayat > 0 ? (
                               <div  className="flex justify-center">
                                 <Check size={23} className="text-foreground" />
                               </div>
-                            ):('-')}
+                            ):(<span className="text-muted-foreground">Belum verifikasi</span>)}
                           </TableCell>
                         </TableRow>
                       ))

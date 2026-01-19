@@ -66,7 +66,7 @@ class User extends Authenticatable implements MustVerifyEmail
             ->withTimestamps();
     }
 
-    public function riwayatberkas(): HasMany
+    public function riwayats(): HasMany
     {
         return $this->hasMany(RiwayatBerka::class);
     }

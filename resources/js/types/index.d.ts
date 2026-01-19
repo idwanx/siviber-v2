@@ -27,7 +27,7 @@ export interface NavItem {
     href: NonNullable<InertiaLinkProps['href']>;
     icon?: LucideIcon | null;
     isActive?: boolean;
-    role?: string;
+    role?: string | null;
 }
 
 export interface SharedData {

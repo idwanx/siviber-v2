@@ -15,9 +15,10 @@ class CekVerifikatorKonfirmasiResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'foto' => $this->foto,
             'id' => $this->id,
             'name' => $this->name,
-            'jumlah_riwayat' => $this->riwayatberkas_count,
+            'jumlah_riwayat' => $this->riwayats_count,
         ];
     }
 }

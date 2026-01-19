@@ -65,12 +65,14 @@ export function AppHeader({
             href: dashboard({ tahun: tahun ? tahun : '' }),
             isActive: page.url.startsWith('/dashboard'),
             icon: null,
+            role: null
         },
         {
             title: 'Berkas',
             href: berkas.main({ tahun: !tahun ? currentYear : tahun, statusberkas: "registrasi" }),
             isActive: page.url.startsWith('/berkas'),
             icon: null,
+            role: null
         },
         {
             
@@ -78,6 +80,7 @@ export function AppHeader({
             href: datapendukung(),
             isActive: page.url.startsWith('/data-pendukung'),
             icon: null,
+            role: 'AdminBendahara'
         }, 
 
     ];
@@ -94,6 +97,14 @@ export function AppHeader({
             icon: BookOpen,
         },
     ];
+
+    const menuHeader = mainNavItems.filter((item) => {
+        if (auth.user.roleuser.slug === "admin" || auth.user.roleuser.slug === "bendahara") {
+            return item
+        } else {
+            return item.role === null
+        }
+    });
 
     return (
         <>
@@ -126,7 +137,7 @@ export function AppHeader({
                                 <div className="flex h-full flex-1 flex-col space-y-4 p-4">
                                     <div className="flex h-full flex-col justify-between text-sm">
                                         <div className="flex flex-col space-y-4">
-                                            {mainNavItems.map((item) => (
+                                            {menuHeader.map((item) => (
                                                 <Link
                                                     key={item.title}
                                                     href={item.href}
@@ -180,7 +191,7 @@ export function AppHeader({
                     <div className="ml-6 hidden h-full items-center space-x-6 lg:flex">
                         <NavigationMenu className="flex h-full items-stretch">
                             <NavigationMenuList className="flex h-full items-stretch space-x-2">
-                                {mainNavItems.map((item, index) => (
+                                {menuHeader.map((item, index) => (
                                     <NavigationMenuItem
                                         key={index}
                                         className="relative flex h-full items-center"

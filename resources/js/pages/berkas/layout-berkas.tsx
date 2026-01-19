@@ -145,40 +145,47 @@ export default function LayoutBerkas({ daftarberkas, tahun, menuOption, filtered
         const checkStatus: boolean = statusBerkas() === menuOption;
 
         if (checkStatus) {
+            
             setStateBerkas((prevState) => {
                 const cekBerkas: boolean = prevState.some((item) => item.id === newData.berka_id);
+
                 if (cekBerkas) {
+                    
                     return prevState.map(itemBerkas => {
-                        const existingItemIndex = itemBerkas.riwayats.find(item => 
-                            item.id === newData.data.id
-                        );
 
-                        let updatedItems: Riwayats[];
-
-                        if (!existingItemIndex) {
-                            const newItem: Riwayats = { 
-                                berka_id: newData.data.berka_id, 
-                                id: newData.data.id, 
-                                status_berka_id: newData.data.status_berka_id, 
-                                user_id: newData.data.user_id
-                            };
-
-                            updatedItems = [...itemBerkas.riwayats, newItem];
-
-                        } else {
-
-                            updatedItems = itemBerkas.riwayats.filter(item => 
-                                item.id !== existingItemIndex.id
+                        if (itemBerkas.id === newData.berka_id) {
+                            const existingItemIndex = itemBerkas.riwayats.find(item => 
+                                item.id === newData.data.id
                             );
+
+                            if (!existingItemIndex) {
+
+                                const newItem: Riwayats = { 
+                                    berka_id: newData.data.berka_id, 
+                                    id: newData.data.id, 
+                                    status_berka_id: newData.data.status_berka_id, 
+                                    user_id: newData.data.user_id
+                                };
+
+                                return {
+                                    ...itemBerkas,
+                                    riwayats: [...itemBerkas.riwayats, newItem],
+                                };
+
+                            } else {
+
+                                return {
+                                    ...itemBerkas,
+                                    riwayats: itemBerkas.riwayats.filter(item => 
+                                        item.id !== existingItemIndex.id
+                                    ),
+                                };
+                            }
                         }
 
-                        return {
-                            ...itemBerkas,
-                            riwayats: updatedItems
-                        };
+                        return itemBerkas;
                     });
-                    
-                    
+
                 } else {
                     return [newData.data,...prevState];
                 }
@@ -325,42 +332,47 @@ export default function LayoutBerkas({ daftarberkas, tahun, menuOption, filtered
     }
 
     useEcho<{newData:any}>(`${userChannel()}`, 'StatusBerkasEvent', (e: {newData:any}) => {
+
         const checkAuth: boolean = e.newData.user_id === auth.user.id;
-        switch (e.newData.info) {
-            case 'berkas':
-                if (e.newData.action === "newBerkas") {
-                    if (menuOption === "registrasi" && auth.user.roleuser.slug === "admin" || auth.user.roleuser.slug === "verifikator") {
-                        addNew(e.newData.data);
-                    } else {
-                        return () => e.newData.info;
-                    }
-                } else if (e.newData.action === "updateBerkas") {
-                    if (auth.user.roleuser.slug !== "bendahara") {
+
+        if (!checkAuth) {
+            if (e.newData.info === "berkas") {
+                switch (e.newData.action) {
+                    case 'newBerkas':
+                        if (menuOption === "registrasi" && auth.user.roleuser.slug === "admin" || auth.user.roleuser.slug === "verifikator") {
+                            addNew(e.newData.data);
+                        } else {
+                            return () => e.newData.action;
+                        }
+
+                        break;
+                    
+                    case 'updateBerkas':
                         updateBerkas(e.newData);
-                    } else {
-                        return () => e.newData.info;
-                    }
-                } else if (e.newData.action === "destroyBerkas") {
-                    if (auth.user.roleuser.slug !== "bendahara") {
+                        
+                        break;
+
+                    case 'destroyBerkas':
                         destroyBerkas(e.newData.id);
-                    } else {
-                        return () => e.newData.info;
-                    }
-                } else if (e.newData.action === "updateStatus") {
-                    updateStatusBerkas(e.newData);
+                        
+                        break;
+
+                    case 'updateStatus':
+                        updateStatusBerkas(e.newData);
+                        
+                        break;
+
+                    default:
+                        return () => checkAuth;
                 }
-                break;
-            case 'catatan':
-                if (checkAuth) {
-                    return () => checkAuth;
-                } else {
-                    updateJumlahCatatan(e.newData);
-                    setStateCatatans(e.newData);
-                }
-                
-                break;
-            default:
+            } else if (e.newData.info === "catatan") {
+                updateJumlahCatatan(e.newData);
+                setStateCatatans(e.newData);
+            } else {
                 return () => checkAuth;
+            }
+        } else {
+            return () => checkAuth;
         }
     });
 
@@ -368,7 +380,6 @@ export default function LayoutBerkas({ daftarberkas, tahun, menuOption, filtered
         {title: 'Berkas', href: "#"},
         {title: menuOption, href: "#"}
     ];
-
 
     return (
         <>
@@ -428,7 +439,7 @@ export default function LayoutBerkas({ daftarberkas, tahun, menuOption, filtered
                                         }))
                                     }
                                 >
-                                    <SelectTrigger tabIndex={2} className="w-full">
+                                    <SelectTrigger id="jenisspm" tabIndex={2} className="w-full">
                                         <SelectValue placeholder="Jenis SPM" />
                                     </SelectTrigger>
                                     <SelectContent>
@@ -452,7 +463,7 @@ export default function LayoutBerkas({ daftarberkas, tahun, menuOption, filtered
                                         }))
                                     }
                                 >
-                                    <SelectTrigger tabIndex={3} className="w-full">
+                                    <SelectTrigger id="sumberdana" tabIndex={3} className="w-full">
                                         <SelectValue placeholder="Sumber Dana" />
                                     </SelectTrigger>
                                     <SelectContent>
@@ -476,7 +487,7 @@ export default function LayoutBerkas({ daftarberkas, tahun, menuOption, filtered
                                         }))
                                     }
                                 >
-                                    <SelectTrigger tabIndex={4} className="w-full">
+                                    <SelectTrigger id="instansi" tabIndex={4} className="w-full">
                                         <SelectValue placeholder="Instansi" />
                                     </SelectTrigger>
                                     <SelectContent>
@@ -515,7 +526,7 @@ export default function LayoutBerkas({ daftarberkas, tahun, menuOption, filtered
                                                 }))
                                             }
                                         >
-                                            <SelectTrigger tabIndex={7} className="w-full">
+                                            <SelectTrigger id="load" tabIndex={7} className="w-full">
                                                 <SelectValue placeholder={filtered.load} />
                                             </SelectTrigger>
                                             <SelectContent>
@@ -596,11 +607,11 @@ export default function LayoutBerkas({ daftarberkas, tahun, menuOption, filtered
                                             </TableCell>
                                         </TableRow>
                                     ))
-                                ):(
+                                    ):(
                                     <TableRow>
-                                        <TableCell colSpan={7} className="font-normal">Tidak ada data. Silahkan klik tombol Tambah untuk menambah.</TableCell>
+                                        <TableCell colSpan={7} className="font-normal">Data tidak ditemukan.</TableCell>
                                     </TableRow>
-                                )
+                                    )
                                 }
                             </TableBody>
                         </Table>

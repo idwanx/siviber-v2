@@ -168,28 +168,28 @@ export default function DialogCatatan({
           });
           break;
         default:
-        post(catatan.store().url, {
-            preserveScroll: true,
-            onSuccess: (response: { props: FlashCatatanProps }) => {
-                if (response.props.flash?.type === 'success') {
-                  addNewCatatan(response.props.newdata?.datas);
-                  updateJumlahCatatan(response.props.newdata?.datas);
-                  toast.success(response.props.flash?.message, {
-                    position: "top-center"
-                  });
-                } else if (response.props.flash?.type === 'error') {
-                  toast.error(response.props.flash?.message, {
-                    position: "top-center"
-                  });
-                } else {
-                  toast.info(response.props.flash?.message, {
-                    position: "top-center"
-                  });
-                }
-                handleReset();
-                clearErrors();
-            },
-        });
+          post(catatan.store().url, {
+              preserveScroll: true,
+              onSuccess: (response: { props: FlashCatatanProps }) => {
+                  if (response.props.flash?.type === 'success') {
+                    addNewCatatan(response.props.newdata?.datas);
+                    updateJumlahCatatan(response.props.newdata?.datas);
+                    toast.success(response.props.flash?.message, {
+                      position: "top-center"
+                    });
+                  } else if (response.props.flash?.type === 'error') {
+                    toast.error(response.props.flash?.message, {
+                      position: "top-center"
+                    });
+                  } else {
+                    toast.info(response.props.flash?.message, {
+                      position: "top-center"
+                    });
+                  }
+                  handleReset();
+                  clearErrors();
+              },
+          });
         break;
       }
     }
@@ -422,79 +422,75 @@ export default function DialogCatatan({
           Daftar Catatan
         </DialogTitle>
         <DialogDescription>
+          Kegiatan:{' '}{dataValue.kegiatan}<br />
+          No. SPM:{' '}{dataValue.no_spm}
         </DialogDescription>
       </DialogHeader>
-      <div className="grid grid-cols-8 text-sm text-muted-foreground px-6">
-        <div>Kegiatan</div>
-        <div className="col-span-7">: {dataValue.kegiatan}</div>
-        <div>No. Spm</div>
-        <div className="col-span-7">: {dataValue.no_spm}</div>
-      </div>
-          <div ref={scrollRef} className="sm:max-h-80 2xl:max-h-120 overflow-y-auto mx-4 border rounded-md">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="w-7">
-                      {/* <Checkbox id="terms" className="bg-background" /> */}
-                  </TableHead>
-                  <TableHead>Catatan</TableHead>
-                  <TableHead className="w-40">Verifikator</TableHead>
-                  <TableHead className="w-28 text-center">{isAdminVerifikator && 'Pilih'}</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {isLoading ? (
-                  <TableRow>
-                    <TableCell colSpan={4}><div className="flex gap-2 items-center"><Spinner />Loading...</div></TableCell>
-                  </TableRow>
-                ) : (
-                  daftarCatatan.length > 0 ? (
-                    daftarCatatan.map((item, index) => (
-                      <TableRow key={index}>
-                        <TableCell>
-                          <CheckBoxItem itemCatatan={item}/>
-                        </TableCell>
-                        <TableCell>
-                          <div className={`whitespace-normal ${item.id === data.id && 'font-medium'}`}>
-                            {item.catatan}
-                          </div>
-                          <div className="text-muted-foreground text-xs pt-1.5">{item.created_at}</div>
-                        </TableCell>
-                        <TableCell>
-                          <div key={index} className="flex items-center space-x-3">
-                            <Avatar className="h-9 w-9 overflow-hidden rounded-full">
-                              {item.foto ?
-                              <AvatarImage src={`/storage/foto/small/${item.foto}`} alt={item.name} />
-                              :
-                              <AvatarFallback className="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
-                                  {getInitials(item.name)}
-                              </AvatarFallback>
-                              }
-                            </Avatar>
-                            <div className="text-sm font-medium text-foreground">
-                              {item.name}
-                            </div>
-                          </div>
-                        </TableCell>
-                        <TableCell className="text-center">
-                          {isAdminVerifikator && 
-                            <div className='flex gap-2.5 justify-center'>
-                              <ButtenEditItem itemCatatan={item} />
-                              <ButtenDestroyItem itemCatatan={item} />
-                            </div>
+      <div ref={scrollRef} className="sm:max-h-80 2xl:max-h-120 overflow-y-auto mx-4 border rounded-md">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-7">
+                  {/* <Checkbox id="terms" className="bg-background" /> */}
+              </TableHead>
+              <TableHead>Catatan</TableHead>
+              <TableHead className="w-40">Verifikator</TableHead>
+              <TableHead className="w-28 text-center">{isAdminVerifikator && 'Pilih'}</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {isLoading ? (
+              <TableRow>
+                <TableCell colSpan={4}><div className="flex gap-2 items-center"><Spinner />Loading...</div></TableCell>
+              </TableRow>
+            ) : (
+              daftarCatatan.length > 0 ? (
+                daftarCatatan.map((item, index) => (
+                  <TableRow key={index}>
+                    <TableCell>
+                      <CheckBoxItem itemCatatan={item}/>
+                    </TableCell>
+                    <TableCell>
+                      <div className={`whitespace-normal ${item.id === data.id && 'font-medium'}`}>
+                        {item.catatan}
+                      </div>
+                      <div className="text-muted-foreground text-xs pt-1.5">{item.created_at}</div>
+                    </TableCell>
+                    <TableCell>
+                      <div key={index} className="flex items-center space-x-3">
+                        <Avatar className="h-9 w-9 overflow-hidden rounded-full">
+                          {item.foto ?
+                          <AvatarImage src={`/storage/foto/small/${item.foto}`} alt={item.name} />
+                          :
+                          <AvatarFallback className="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
+                              {getInitials(item.name)}
+                          </AvatarFallback>
                           }
-                        </TableCell>
-                      </TableRow>
-                    ))
-                  ):(
-                    <TableRow>
-                      <TableCell colSpan={4}>Tidak catatan.</TableCell>
-                    </TableRow>
-                  )
-                )}
-              </TableBody>
-            </Table>
-          </div>
+                        </Avatar>
+                        <div className="text-sm font-medium text-foreground">
+                          {item.name}
+                        </div>
+                      </div>
+                    </TableCell>
+                    <TableCell className="text-center">
+                      {isAdminVerifikator && 
+                        <div className='flex gap-2.5 justify-center'>
+                          <ButtenEditItem itemCatatan={item} />
+                          <ButtenDestroyItem itemCatatan={item} />
+                        </div>
+                      }
+                    </TableCell>
+                  </TableRow>
+                ))
+              ):(
+                <TableRow>
+                  <TableCell colSpan={4}>Tidak catatan.</TableCell>
+                </TableRow>
+              )
+            )}
+          </TableBody>
+        </Table>
+      </div>
       {isAdminVerifikator ? (
         <form onSubmit={submitForm}>
           <div className="border-t bg-muted dark:bg-background rounded-b-md px-4 py-4">
