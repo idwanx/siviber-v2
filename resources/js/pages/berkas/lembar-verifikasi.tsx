@@ -17,10 +17,6 @@ const LembarVerifikasi = forwardRef<HTMLDivElement, { data: any }>((props, ref) 
 
       {/* Client & Date */}
        <div className="py-4">
-        {/* <div className="sm:grid sm:grid-cols-5">
-          <div>No. Registrasi</div>
-          <div className="sm:col-span-4">: <span className="font-mono">{data?.kode}</span></div>
-        </div> */}
         <div className="sm:grid sm:grid-cols-5">
           <div>Instansi</div>
           <div className="sm:col-span-4">:{' '}{data?.nama_instansi}</div>

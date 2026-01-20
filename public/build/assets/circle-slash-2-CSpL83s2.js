@@ -1,1 +1,0 @@
-import{c}from"./createLucideIcon-_i8x8KLa.js";const e=[["path",{d:"M21.801 10A10 10 0 1 1 17 3.335",key:"yps3ct"}],["path",{d:"m9 11 3 3L22 4",key:"1pflzl"}]],i=c("CircleCheckBig",e);const o=[["circle",{cx:"12",cy:"12",r:"10",key:"1mglay"}],["path",{d:"M22 2 2 22",key:"y4kqgn"}]],t=c("CircleSlash2",o);export{t as C,i as a};

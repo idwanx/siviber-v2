@@ -13,14 +13,6 @@ const tabs = [
     name: "Rincian Belanja",
     value: "profile",
   },
-  // {
-  //   name: "Dokumen",
-  //   value: "messages",
-  // },
-  // {
-  //   name: "Settings",
-  //   value: "settings",
-  // },
 ];
 
 interface BerkasProps {

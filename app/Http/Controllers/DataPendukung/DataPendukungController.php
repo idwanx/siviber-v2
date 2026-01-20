@@ -18,7 +18,7 @@ class DataPendukungController extends Controller
         $this->roleuser = Auth::user()->roleuser()->firstOrFail();
     }
 
-    public function __invoke(Request $request)
+    public function __invoke()
     {
         if ($this->roleuser->slug === "admin") {
             return redirect()->route('instansi.index');

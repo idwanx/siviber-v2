@@ -13,7 +13,6 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\ImageManager;
-use Throwable;
 
 class ProfileController extends Controller
 {

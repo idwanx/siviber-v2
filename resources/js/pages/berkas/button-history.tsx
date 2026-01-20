@@ -1,14 +1,8 @@
-import { useInitials } from "@/hooks/use-initials";
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import { History } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
 } from "@/components/ui/sheet";
 
 import {
@@ -17,13 +11,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import berkas from "@/routes/berkas";
-import { Spinner } from "@/components/ui/spinner";
-import { Separator } from "@/components/ui/separator";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { SharedData } from "@/types";
-import { usePage } from "@inertiajs/react";
-import { FieldDataBerkas, Riwayats } from "@/types/berkas";
+import { FieldDataBerkas } from "@/types/berkas";
 import SheetHistory from "./sheet-history";
 
 interface DialogProps {

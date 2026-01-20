@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\DataPendukung\JenisBelanjaController::index
-* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:20
+* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:19
 * @route '/data-pendukung/jenis-belanja'
 */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\DataPendukung\JenisBelanjaController::index
-* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:20
+* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:19
 * @route '/data-pendukung/jenis-belanja'
 */
 index.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ index.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DataPendukung\JenisBelanjaController::index
-* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:20
+* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:19
 * @route '/data-pendukung/jenis-belanja'
 */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\DataPendukung\JenisBelanjaController::index
-* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:20
+* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:19
 * @route '/data-pendukung/jenis-belanja'
 */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\DataPendukung\JenisBelanjaController::index
-* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:20
+* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:19
 * @route '/data-pendukung/jenis-belanja'
 */
 const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +55,7 @@ const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 
 /**
 * @see \App\Http\Controllers\DataPendukung\JenisBelanjaController::index
-* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:20
+* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:19
 * @route '/data-pendukung/jenis-belanja'
 */
 indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -65,7 +65,7 @@ indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\DataPendukung\JenisBelanjaController::index
-* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:20
+* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:19
 * @route '/data-pendukung/jenis-belanja'
 */
 indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -82,7 +82,7 @@ index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\DataPendukung\JenisBelanjaController::store
-* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:40
+* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:39
 * @route '/data-pendukung/jenis-belanja'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -97,7 +97,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\DataPendukung\JenisBelanjaController::store
-* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:40
+* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:39
 * @route '/data-pendukung/jenis-belanja'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -106,7 +106,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DataPendukung\JenisBelanjaController::store
-* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:40
+* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:39
 * @route '/data-pendukung/jenis-belanja'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -116,7 +116,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\DataPendukung\JenisBelanjaController::store
-* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:40
+* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:39
 * @route '/data-pendukung/jenis-belanja'
 */
 const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -126,7 +126,7 @@ const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => 
 
 /**
 * @see \App\Http\Controllers\DataPendukung\JenisBelanjaController::store
-* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:40
+* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:39
 * @route '/data-pendukung/jenis-belanja'
 */
 storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -138,7 +138,7 @@ store.form = storeForm
 
 /**
 * @see \App\Http\Controllers\DataPendukung\JenisBelanjaController::update
-* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:81
+* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:80
 * @route '/data-pendukung/jenis-belanja/{jenis_belanja}'
 */
 export const update = (args: { jenis_belanja: string | number } | [jenis_belanja: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -153,7 +153,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\DataPendukung\JenisBelanjaController::update
-* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:81
+* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:80
 * @route '/data-pendukung/jenis-belanja/{jenis_belanja}'
 */
 update.url = (args: { jenis_belanja: string | number } | [jenis_belanja: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -180,7 +180,7 @@ update.url = (args: { jenis_belanja: string | number } | [jenis_belanja: string 
 
 /**
 * @see \App\Http\Controllers\DataPendukung\JenisBelanjaController::update
-* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:81
+* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:80
 * @route '/data-pendukung/jenis-belanja/{jenis_belanja}'
 */
 update.put = (args: { jenis_belanja: string | number } | [jenis_belanja: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -190,7 +190,7 @@ update.put = (args: { jenis_belanja: string | number } | [jenis_belanja: string 
 
 /**
 * @see \App\Http\Controllers\DataPendukung\JenisBelanjaController::update
-* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:81
+* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:80
 * @route '/data-pendukung/jenis-belanja/{jenis_belanja}'
 */
 update.patch = (args: { jenis_belanja: string | number } | [jenis_belanja: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -200,7 +200,7 @@ update.patch = (args: { jenis_belanja: string | number } | [jenis_belanja: strin
 
 /**
 * @see \App\Http\Controllers\DataPendukung\JenisBelanjaController::update
-* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:81
+* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:80
 * @route '/data-pendukung/jenis-belanja/{jenis_belanja}'
 */
 const updateForm = (args: { jenis_belanja: string | number } | [jenis_belanja: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -215,7 +215,7 @@ const updateForm = (args: { jenis_belanja: string | number } | [jenis_belanja: s
 
 /**
 * @see \App\Http\Controllers\DataPendukung\JenisBelanjaController::update
-* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:81
+* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:80
 * @route '/data-pendukung/jenis-belanja/{jenis_belanja}'
 */
 updateForm.put = (args: { jenis_belanja: string | number } | [jenis_belanja: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -230,7 +230,7 @@ updateForm.put = (args: { jenis_belanja: string | number } | [jenis_belanja: str
 
 /**
 * @see \App\Http\Controllers\DataPendukung\JenisBelanjaController::update
-* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:81
+* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:80
 * @route '/data-pendukung/jenis-belanja/{jenis_belanja}'
 */
 updateForm.patch = (args: { jenis_belanja: string | number } | [jenis_belanja: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -247,7 +247,7 @@ update.form = updateForm
 
 /**
 * @see \App\Http\Controllers\DataPendukung\JenisBelanjaController::destroy
-* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:106
+* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:105
 * @route '/data-pendukung/jenis-belanja/{jenis_belanja}'
 */
 export const destroy = (args: { jenis_belanja: string | number } | [jenis_belanja: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -262,7 +262,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\DataPendukung\JenisBelanjaController::destroy
-* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:106
+* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:105
 * @route '/data-pendukung/jenis-belanja/{jenis_belanja}'
 */
 destroy.url = (args: { jenis_belanja: string | number } | [jenis_belanja: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -289,7 +289,7 @@ destroy.url = (args: { jenis_belanja: string | number } | [jenis_belanja: string
 
 /**
 * @see \App\Http\Controllers\DataPendukung\JenisBelanjaController::destroy
-* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:106
+* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:105
 * @route '/data-pendukung/jenis-belanja/{jenis_belanja}'
 */
 destroy.delete = (args: { jenis_belanja: string | number } | [jenis_belanja: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -299,7 +299,7 @@ destroy.delete = (args: { jenis_belanja: string | number } | [jenis_belanja: str
 
 /**
 * @see \App\Http\Controllers\DataPendukung\JenisBelanjaController::destroy
-* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:106
+* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:105
 * @route '/data-pendukung/jenis-belanja/{jenis_belanja}'
 */
 const destroyForm = (args: { jenis_belanja: string | number } | [jenis_belanja: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -314,7 +314,7 @@ const destroyForm = (args: { jenis_belanja: string | number } | [jenis_belanja: 
 
 /**
 * @see \App\Http\Controllers\DataPendukung\JenisBelanjaController::destroy
-* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:106
+* @see app/Http/Controllers/DataPendukung/JenisBelanjaController.php:105
 * @route '/data-pendukung/jenis-belanja/{jenis_belanja}'
 */
 destroyForm.delete = (args: { jenis_belanja: string | number } | [jenis_belanja: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

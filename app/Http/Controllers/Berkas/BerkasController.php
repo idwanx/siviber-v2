@@ -38,15 +38,13 @@ class BerkasController extends Controller
         $this->loadDefault = '15';
         $this->roleuser = Auth::user()->roleuser()->firstOrFail();
 
-        Cache::remember('dataPendukung', 86400, function () {
+        Cache::remember('dataPendukung', 1440, function () {
             return [
                 'instansi' => DB::table('instansis')->get(),
                 'jenisberkas' => DB::table('jenis_berkas')->get(),
                 'sumberdana' => DB::table('sumber_danas')->get()
             ];
         });
-
-        // Cache::forget('dataPendukung');
     }
 
     public function index(int $tahun, string $statusberkas, CariRequest $request): Response
