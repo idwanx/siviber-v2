@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { RefreshCcw, Search } from "lucide-react";
+import { AlertCircleIcon, RefreshCcw, Search } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import {
   Table,
@@ -42,6 +42,11 @@ import DropDownPilihan from "./dropdown-action";
 import Pagination from "@/components/pagination";
 import ButtonHistory from "./button-history";
 import { Separator } from "@/components/ui/separator";
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "@/components/ui/alert"
 
 const loads = [
     {
@@ -62,8 +67,8 @@ const loads = [
     },
 ]
 
-export default function LayoutBerkas({ daftarberkas, tahun, menuOption, filtered, instansi, jenisberkas, sumberdana }: BerkasProps) {
-    const { auth } = usePage<SharedData>().props;
+export default function LayoutBerkas({ daftarberkas, tahun, menuOption, filtered, dataPendukung, totals }: BerkasProps) {
+    const { auth, errors } = usePage<SharedData>().props;
     const [stateBerkas, setStateBerkas] = useState<FieldDataBerkas[] | []>(daftarberkas.data);
     const [modalCrud, setModalCrud] = useState<boolean>(false);
     const [dialogDestroy, setDialogDestroy] = useState<boolean>(false);
@@ -427,6 +432,21 @@ export default function LayoutBerkas({ daftarberkas, tahun, menuOption, filtered
                             )}
                         </div>
                         <Separator className="mb-4" />
+                        {errors.cari && 
+                            <div className="flex max-w-xl whitespace-normal">
+                                <Alert variant="destructive">
+                                    <AlertCircleIcon />
+                                    <AlertTitle>Pemberitahuan.</AlertTitle>
+                                    <AlertDescription>
+                                        <p>
+                                            Tidak dizinkan menggunakan karakter simbol 
+                                            (seperti tanda baca khusus, simbol matematika, 
+                                            atau karakter non-alfanumerik) dalam pencarian.
+                                        </p>
+                                    </AlertDescription>
+                                </Alert>
+                            </div>
+                        }
                         <div className="flex items-center py-4 gap-2">
                             <div>
                                 <Select 
@@ -445,7 +465,7 @@ export default function LayoutBerkas({ daftarberkas, tahun, menuOption, filtered
                                     <SelectContent>
                                         <SelectGroup>
                                             <SelectLabel>Jenis SPM</SelectLabel>
-                                            {jenisberkas.map(item => (
+                                            {dataPendukung.jenisberkas.map(item => (
                                                 <SelectItem key={item.slug} value={item.slug}>{item.nama_jenis_berkas}</SelectItem>
                                             ))}
                                         </SelectGroup>
@@ -469,7 +489,7 @@ export default function LayoutBerkas({ daftarberkas, tahun, menuOption, filtered
                                     <SelectContent>
                                         <SelectGroup>
                                             <SelectLabel>Sumber Dana</SelectLabel>
-                                            {sumberdana.map(item => (
+                                            {dataPendukung.sumberdana.map(item => (
                                                 <SelectItem key={item.slug} value={item.slug}>{item.nama_sumber_dana}</SelectItem>
                                             ))}
                                         </SelectGroup>
@@ -493,8 +513,8 @@ export default function LayoutBerkas({ daftarberkas, tahun, menuOption, filtered
                                     <SelectContent>
                                         <SelectGroup>
                                             <SelectLabel>Instansi</SelectLabel>
-                                            {instansi.map(item => (
-                                            <SelectItem key={item.slug} value={item.slug}>{item.nama_instansi}</SelectItem>
+                                            {dataPendukung.instansi.map(item => (
+                                                <SelectItem key={item.slug} value={item.slug}>{item.nama_instansi}</SelectItem>
                                             ))}
                                         </SelectGroup>
                                     </SelectContent>
@@ -502,7 +522,7 @@ export default function LayoutBerkas({ daftarberkas, tahun, menuOption, filtered
                             </div>
                             <div>
                                 <InputGroup>
-                                    <InputGroupInput id='cari' name='cari' value={values.cari} onChange={handleInputCari} tabIndex={5} placeholder="Cari..." autoFocus />
+                                    <InputGroupInput id='cari' name='cari' value={values.cari} onChange={handleInputCari} tabIndex={5} placeholder="Cari kegiatan..." autoFocus />
                                         <InputGroupAddon>
                                             <Search />
                                         </InputGroupAddon>
@@ -541,7 +561,6 @@ export default function LayoutBerkas({ daftarberkas, tahun, menuOption, filtered
                                 </div>
                             </div>
                         </div>
-                        
                         <Table>
                             <TableHeader>
                                 <TableRow>

@@ -2,6 +2,14 @@
 
 namespace App\Providers;
 
+use App\Models\Berka;
+use App\Models\Instansi;
+use App\Models\JenisBerka;
+use App\Models\SumberDana;
+use App\Observers\BerkaObserver;
+use App\Observers\InstansiObserver;
+use App\Observers\JenisBerkaObserver;
+use App\Observers\SumberDanaObserver;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -23,6 +31,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Instansi::observe(InstansiObserver::class);
+        JenisBerka::observe(JenisBerkaObserver::class);
+        SumberDana::observe(SumberDanaObserver::class);
+        Berka::observe(BerkaObserver::class);
+
         VerifyEmail::toMailUsing(function (object $notifiable, string $url) {
             return (new MailMessage)
                 ->subject('Verifikasi Email')

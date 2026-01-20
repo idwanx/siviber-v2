@@ -30,6 +30,7 @@ class Berka extends Model
     protected function casts(): array
     {
         return [
+            'created_at' => 'datetime',
             'tgl_spm' => 'date',
         ];
     }
@@ -59,7 +60,7 @@ class Berka extends Model
         return $this->hasMany(CatatanBerka::class);
     }
 
-    public function detailberka(): HasOneThrough
+    public function detailberkas(): HasOneThrough
     {
         return $this->hasOneThrough(FileBerka::class, RincianBerka::class);
     }

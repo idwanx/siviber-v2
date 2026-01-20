@@ -1,25 +1,21 @@
 import { AppSidebarHeader } from '@/components/app-sidebar-header';
-import { BerkasSidebar } from '@/components/berkas-sidebar';
-import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import { SidebarInset } from '@/components/ui/sidebar';
 import AppLayout from '@/layouts/app-layout';
 import { dashboard } from '@/routes';
-import { type BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/react';
+import { SharedData, type BreadcrumbItem } from '@/types';
+import { Head, usePage } from '@inertiajs/react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {title: 'Berkas', href: dashboard().url},
     {title: 'Registrasi', href: dashboard().url}
 ];
 
-interface IndexBerkasProps extends Record<string, any> {
-    daftarberkas: any;
-}
+export default function Dashboard() {
+    const { tahun } = usePage<SharedData>().props;
 
-export default function Dashboard({ daftarberkas }: IndexBerkasProps) {
-    
+
     return (
-        <AppLayout>
+        <>
             <Head title="Dashboard" />
             <SidebarInset className='p-1'>
                 <div className="flex flex-1 flex-col space-y-2 pl-2 mt-(--header-height) h-[calc(100svh-var(--header-height))]!">
@@ -37,6 +33,8 @@ export default function Dashboard({ daftarberkas }: IndexBerkasProps) {
                     </div>
                 </div>
             </SidebarInset>
-        </AppLayout>
+        </>
     );
 }
+
+Dashboard.layout = (page: React.ReactNode) => <AppLayout children={page} />

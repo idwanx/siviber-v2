@@ -605,7 +605,7 @@ export default function FormRegistrasiBerkas({ modalCrud, addNew, dataState, mod
               </div>
             </div>
             <Separator />
-            <div className="flex justify-between space-x-4 p-6 flex-col-reverse sm:flex-row">
+            <div className="flex justify-between space-x-4 px-6 py-4 flex-col-reverse sm:flex-row">
               <Button type="button" variant="outline" onClick={handleReset} tabIndex={8}>Reset</Button>
               <div className="flex flex-col-reverse items-center gap-2 sm:flex-row">
                 {processing ? (

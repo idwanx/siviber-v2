@@ -26,13 +26,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('berkas/{tahun?}/{statusberkas}', [BerkasController::class, 'index'])->name('berkas.main');
     Route::post('add-riwayat/{berka}', [BerkasController::class, 'addRiwayat'])->name('berkas.addriwayat');
     Route::get('get-verifikator/{berka}', [BerkasController::class, 'getVerifikator'])->name('berkas.getverifikator');
-    Route::get('get-history/{berka}', [BerkasController::class, 'getHistory'])->name('berkas.gethistory');
+    Route::get('get-history/{id}', [BerkasController::class, 'getHistory'])->name('berkas.gethistory');
     Route::post('store-berkas', [BerkasController::class, 'storeBerkas'])->name('berkas.store');
     Route::put('update-berkas/{berka}', [BerkasController::class, 'updateBerkas'])->name('berkas.update');
     Route::delete('destroy-berkas/{berka}', [BerkasController::class, 'destroyBerkas'])->name('berkas.destroy');
-    Route::get('edit-berkas/{berka}', [BerkasController::class, 'editBerkas'])->name('berkas.edit');
-    Route::get('find-berkas/{berka}', [BerkasController::class, 'findBerkas'])->name('berkas.find');
-    Route::get('detail-berkas/{berka}', [BerkasController::class, 'detailBerkas'])->name('berkas.detail');
+    Route::get('edit-berkas/{id}', [BerkasController::class, 'editBerkas'])->name('berkas.edit');
+    Route::get('find-berkas/{id}', [BerkasController::class, 'findBerkas'])->name('berkas.find');
+    Route::get('detail-berkas/{id}', [BerkasController::class, 'detailBerkas'])->name('berkas.detail');
     Route::get('fetch/data-pendukung-regis', [FetchDataController::class, 'getDataPendkungRegis'])->name('fetch.datapendukungregis');
     // Catatan berkas
     Route::get('catatan/{berka}', [CatatansController::class, 'index'])->name('catatan.index');

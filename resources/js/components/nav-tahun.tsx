@@ -12,8 +12,12 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { useMemo } from 'react';
 import { cn } from '@/lib/utils'
+import { usePage } from '@inertiajs/react';
+import { SharedData } from '@/types';
 
-export function NavTahun({tahun, updateNewTahun}: {tahun?: number | null, updateNewTahun: (newtahun: number) => void}) {
+export function NavTahun({updateNewTahun}: {updateNewTahun: (newtahun: number) => void}) {
+    
+    const { tahun } = usePage<SharedData>().props;
 
     const currentYear = new Date().getFullYear();
 
@@ -34,7 +38,7 @@ export function NavTahun({tahun, updateNewTahun}: {tahun?: number | null, update
                     className="group h-9 data-[state=open]:bg-sidebar-accent"
                     data-test="sidebar-menu-button"
                 >
-                    {!tahun ? currentYear : tahun}
+                    {tahun}
                     <ChevronsUpDown className="ml-auto size-4" />
                 </SidebarMenuButton>
             </DropdownMenuTrigger>

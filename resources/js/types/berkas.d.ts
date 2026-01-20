@@ -14,6 +14,11 @@ export interface BerkasProps {
     tahun: number;
     menuOption: string;
     filtered: FilteredValues;
+    dataPendukung: CacheDataPendukung;
+    totals: any;
+}
+
+interface CacheDataPendukung {
     instansi: InstansiProps[];
     jenisberkas: JenisBerkasProps[];
     sumberdana: SumberDanaProps[];

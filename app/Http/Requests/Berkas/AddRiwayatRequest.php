@@ -22,7 +22,7 @@ class AddRiwayatRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'berkasid' => ['required', 'exists:berkas,id'],
+            'berkasid' => ['required', 'numeric'],
             'statusberkas' => ['required', 'in:2,3,4'],
         ];
     }
@@ -30,8 +30,8 @@ class AddRiwayatRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'berkasid.required' => 'Berkas tidak ada',
-            'berkasid.exists' => 'Berkas tidak valid',
+            'berkasid.required' => 'Kode berkas tidak ada',
+            'berkasid.numeric' => 'Kode berkas tidak valid',
             'statusberkas.required' => 'Status berkas tidak ada',
             'statusberkas.in' => 'Status berkas tidak valid',
         ];

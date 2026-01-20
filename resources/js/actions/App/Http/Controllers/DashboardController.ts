@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults, validateParameters } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\DashboardController::__invoke
-* @see app/Http/Controllers/DashboardController.php:18
+* @see app/Http/Controllers/DashboardController.php:17
 * @route '/dashboard/{tahun?}'
 */
 const DashboardController = (args?: { tahun?: string | number } | [tahun: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ DashboardController.definition = {
 
 /**
 * @see \App\Http\Controllers\DashboardController::__invoke
-* @see app/Http/Controllers/DashboardController.php:18
+* @see app/Http/Controllers/DashboardController.php:17
 * @route '/dashboard/{tahun?}'
 */
 DashboardController.url = (args?: { tahun?: string | number } | [tahun: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -47,7 +47,7 @@ DashboardController.url = (args?: { tahun?: string | number } | [tahun: string |
 
 /**
 * @see \App\Http\Controllers\DashboardController::__invoke
-* @see app/Http/Controllers/DashboardController.php:18
+* @see app/Http/Controllers/DashboardController.php:17
 * @route '/dashboard/{tahun?}'
 */
 DashboardController.get = (args?: { tahun?: string | number } | [tahun: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -57,7 +57,7 @@ DashboardController.get = (args?: { tahun?: string | number } | [tahun: string |
 
 /**
 * @see \App\Http\Controllers\DashboardController::__invoke
-* @see app/Http/Controllers/DashboardController.php:18
+* @see app/Http/Controllers/DashboardController.php:17
 * @route '/dashboard/{tahun?}'
 */
 DashboardController.head = (args?: { tahun?: string | number } | [tahun: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -67,7 +67,7 @@ DashboardController.head = (args?: { tahun?: string | number } | [tahun: string 
 
 /**
 * @see \App\Http\Controllers\DashboardController::__invoke
-* @see app/Http/Controllers/DashboardController.php:18
+* @see app/Http/Controllers/DashboardController.php:17
 * @route '/dashboard/{tahun?}'
 */
 const DashboardControllerForm = (args?: { tahun?: string | number } | [tahun: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -77,7 +77,7 @@ const DashboardControllerForm = (args?: { tahun?: string | number } | [tahun: st
 
 /**
 * @see \App\Http\Controllers\DashboardController::__invoke
-* @see app/Http/Controllers/DashboardController.php:18
+* @see app/Http/Controllers/DashboardController.php:17
 * @route '/dashboard/{tahun?}'
 */
 DashboardControllerForm.get = (args?: { tahun?: string | number } | [tahun: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -87,7 +87,7 @@ DashboardControllerForm.get = (args?: { tahun?: string | number } | [tahun: stri
 
 /**
 * @see \App\Http\Controllers\DashboardController::__invoke
-* @see app/Http/Controllers/DashboardController.php:18
+* @see app/Http/Controllers/DashboardController.php:17
 * @route '/dashboard/{tahun?}'
 */
 DashboardControllerForm.head = (args?: { tahun?: string | number } | [tahun: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

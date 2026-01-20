@@ -43,39 +43,32 @@ import { useEffect, useState } from 'react';
 
 const activeItemStyles = 'text-neutral-900 bg-sidebar-border/50 dark:bg-neutral-800 dark:text-neutral-100';
 
-export interface PropsTahun {
-    tahun?: number;
-    [key: string]: unknown;
-}
 
 export function AppHeader({
-    tahun,
     updateNewTahun
 }: {
-    tahun?: number | null, updateNewTahun: (newtahun: number) => void
+    updateNewTahun: (newtahun: number) => void
 }) {
     const page = usePage<SharedData>();
-    const { auth } = page.props;
+    const { auth, tahun } = page.props;
     const getInitials = useInitials();
-    const currentYear: number = new Date().getFullYear();
 
     const mainNavItems: NavItem[] = [
         {
             title: 'Dashboard',
-            href: dashboard({ tahun: tahun ? tahun : '' }),
+            href: dashboard({ tahun: tahun }),
             isActive: page.url.startsWith('/dashboard'),
             icon: null,
             role: null
         },
         {
             title: 'Berkas',
-            href: berkas.main({ tahun: !tahun ? currentYear : tahun, statusberkas: "registrasi" }),
+            href: berkas.main({ tahun: tahun, statusberkas: "registrasi" }),
             isActive: page.url.startsWith('/berkas'),
             icon: null,
             role: null
         },
         {
-            
             title: 'Data Pendukung',
             href: datapendukung(),
             isActive: page.url.startsWith('/data-pendukung'),
@@ -223,7 +216,7 @@ export function AppHeader({
 
                     <div className="ml-auto flex items-center space-x-2">
                         <div className="relative flex items-center space-x-1">
-                            <NavTahun tahun={tahun} updateNewTahun={updateNewTahun} />
+                            <NavTahun updateNewTahun={updateNewTahun} />
                             {/* <div className="hidden lg:flex">
                                 {rightNavItems.map((item) => (
                                     <TooltipProvider

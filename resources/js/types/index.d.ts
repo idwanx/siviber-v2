@@ -28,6 +28,15 @@ export interface NavItem {
     icon?: LucideIcon | null;
     isActive?: boolean;
     role?: string | null;
+    totals?: number;
+}
+
+
+export interface TotalsCache {
+    penolakan: number;
+    registrasi: number;
+    sp2d: number;
+    verifikasi: number;
 }
 
 export interface SharedData {
@@ -37,6 +46,7 @@ export interface SharedData {
     sidebarOpen: boolean;
     tahun: number
     menuOption: string
+    totals: TotalsCache
     [key: string]: unknown;
 }
 

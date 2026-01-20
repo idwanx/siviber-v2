@@ -16,7 +16,7 @@ class PrintBerkasResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'created_at' => $this->created_at->isoFormat('D MMMM Y'),
+            'created_at' => Carbon::parse($this->created_at)->isoFormat('D MMMM Y'),
             'id' => $this->id,
             'kegiatan' => $this->kegiatan,
             'kode' => $this->kode,
@@ -28,7 +28,7 @@ class PrintBerkasResource extends JsonResource
             'no_spm' => $this->no_spm,
             'norek' => $this->norek,
             'npwp' => $this->npwp,
-            'tgl_spm' => $this->tgl_spm->isoFormat('D MMMM Y'),
+            'tgl_spm' => Carbon::parse($this->tgl_spm)->isoFormat('D MMMM Y'),
         ];
     }
 }

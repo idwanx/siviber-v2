@@ -6,6 +6,7 @@ use App\Events\StatusBerkasEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Berkas\AddRiwayatRequest;
 use App\Http\Requests\Berkas\BerkasStoreRequest;
+use App\Http\Requests\Berkas\CariRequest;
 use App\Http\Resources\Berkas\BerkasResource;
 use App\Http\Resources\Berkas\CekVerifikatorKonfirmasiResource;
 use App\Http\Resources\Berkas\DetailBerkasResource;
@@ -13,10 +14,7 @@ use App\Http\Resources\Berkas\FindBerkasResource;
 use App\Http\Resources\Berkas\PrintBerkasResource;
 use App\Http\Resources\Berkas\RiwayatBerkasResource;
 use App\Models\Berka;
-use App\Models\Instansi;
-use App\Models\JenisBerka;
 use App\Models\RiwayatBerka;
-use App\Models\SumberDana;
 use App\Models\User;
 use Carbon\Carbon;
 use Exception;
@@ -27,6 +25,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class BerkasController extends Controller
 {
@@ -37,9 +37,19 @@ class BerkasController extends Controller
     {
         $this->loadDefault = '15';
         $this->roleuser = Auth::user()->roleuser()->firstOrFail();
+
+        Cache::remember('dataPendukung', 86400, function () {
+            return [
+                'instansi' => DB::table('instansis')->get(),
+                'jenisberkas' => DB::table('jenis_berkas')->get(),
+                'sumberdana' => DB::table('sumber_danas')->get()
+            ];
+        });
+
+        // Cache::forget('dataPendukung');
     }
 
-    public function index(int $tahun, string $statusberkas, Request $request): Response
+    public function index(int $tahun, string $statusberkas, CariRequest $request): Response
     {
         switch ($statusberkas) {
             case 'registrasi': 
@@ -88,9 +98,8 @@ class BerkasController extends Controller
             'tahun' => $tahun,
             'menuOption' => $statusberkas,
             'filtered' => $request->only(['load','cari','instansi', 'jenisspm', 'sumberdana','page']),
-            'instansi' => Instansi::get(),
-            'jenisberkas' => JenisBerka::get(),
-            'sumberdana' => SumberDana::get()
+            'dataPendukung' => Cache::get('dataPendukung'),
+            'totals' => $this->roleuser->instansi_id === null ? Cache::get('total_'.$tahun) : Cache::get('total_'.$this->roleuser->instansi_id.'_'.$tahun),
         ]);
     }
 
@@ -751,68 +760,121 @@ class BerkasController extends Controller
         return CekVerifikatorKonfirmasiResource::collection($getVerifikator);
     }
 
-    public function getHistory(Berka $berka)
+    public function getHistory(int $id)
     {
-        if(Gate::denies('canAksesBerkas', $berka)) {
+        $berkas = DB::table('berkas')->find($id);
+
+        if(Gate::denies('canAksesBerkas', $berkas)) {
             abort(404);
         }
 
-        $histories = RiwayatBerka::select('riwayat_berkas.created_at', 'users.foto', 'users.name', 'status_berkas.slug')
+        $histories =  DB::table('riwayat_berkas')->select('riwayat_berkas.created_at', 'users.foto', 'users.name', 'status_berkas.slug')
+        ->leftJoin('berkas', 'riwayat_berkas.berka_id', '=', 'berkas.id')
         ->leftJoin('status_berkas', 'riwayat_berkas.status_berka_id', '=', 'status_berkas.id')
         ->leftJoin('users', 'riwayat_berkas.user_id', '=', 'users.id')
-        ->where('riwayat_berkas.berka_id', $berka->id)
+        ->where('riwayat_berkas.berka_id', $id)
         ->orderBy('riwayat_berkas.created_at', 'asc')
         ->get();
+        
 
         return RiwayatBerkasResource::collection($histories);
     }
 
-    public function editBerkas(Berka $berka)
+    public function editBerkas(int $id)
     {
-        if(Gate::denies('canAksesBerkas', $berka)) {
-            abort(404);
-        }
-
-        $findberkas = Berka::select(['berkas.id', 'berkas.jenis_berka_id', 'berkas.kode', 'berkas.no_spm', 'berkas.nilai_spm', 'berkas.penerima_id', 'berkas.tgl_spm', 'berkas.kegiatan', 'berkas.created_at', 'berkas.status_berka_id', 'berkas.sumber_dana_id', 'instansis.nama_instansi', 'jenis_berkas.nama_jenis_berkas', 'penerimas.norek', 'penerimas.npwp', 'sumber_danas.nama_sumber_dana'])
+        $findberkas =  DB::table('berkas')->select(
+            'berkas.id', 
+            'berkas.instansi_id', 
+            'berkas.jenis_berka_id', 
+            'berkas.kegiatan', 
+            'berkas.no_spm', 
+            'berkas.nilai_spm', 
+            'berkas.penerima_id', 
+            'berkas.tgl_spm', 
+            'berkas.sumber_dana_id', 
+            'jenis_berkas.nama_jenis_berkas', 
+            'penerimas.norek', 
+            'penerimas.npwp', 
+            'sumber_danas.nama_sumber_dana'
+        )
         ->leftJoin('instansis', 'berkas.instansi_id', '=', 'instansis.id')
         ->leftJoin('jenis_berkas', 'berkas.jenis_berka_id', '=', 'jenis_berkas.id')
         ->leftJoin('penerimas', 'berkas.penerima_id', '=', 'penerimas.id')
         ->leftJoin('sumber_danas', 'berkas.sumber_dana_id', '=', 'sumber_danas.id')
-        ->find($berka->id);
+        ->where('berkas.id', $id)->firstOrFail();
 
-        return new FindBerkasResource($findberkas);
+        if(Gate::denies('canAksesBerkas', $findberkas)) {
+            abort(404);
+        } else {
+            return new FindBerkasResource($findberkas);
+        }
     }
 
-    public function detailBerkas(Berka $berka)
+    public function detailBerkas(int $id)
     {
-        if(Gate::denies('canAksesBerkas', $berka)) {
-            abort(404);
-        }
-
-        $findberkas = Berka::select(['berkas.id', 'berkas.jenis_berka_id', 'berkas.kode', 'berkas.no_spm', 'berkas.nilai_spm', 'berkas.penerima_id', 'berkas.tgl_spm', 'berkas.kegiatan', 'berkas.created_at', 'berkas.status_berka_id', 'berkas.sumber_dana_id', 'instansis.nama_instansi', 'jenis_berkas.nama_jenis_berkas', 'penerimas.nama_penerima', 'penerimas.norek', 'penerimas.npwp', 'sumber_danas.nama_sumber_dana'])
-        ->with('detailberka')
+        $findberkas = Berka::select([
+            'berkas.created_at', 
+            'berkas.id', 
+            'berkas.instansi_id', 
+            'berkas.jenis_berka_id', 
+            'berkas.kegiatan', 
+            'berkas.kode', 
+            'berkas.nilai_spm', 
+            'berkas.no_spm', 
+            'berkas.penerima_id', 
+            'berkas.status_berka_id', 
+            'berkas.sumber_dana_id', 
+            'berkas.tgl_spm', 
+            'instansis.nama_instansi', 
+            'jenis_berkas.nama_jenis_berkas', 
+            'penerimas.nama_penerima', 
+            'penerimas.norek', 
+            'penerimas.npwp', 
+            'sumber_danas.nama_sumber_dana'
+        ])
+        ->with('detailberkas')
         ->leftJoin('instansis', 'berkas.instansi_id', '=', 'instansis.id')
         ->leftJoin('jenis_berkas', 'berkas.jenis_berka_id', '=', 'jenis_berkas.id')
         ->leftJoin('penerimas', 'berkas.penerima_id', '=', 'penerimas.id')
         ->leftJoin('sumber_danas', 'berkas.sumber_dana_id', '=', 'sumber_danas.id')
-        ->find($berka->id);
+        ->where('berkas.id', $id)->firstOrFail();
 
-        return new DetailBerkasResource($findberkas);
+        if(Gate::denies('canAksesBerkas', $findberkas)) {
+            abort(404);
+        } else {
+            return new DetailBerkasResource($findberkas);
+        }
     }
 
-    public function findBerkas(Berka $berka)
+    public function findBerkas(int $id)
     {
-        if(Gate::denies('canAksesBerkas', $berka)) {
-            abort(404);
-        }
-        
-        $findberkas = Berka::select(['berkas.created_at', 'berkas.id', 'berkas.kode', 'berkas.no_spm', 'berkas.nilai_spm', 'berkas.tgl_spm', 'berkas.kegiatan', 'berkas.created_at', 'instansis.nama_instansi', 'jenis_berkas.nama_jenis_berkas', 'penerimas.nama_penerima', 'penerimas.norek', 'penerimas.npwp', 'sumber_danas.nama_sumber_dana'])
+        $findberkas = DB::table('berkas')
+        ->select(
+            'berkas.created_at', 
+            'berkas.id', 
+            'berkas.instansi_id', 
+            'berkas.kegiatan',
+            'berkas.kode', 
+            'berkas.nilai_spm', 
+            'berkas.no_spm', 
+            'berkas.tgl_spm',  
+            'instansis.nama_instansi', 
+            'jenis_berkas.nama_jenis_berkas', 
+            'penerimas.nama_penerima', 
+            'penerimas.norek', 
+            'penerimas.npwp', 
+            'sumber_danas.nama_sumber_dana'
+        )
         ->leftJoin('instansis', 'berkas.instansi_id', '=', 'instansis.id')
         ->leftJoin('jenis_berkas', 'berkas.jenis_berka_id', '=', 'jenis_berkas.id')
         ->leftJoin('penerimas', 'berkas.penerima_id', '=', 'penerimas.id')
         ->leftJoin('sumber_danas', 'berkas.sumber_dana_id', '=', 'sumber_danas.id')
-        ->find($berka->id);
+        ->where('berkas.id', $id)->firstOrFail();
 
-        return new PrintBerkasResource($findberkas);
+        if(Gate::denies('canAksesBerkas', $findberkas)) {
+            abort(404);
+        } else {
+            return new PrintBerkasResource($findberkas);
+        }
     }
 }

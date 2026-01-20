@@ -293,7 +293,7 @@ home.form = homeForm
 
 /**
 * @see \App\Http\Controllers\DashboardController::__invoke
-* @see app/Http/Controllers/DashboardController.php:18
+* @see app/Http/Controllers/DashboardController.php:17
 * @route '/dashboard/{tahun?}'
 */
 export const dashboard = (args?: { tahun?: string | number } | [tahun: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -308,7 +308,7 @@ dashboard.definition = {
 
 /**
 * @see \App\Http\Controllers\DashboardController::__invoke
-* @see app/Http/Controllers/DashboardController.php:18
+* @see app/Http/Controllers/DashboardController.php:17
 * @route '/dashboard/{tahun?}'
 */
 dashboard.url = (args?: { tahun?: string | number } | [tahun: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -339,7 +339,7 @@ dashboard.url = (args?: { tahun?: string | number } | [tahun: string | number ] 
 
 /**
 * @see \App\Http\Controllers\DashboardController::__invoke
-* @see app/Http/Controllers/DashboardController.php:18
+* @see app/Http/Controllers/DashboardController.php:17
 * @route '/dashboard/{tahun?}'
 */
 dashboard.get = (args?: { tahun?: string | number } | [tahun: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -349,7 +349,7 @@ dashboard.get = (args?: { tahun?: string | number } | [tahun: string | number ] 
 
 /**
 * @see \App\Http\Controllers\DashboardController::__invoke
-* @see app/Http/Controllers/DashboardController.php:18
+* @see app/Http/Controllers/DashboardController.php:17
 * @route '/dashboard/{tahun?}'
 */
 dashboard.head = (args?: { tahun?: string | number } | [tahun: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -359,7 +359,7 @@ dashboard.head = (args?: { tahun?: string | number } | [tahun: string | number ]
 
 /**
 * @see \App\Http\Controllers\DashboardController::__invoke
-* @see app/Http/Controllers/DashboardController.php:18
+* @see app/Http/Controllers/DashboardController.php:17
 * @route '/dashboard/{tahun?}'
 */
 const dashboardForm = (args?: { tahun?: string | number } | [tahun: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -369,7 +369,7 @@ const dashboardForm = (args?: { tahun?: string | number } | [tahun: string | num
 
 /**
 * @see \App\Http\Controllers\DashboardController::__invoke
-* @see app/Http/Controllers/DashboardController.php:18
+* @see app/Http/Controllers/DashboardController.php:17
 * @route '/dashboard/{tahun?}'
 */
 dashboardForm.get = (args?: { tahun?: string | number } | [tahun: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -379,7 +379,7 @@ dashboardForm.get = (args?: { tahun?: string | number } | [tahun: string | numbe
 
 /**
 * @see \App\Http\Controllers\DashboardController::__invoke
-* @see app/Http/Controllers/DashboardController.php:18
+* @see app/Http/Controllers/DashboardController.php:17
 * @route '/dashboard/{tahun?}'
 */
 dashboardForm.head = (args?: { tahun?: string | number } | [tahun: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
