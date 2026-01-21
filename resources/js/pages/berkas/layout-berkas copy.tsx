@@ -8,7 +8,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
+} from "@/components/ui/table";
 import AppLayout from "@/layouts/app-layout";
 import { BerkasSidebar } from "@/components/berkas-sidebar";
 import { Head, router, usePage } from "@inertiajs/react";
@@ -388,7 +388,7 @@ export default function LayoutBerkas({ daftarberkas, tahun, menuOption, filtered
 
     return (
         <>
-            <Head title="Berkas" />
+        <BerkasSidebar />
             <Dialog open={modalCrud} onOpenChange={handleDialogToggle} modal>
                 <FormRegistrasiBerkas
                     modalCrud={modalCrud}
@@ -413,12 +413,12 @@ export default function LayoutBerkas({ daftarberkas, tahun, menuOption, filtered
                     destroyBerkas={destroyBerkas}
                 />
             </Dialog>
-            <BerkasSidebar />
-            <SidebarInset className='p-1'>
+            <Head title="Berkas" />
+            <SidebarInset className="py-1">
                 <div className="flex flex-1 flex-col space-y-2 pl-2 mt-(--header-height) h-[calc(100svh-var(--header-height))]!">
                     <AppSidebarHeader breadcrumbs={breadcrumbs} trigger={true} />
-                    <div className="flex flex-1 flex-col gap-4 rounded-xl p-4 bg-background">
-                        <div className="flex">
+                    <div className="min-h-screen p-4 flex-1 overflow-hidden bg-background shadow-sm rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
+                        <div className="flex flex-1">
                             <Heading
                                 title={menuOption.charAt(0).toUpperCase() + menuOption.slice(1)}
                                 description="Kelola data berkas pada tabel dibawah ini."
@@ -447,8 +447,7 @@ export default function LayoutBerkas({ daftarberkas, tahun, menuOption, filtered
                                 </Alert>
                             </div>
                         }
-
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center py-4 gap-2">
                             <div>
                                 <Select 
                                     name="jenisspm"
@@ -562,7 +561,6 @@ export default function LayoutBerkas({ daftarberkas, tahun, menuOption, filtered
                                 </div>
                             </div>
                         </div>
-
                         <Table>
                             <TableHeader>
                                 <TableRow>
