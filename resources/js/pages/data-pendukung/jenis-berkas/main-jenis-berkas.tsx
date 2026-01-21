@@ -1,5 +1,5 @@
-import Heading from '@/components/heading';
 import AppLayout from '@/layouts/app-layout';
+import Heading from '@/components/heading';
 import { type BreadcrumbItem } from '@/types';
 import { Head, useForm } from '@inertiajs/react';
 import { useState } from 'react';
@@ -88,8 +88,8 @@ export default function MainJenisBerkas({ jenisberkas }: FieldDataProps) {
                     clearErrors={clearErrors}
                 />
             </Dialog>
-            <div className="min-h-screen p-4 flex-1 overflow-hidden bg-background shadow-sm rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
-                <div className="flex flex-1">
+            <div className="p-4 bg-background shadow-sm rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
+                <div className="flex">
                     <Heading
                         title="Jenis Berkas"
                         description="Kelola data jenis berkas pada tabel dibawah ini."

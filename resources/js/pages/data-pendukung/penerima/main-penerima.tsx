@@ -1,5 +1,5 @@
-import Heading from '@/components/heading';
 import AppLayout from '@/layouts/app-layout';
+import Heading from '@/components/heading';
 import { SharedData, type BreadcrumbItem } from '@/types';
 import { Head, router, useForm, usePage } from '@inertiajs/react';
 import { useCallback, useEffect, useState } from 'react';
@@ -186,8 +186,8 @@ export default function MainPenerima({ penerimas, filtered }: IndexPenerimaProps
                     clearErrors={clearErrors}
                 />
             </Dialog>
-            <div className="min-h-screen p-4 flex-1 overflow-hidden bg-background shadow-sm rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
-                <div className="flex flex-1">
+            <div className="p-4 bg-background shadow-sm rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
+                <div className="flex">
                     <Heading
                         title="Penerima"
                         description="Kelola data penerima pada tabel dibawah ini."

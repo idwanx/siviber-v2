@@ -1,6 +1,6 @@
+import AppLayout from '@/layouts/app-layout';
 import AppearanceTabs from '@/components/appearance-tabs';
 import { type BreadcrumbItem } from '@/types';
-import AppLayout from '@/layouts/app-layout';
 import LayoutSettings from './layout-settings';
 import Heading from '@/components/heading';
 import { Separator } from '@/components/ui/separator';

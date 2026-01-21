@@ -11,7 +11,7 @@ import { register } from '@/routes';
 import { store } from '@/routes/login';
 import { request } from '@/routes/password';
 import { Form, Head } from '@inertiajs/react';
-import { CheckCircle2Icon, Eye, EyeClosed, EyeClosedIcon, EyeOff } from 'lucide-react';
+import { CheckCircle2Icon, Eye, EyeOff } from 'lucide-react';
 import {
   InputGroup,
   InputGroupAddon,

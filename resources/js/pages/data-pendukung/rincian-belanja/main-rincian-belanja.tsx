@@ -196,8 +196,8 @@ export default function MainRincianBelanja({ rincianbelanjas, filtered }: IndexR
                     isOpen={modalCrud}
                 />
             </Dialog>
-            <div className="min-h-screen p-4 flex-1 overflow-hidden bg-background shadow-sm rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
-                <div className="flex flex-1">
+            <div className="p-4 bg-background shadow-sm rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
+                <div className="flex">
                     <Heading
                         title="Rincian Belanja"
                         description="Kelola data rincian belanja pada tabel dibawah ini."

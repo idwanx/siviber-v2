@@ -1,7 +1,7 @@
-import { AppSidebarHeader } from '@/components/app-sidebar-header';
 import AppLayout from '@/layouts/app-layout';
+import { AppSidebarHeader } from '@/components/app-sidebar-header';
 import { type BreadcrumbItem } from '@/types';
-import { Head, router, useForm, usePage } from '@inertiajs/react';
+import { Head, router, useForm } from '@inertiajs/react';
 import { useCallback, useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
@@ -183,8 +183,8 @@ export default function MainInstansi({ instansis, filtered }: IndexInstansiProps
                     clearErrors={clearErrors}
                 />
             </Dialog>
-            <div className="min-h-screen p-4 flex-1 overflow-hidden bg-background shadow-sm rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
-                <div className="flex flex-1">
+            <div className="p-4 bg-background shadow-sm rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
+                <div className="flex">
                     <Heading
                         title="Instansi"
                         description="Kelola data instansi pada tabel dibawah ini."

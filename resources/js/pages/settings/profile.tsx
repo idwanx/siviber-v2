@@ -1,13 +1,12 @@
-import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
+import AppLayout from '@/layouts/app-layout';
 import { send } from '@/routes/verification';
 import { type BreadcrumbItem, type SharedData } from '@/types';
 import { Transition } from '@headlessui/react';
-import { Form, Link, useForm, usePage } from '@inertiajs/react';
+import { Link, useForm, usePage } from '@inertiajs/react';
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import AppLayout from '@/layouts/app-layout';
 import LayoutSettings from './layout-settings';
 import Heading from '@/components/heading';
 import { Separator } from '@/components/ui/separator';
@@ -53,9 +52,6 @@ export default function Profile({
     };
 
     const handleFileFoto = (e: React.ChangeEvent<HTMLInputElement>) => {
-        // if (e.target.files && e.target.files.length > 0) {
-        //     setData('foto', e.target.files[0]);
-        // }
         const file = e.target.files?.[0] || null;
         if (file) {
             setData('foto', file);

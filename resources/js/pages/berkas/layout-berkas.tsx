@@ -1,3 +1,4 @@
+import AppLayout from "@/layouts/app-layout";
 import { Button } from "@/components/ui/button";
 import { AlertCircleIcon, RefreshCcw, Search } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
@@ -9,7 +10,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import AppLayout from "@/layouts/app-layout";
 import { BerkasSidebar } from "@/components/berkas-sidebar";
 import { Head, router, usePage } from "@inertiajs/react";
 import { SidebarInset } from "@/components/ui/sidebar";
@@ -30,23 +30,23 @@ import {
 import { BreadcrumbItem, SharedData } from "@/types";
 import Heading from "@/components/heading";
 import { Dialog } from "@/components/ui/dialog";
-import FormRegistrasiBerkas from "./dialog-form-registrasi";
 import { useEcho } from "@laravel/echo-react";
+import FormRegistrasiBerkas from "./dialog-form-registrasi";
 import DialogDetailBerkas from "./dialog-detail-berkas";
 import DialogDestroy from "./dialog-destroy";
-import { BerkasProps, FieldDataBerkas, FilteredValues, ModeType, Riwayats, StatusType, UpdateJumlahCatatan } from "@/types/berkas";
 import ButtonUpdateStatus from "./button-update-status";
 import ButtonCatatan from "./button-catatan";
+import ButtonHistory from "./button-history";
 import { LabelIconStatus } from "./label-icon-status";
 import DropDownPilihan from "./dropdown-action";
 import Pagination from "@/components/pagination";
-import ButtonHistory from "./button-history";
 import { Separator } from "@/components/ui/separator";
 import {
   Alert,
   AlertDescription,
   AlertTitle,
-} from "@/components/ui/alert"
+} from "@/components/ui/alert";
+import { BerkasProps, FieldDataBerkas, FilteredValues, ModeType, Riwayats, StatusType, UpdateJumlahCatatan } from "@/types/berkas";
 
 const loads = [
     {
@@ -416,7 +416,7 @@ export default function LayoutBerkas({ daftarberkas, tahun, menuOption, filtered
             <BerkasSidebar />
             <SidebarInset>
                 <AppSidebarHeader breadcrumbs={breadcrumbs} trigger={true} />
-                <div className="flex flex-1 flex-col bg-background shadow-md gap-4 rounded-xl p-4">
+                <div className="p-4 bg-background shadow-sm rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
                     <div className="flex">
                         <Heading
                             title={menuOption.charAt(0).toUpperCase() + menuOption.slice(1)}
@@ -446,8 +446,7 @@ export default function LayoutBerkas({ daftarberkas, tahun, menuOption, filtered
                             </Alert>
                         </div>
                     }
-
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center py-4 gap-2">
                         <div>
                             <Select 
                                 name="jenisspm"
