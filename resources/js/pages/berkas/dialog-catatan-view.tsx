@@ -150,14 +150,10 @@ export default function DialogCatatanView({
               Daftar Catatan
             </DialogTitle>
             <DialogDescription>
+              Kegiatan:{' '}{dataValue?.kegiatan}<br />
+              No. SPM:{' '}{dataValue?.no_spm}
             </DialogDescription>
           </DialogHeader>
-          <div className="grid grid-cols-8 text-sm text-muted-foreground px-6">
-            <div>Kegiatan</div>
-            <div className="col-span-7">: {dataValue?.kegiatan}</div>
-            <div>No. Spm</div>
-            <div className="col-span-7">: {dataValue?.no_spm}</div>
-          </div>
           <div ref={scrollRef} className="xl:max-h-120 max-h-80 overflow-y-auto mx-4 border rounded-md">
               <Table>
                 <TableHeader>

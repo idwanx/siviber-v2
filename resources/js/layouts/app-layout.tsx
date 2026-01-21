@@ -201,7 +201,7 @@ export default ({ children }: AppLayoutProps) => {
             <div className="[--header-height:calc(--spacing(14))]">
                 <Toaster />
                 <SidebarProvider className="flex flex-col">
-                    <AppHeader tahun={tahun} updateNewTahun={updateNewTahun} />
+                    <AppHeader updateNewTahun={updateNewTahun} />
                     <div className="flex flex-1 bg-sidebar">
                         {children}
                     </div>

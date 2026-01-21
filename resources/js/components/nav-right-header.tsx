@@ -98,13 +98,13 @@ const data = [
   ],
 ]
 
-export function NavRightHeader({tahun, updateNewTahun}: {tahun?: number | null, updateNewTahun: (newtahun: number) => void}) {
+export function NavRightHeader({updateNewTahun}: {updateNewTahun: (newtahun: number) => void}) {
   const [isOpen, setIsOpen] = React.useState(false);
 
   return (
     <div className="flex items-center gap-2 text-sm">
       <div className="text-muted-foreground hidden font-medium md:inline-block">
-        <NavTahun tahun={tahun} updateNewTahun={updateNewTahun} />
+        <NavTahun updateNewTahun={updateNewTahun} />
       </div>
       <Button variant="ghost" size="icon" className="h-7 w-7">
         <Star />

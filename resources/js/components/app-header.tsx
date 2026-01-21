@@ -21,28 +21,18 @@ import {
     SheetTitle,
     SheetTrigger,
 } from '@/components/ui/sheet';
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
-} from '@/components/ui/tooltip';
 import { UserMenuContent } from '@/components/user-menu-content';
 import { useInitials } from '@/hooks/use-initials';
 import { cn, resolveUrl } from '@/lib/utils';
 import { dashboard, datapendukung } from '@/routes';
-import { type BreadcrumbItem, type NavItem, type SharedData } from '@/types';
-import { Link, router, usePage } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid, Menu, Search, Settings } from 'lucide-react';
+import { type NavItem, type SharedData } from '@/types';
+import { Link, usePage } from '@inertiajs/react';
+import { BookOpen, Folder, Menu } from 'lucide-react';
 import AppLogo from './app-logo';
-import AppLogoIcon from './app-logo-icon';
 import berkas from '@/routes/berkas';
-import instansi from '@/routes/instansi';
 import { NavTahun } from './nav-tahun';
-import { useEffect, useState } from 'react';
 
 const activeItemStyles = 'text-neutral-900 bg-sidebar-border/50 dark:bg-neutral-800 dark:text-neutral-100';
-
 
 export function AppHeader({
     updateNewTahun
@@ -75,7 +65,6 @@ export function AppHeader({
             icon: null,
             role: 'AdminBendahara'
         }, 
-
     ];
 
     const rightNavItems: NavItem[] = [
@@ -101,7 +90,7 @@ export function AppHeader({
 
     return (
         <>
-            <div className="fixed top-0 z-50 flex w-full bg-sidebar border-b border-sidebar-border/80">
+            <div className="bg-background sticky top-0 z-50 flex w-full items-center border-b">
                 <div className="flex h-(--header-height) w-full items-center gap-2 px-4">
                     {/* Mobile Menu */}
                     <div className="lg:hidden">
@@ -171,7 +160,6 @@ export function AppHeader({
                             </SheetContent>
                         </Sheet>
                     </div>
-
                     <Link
                         href={'/'}
                         prefetch
@@ -179,7 +167,6 @@ export function AppHeader({
                     >
                         <AppLogo />
                     </Link>
-
                     {/* Desktop Navigation */}
                     <div className="ml-6 hidden h-full items-center space-x-6 lg:flex">
                         <NavigationMenu className="flex h-full items-stretch">

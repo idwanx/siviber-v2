@@ -12,7 +12,7 @@ import berkas from '@/routes/berkas';
 import { SharedData, type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { resolveUrl } from "@/lib/utils";
-import { Check, CircleCheckBig, CircleSlash2, FileInput, Mail } from 'lucide-react';
+import { Check, CircleCheckBig, CircleSlash2, FileInput } from 'lucide-react';
 import { NavLaporanBerkas } from './nav-laporan-berkas';
 import { useEcho } from '@laravel/echo-react';
 import { router } from '@inertiajs/react'
@@ -97,7 +97,7 @@ export function BerkasSidebar() {
                                         <span>{item.title}</span>
                                     </Link>
                                 </SidebarMenuButton>
-                                <SidebarMenuBadge>{item.totals === 0 ? '-' : item.totals}</SidebarMenuBadge>
+                                <SidebarMenuBadge>{item.totals === 0 ? '' : item.totals}</SidebarMenuBadge>
                             </SidebarMenuItem>
                         ))}
                         

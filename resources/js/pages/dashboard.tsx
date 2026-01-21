@@ -17,21 +17,21 @@ export default function Dashboard() {
     return (
         <>
             <Head title="Dashboard" />
-            <SidebarInset className='p-1'>
-                <div className="flex flex-1 flex-col space-y-2 pl-2 mt-(--header-height) h-[calc(100svh-var(--header-height))]!">
-                    <AppSidebarHeader breadcrumbs={breadcrumbs} trigger={false} />
-                    <div className="flex flex-1 flex-col gap-4 rounded-xl p-4 bg-background">
-                        <h1 className="text-2xl font-bold mb-4">Main Content Area</h1>
-                        <p>This is the main content. It will scroll vertically.</p>
-                        <p>Scroll down to see the fixed sidebar in action.</p>
-                        {Array.from({ length: 24 }).map((_, index) => (
-                            <div
-                            key={index}
-                            className="bg-muted/50 aspect-video h-12 w-full rounded-lg"
-                            />
-                        ))}
-                    </div>
+            <SidebarInset>
+
+                <AppSidebarHeader breadcrumbs={breadcrumbs} trigger={false} />
+                <div className="flex flex-1 flex-col gap-4 rounded-xl p-4 bg-background">
+                    <h1 className="text-2xl font-bold mb-4">Main Content Area</h1>
+                    <p>This is the main content. It will scroll vertically.</p>
+                    <p>Scroll down to see the fixed sidebar in action.</p>
+                    {Array.from({ length: 24 }).map((_, index) => (
+                        <div
+                        key={index}
+                        className="bg-muted/50 aspect-video h-12 w-full rounded-lg"
+                        />
+                    ))}
                 </div>
+
             </SidebarInset>
         </>
     );

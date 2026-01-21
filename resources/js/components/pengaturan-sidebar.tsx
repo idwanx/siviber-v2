@@ -7,13 +7,8 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import instansi from '@/routes/instansi';
-import jenisBelanja from '@/routes/jenis-belanja';
-import jenisBerkas from '@/routes/jenis-berkas';
-import sumberDana from '@/routes/sumber-dana';
 import { type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { CircleSmall } from 'lucide-react';
 import { resolveUrl } from "@/lib/utils";
 import { edit as editAppearance } from '@/routes/appearance';
 import { edit } from '@/routes/profile';

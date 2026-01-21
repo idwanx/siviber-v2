@@ -414,235 +414,233 @@ export default function LayoutBerkas({ daftarberkas, tahun, menuOption, filtered
                 />
             </Dialog>
             <BerkasSidebar />
-            <SidebarInset className='p-1'>
-                <div className="flex flex-1 flex-col space-y-2 pl-2 mt-(--header-height) h-[calc(100svh-var(--header-height))]!">
-                    <AppSidebarHeader breadcrumbs={breadcrumbs} trigger={true} />
-                    <div className="flex flex-1 flex-col gap-4 rounded-xl p-4 bg-background">
-                        <div className="flex">
-                            <Heading
-                                title={menuOption.charAt(0).toUpperCase() + menuOption.slice(1)}
-                                description="Kelola data berkas pada tabel dibawah ini."
-                            />
-                            {auth.user.roleuser.slug === 'bendahara' && menuOption === "registrasi" ? (
-                                <div className="ml-auto">
-                                    <Button onClick={() => openModalCrud('create')} tabIndex={1}>Registrasi</Button>
-                                </div>
-                            ):(
-                                ''
-                            )}
-                        </div>
-                        <Separator className="mb-4" />
-                        {errors.cari && 
-                            <div className="flex max-w-xl whitespace-normal">
-                                <Alert variant="destructive">
-                                    <AlertCircleIcon />
-                                    <AlertTitle>Pemberitahuan.</AlertTitle>
-                                    <AlertDescription>
-                                        <p>
-                                            Tidak dizinkan menggunakan karakter simbol 
-                                            (seperti tanda baca khusus, simbol matematika, 
-                                            atau karakter non-alfanumerik) dalam pencarian.
-                                        </p>
-                                    </AlertDescription>
-                                </Alert>
-                            </div>
-                        }
-
-                        <div className="flex items-center gap-2">
-                            <div>
-                                <Select 
-                                    name="jenisspm"
-                                    value={values.jenisspm} 
-                                    onValueChange={(e) => 
-                                        setValues(values => ({
-                                            ...values,
-                                            jenisspm: e,
-                                        }))
-                                    }
-                                >
-                                    <SelectTrigger id="jenisspm" tabIndex={2} className="w-full">
-                                        <SelectValue placeholder="Jenis SPM" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectGroup>
-                                            <SelectLabel>Jenis SPM</SelectLabel>
-                                            {dataPendukung.jenisberkas.map(item => (
-                                                <SelectItem key={item.slug} value={item.slug}>{item.nama_jenis_berkas}</SelectItem>
-                                            ))}
-                                        </SelectGroup>
-                                    </SelectContent>
-                                </Select>
-                            </div>
-                            <div>
-                                <Select 
-                                    name="sumberdana"
-                                    value={values.sumberdana} 
-                                    onValueChange={(e) => 
-                                        setValues(values => ({
-                                            ...values,
-                                            sumberdana: e,
-                                        }))
-                                    }
-                                >
-                                    <SelectTrigger id="sumberdana" tabIndex={3} className="w-full">
-                                        <SelectValue placeholder="Sumber Dana" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectGroup>
-                                            <SelectLabel>Sumber Dana</SelectLabel>
-                                            {dataPendukung.sumberdana.map(item => (
-                                                <SelectItem key={item.slug} value={item.slug}>{item.nama_sumber_dana}</SelectItem>
-                                            ))}
-                                        </SelectGroup>
-                                    </SelectContent>
-                                </Select>
-                            </div>
-                            <div>
-                                <Select 
-                                    name="instansi"
-                                    value={values.instansi} 
-                                    onValueChange={(e) => 
-                                        setValues(values => ({
-                                            ...values,
-                                            instansi: e,
-                                        }))
-                                    }
-                                >
-                                    <SelectTrigger id="instansi" tabIndex={4} className="w-full">
-                                        <SelectValue placeholder="Instansi" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectGroup>
-                                            <SelectLabel>Instansi</SelectLabel>
-                                            {dataPendukung.instansi.map(item => (
-                                                <SelectItem key={item.slug} value={item.slug}>{item.nama_instansi}</SelectItem>
-                                            ))}
-                                        </SelectGroup>
-                                    </SelectContent>
-                                </Select>
-                            </div>
-                            <div>
-                                <InputGroup>
-                                    <InputGroupInput id='cari' name='cari' value={values.cari} onChange={handleInputCari} tabIndex={5} placeholder="Cari kegiatan..." autoFocus />
-                                        <InputGroupAddon>
-                                            <Search />
-                                        </InputGroupAddon>
-                                </InputGroup>
-                            </div>
-                            <div>
-                                <Button onClick={refresh} variant="outline" size="icon" aria-label="Refresh" tabIndex={6}>
-                                    <RefreshCcw />
-                                </Button>
-                            </div>
+            <SidebarInset>
+                <AppSidebarHeader breadcrumbs={breadcrumbs} trigger={true} />
+                <div className="flex flex-1 flex-col bg-background shadow-md gap-4 rounded-xl p-4">
+                    <div className="flex">
+                        <Heading
+                            title={menuOption.charAt(0).toUpperCase() + menuOption.slice(1)}
+                            description="Kelola data berkas pada tabel dibawah ini."
+                        />
+                        {auth.user.roleuser.slug === 'bendahara' && menuOption === "registrasi" ? (
                             <div className="ml-auto">
-                                <div className='flex gap-2'>
-                                    <div>
-                                        <Select 
-                                            name="load"
-                                            value={values.load === '' ? filtered.load : values.load} 
-                                            onValueChange={(e) => 
-                                                setValues(values => ({
-                                                    ...values,
-                                                    load: e,
-                                                }))
-                                            }
-                                        >
-                                            <SelectTrigger id="load" tabIndex={7} className="w-full">
-                                                <SelectValue placeholder={filtered.load} />
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                                <SelectGroup>
-                                                    {loads.map((load, key) => (
-                                                    <SelectItem key={key} value={load.value}>{load.name}</SelectItem>
-                                                    ))}
-                                                </SelectGroup>
-                                            </SelectContent>
-                                        </Select>
-                                    </div>
+                                <Button onClick={() => openModalCrud('create')} tabIndex={1}>Registrasi</Button>
+                            </div>
+                        ):(
+                            ''
+                        )}
+                    </div>
+                    <Separator className="mb-4" />
+                    {errors.cari && 
+                        <div className="flex max-w-xl whitespace-normal">
+                            <Alert variant="destructive">
+                                <AlertCircleIcon />
+                                <AlertTitle>Pemberitahuan.</AlertTitle>
+                                <AlertDescription>
+                                    <p>
+                                        Tidak dizinkan menggunakan karakter simbol 
+                                        (seperti tanda baca khusus, simbol matematika, 
+                                        atau karakter non-alfanumerik) dalam pencarian.
+                                    </p>
+                                </AlertDescription>
+                            </Alert>
+                        </div>
+                    }
+
+                    <div className="flex items-center gap-2">
+                        <div>
+                            <Select 
+                                name="jenisspm"
+                                value={values.jenisspm} 
+                                onValueChange={(e) => 
+                                    setValues(values => ({
+                                        ...values,
+                                        jenisspm: e,
+                                    }))
+                                }
+                            >
+                                <SelectTrigger id="jenisspm" tabIndex={2} className="w-full">
+                                    <SelectValue placeholder="Jenis SPM" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectGroup>
+                                        <SelectLabel>Jenis SPM</SelectLabel>
+                                        {dataPendukung.jenisberkas.map(item => (
+                                            <SelectItem key={item.slug} value={item.slug}>{item.nama_jenis_berkas}</SelectItem>
+                                        ))}
+                                    </SelectGroup>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                        <div>
+                            <Select 
+                                name="sumberdana"
+                                value={values.sumberdana} 
+                                onValueChange={(e) => 
+                                    setValues(values => ({
+                                        ...values,
+                                        sumberdana: e,
+                                    }))
+                                }
+                            >
+                                <SelectTrigger id="sumberdana" tabIndex={3} className="w-full">
+                                    <SelectValue placeholder="Sumber Dana" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectGroup>
+                                        <SelectLabel>Sumber Dana</SelectLabel>
+                                        {dataPendukung.sumberdana.map(item => (
+                                            <SelectItem key={item.slug} value={item.slug}>{item.nama_sumber_dana}</SelectItem>
+                                        ))}
+                                    </SelectGroup>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                        <div>
+                            <Select 
+                                name="instansi"
+                                value={values.instansi} 
+                                onValueChange={(e) => 
+                                    setValues(values => ({
+                                        ...values,
+                                        instansi: e,
+                                    }))
+                                }
+                            >
+                                <SelectTrigger id="instansi" tabIndex={4} className="w-full">
+                                    <SelectValue placeholder="Instansi" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectGroup>
+                                        <SelectLabel>Instansi</SelectLabel>
+                                        {dataPendukung.instansi.map(item => (
+                                            <SelectItem key={item.slug} value={item.slug}>{item.nama_instansi}</SelectItem>
+                                        ))}
+                                    </SelectGroup>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                        <div>
+                            <InputGroup>
+                                <InputGroupInput id='cari' name='cari' value={values.cari} onChange={handleInputCari} tabIndex={5} placeholder="Cari kegiatan..." autoFocus />
+                                    <InputGroupAddon>
+                                        <Search />
+                                    </InputGroupAddon>
+                            </InputGroup>
+                        </div>
+                        <div>
+                            <Button onClick={refresh} variant="outline" size="icon" aria-label="Refresh" tabIndex={6}>
+                                <RefreshCcw />
+                            </Button>
+                        </div>
+                        <div className="ml-auto">
+                            <div className='flex gap-2'>
+                                <div>
+                                    <Select 
+                                        name="load"
+                                        value={values.load === '' ? filtered.load : values.load} 
+                                        onValueChange={(e) => 
+                                            setValues(values => ({
+                                                ...values,
+                                                load: e,
+                                            }))
+                                        }
+                                    >
+                                        <SelectTrigger id="load" tabIndex={7} className="w-full">
+                                            <SelectValue placeholder={filtered.load} />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                {loads.map((load, key) => (
+                                                <SelectItem key={key} value={load.value}>{load.name}</SelectItem>
+                                                ))}
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        <Table>
-                            <TableHeader>
-                                <TableRow>
-                                    <TableHead className="w-12.5 text-center">No</TableHead>
-                                    <TableHead className="w-35">Waktu Registrasi</TableHead>
-                                    <TableHead className="w-30 text-center">Jenis Berkas</TableHead>
-                                    <TableHead>Kegiatan</TableHead>
-                                    <TableHead className="w-52 2xl:w-80 hidden 2xl:table-cell text-center">Instansi</TableHead>
-                                    <TableHead className="w-36 text-center">Sumber Dana</TableHead>
-                                    <TableHead className="w-28 text-center">Status</TableHead>
-                                    <TableHead className="w-20 text-center">Pilihan</TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {stateBerkas.length > 0 ? (
-                                    stateBerkas.map((item, index) => (
-                                        <TableRow key={index}>
-                                            <TableCell className="text-center">
-                                                {daftarberkas?.meta.from ? daftarberkas?.meta.from + index : index + 1}
-                                            </TableCell>
-                                            <TableCell className="text-center">
-                                                {item.hari}<br />
-                                                {item.tgl_registrasi}<br />
-                                                {item.jam}
-                                            </TableCell>
-                                            <TableCell className="text-center">{item.nama_jenis_berkas}</TableCell>
-                                            <TableCell className="whitespace-normal">
-                                                <div className='2xl:hidden md:w-100 text-muted-foreground mb-0.5 md:truncate'>
-                                                    {item.nama_instansi}
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead className="w-12.5 text-center">No</TableHead>
+                                <TableHead className="w-35">Waktu Registrasi</TableHead>
+                                <TableHead className="w-30 text-center">Jenis Berkas</TableHead>
+                                <TableHead>Kegiatan</TableHead>
+                                <TableHead className="w-52 2xl:w-80 hidden 2xl:table-cell text-center">Instansi</TableHead>
+                                <TableHead className="w-36 text-center">Sumber Dana</TableHead>
+                                <TableHead className="w-28 text-center">Status</TableHead>
+                                <TableHead className="w-20 text-center">Pilihan</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {stateBerkas.length > 0 ? (
+                                stateBerkas.map((item, index) => (
+                                    <TableRow key={index}>
+                                        <TableCell className="text-center">
+                                            {daftarberkas?.meta.from ? daftarberkas?.meta.from + index : index + 1}
+                                        </TableCell>
+                                        <TableCell className="text-center">
+                                            {item.hari}<br />
+                                            {item.tgl_registrasi}<br />
+                                            {item.jam}
+                                        </TableCell>
+                                        <TableCell className="text-center">{item.nama_jenis_berkas}</TableCell>
+                                        <TableCell className="whitespace-normal">
+                                            <div className='2xl:hidden md:w-100 text-muted-foreground mb-0.5 md:truncate'>
+                                                {item.nama_instansi}
+                                            </div>
+                                            <p className='text-sm/6 font-normal'>{item.kegiatan}</p>
+                                            <div className="text-muted-foreground sm:grid sm:grid-cols-6">
+                                                <div>No. Spm</div>
+                                                <div className="sm:col-span-5">: {item.no_spm}</div>
+                                            </div>
+                                            <div className="text-muted-foreground sm:grid sm:grid-cols-6">
+                                                <div>Tgl. Spm</div>
+                                                <span className="sm:col-span-2">:  {item.tgl_spm}</span>
+                                                <span className="sm:col-span-2 text-destructive">
+                                                    {expired(item.hari_ke, item.status_berka_id)}
+                                                </span>
+                                            </div>
+                                            <div className="flex items-center pt-3">
+                                                <div className="flex">
+                                                    <ButtonHistory dataValue={item} />
+                                                    <ButtonCatatan stateCatatans={stateCatatans} user={auth.user} updateJumlahCatatan={updateJumlahCatatan} dataValue={item} />
                                                 </div>
-                                                <p className='text-sm/6 font-normal'>{item.kegiatan}</p>
-                                                <div className="text-muted-foreground sm:grid sm:grid-cols-6">
-                                                    <div>No. Spm</div>
-                                                    <div className="sm:col-span-5">: {item.no_spm}</div>
-                                                </div>
-                                                <div className="text-muted-foreground sm:grid sm:grid-cols-6">
-                                                    <div>Tgl. Spm</div>
-                                                    <span className="sm:col-span-2">:  {item.tgl_spm}</span>
-                                                    <span className="sm:col-span-2 text-destructive">
-                                                        {expired(item.hari_ke, item.status_berka_id)}
-                                                    </span>
-                                                </div>
-                                                <div className="flex items-center pt-3">
-                                                    <div className="flex">
-                                                        <ButtonHistory dataValue={item} />
-                                                        <ButtonCatatan stateCatatans={stateCatatans} user={auth.user} updateJumlahCatatan={updateJumlahCatatan} dataValue={item} />
-                                                    </div>
-                                                    <ButtonUpdateStatus 
-                                                        updateStatusBerkas={updateStatusBerkas}
-                                                        dataValue={item}
-                                                    />
-                                                </div>
-                                            </TableCell>
-                                            <TableCell className="hidden 2xl:table-cell text-center whitespace-normal">{item.nama_instansi}</TableCell>
-                                            <TableCell className="text-center">{item.nama_sumber_dana}</TableCell>
-                                            <TableCell>
-                                                <LabelIconStatus status={item.status_berka_id} />
-                                            </TableCell>
-                                            <TableCell>
-                                                <div className='flex justify-center'>
-                                                    <DropDownPilihan user={auth.user} openModalCrud={openModalCrud} openDialogDestroy={openDialogDestroy} openDialogDetail={openDialogDetail} dataValue={item.id} />
-                                                </div>
-                                            </TableCell>
-                                        </TableRow>
-                                    ))
-                                    ):(
-                                    <TableRow>
-                                        <TableCell colSpan={7} className="font-normal">Data tidak ditemukan.</TableCell>
+                                                <ButtonUpdateStatus 
+                                                    updateStatusBerkas={updateStatusBerkas}
+                                                    dataValue={item}
+                                                />
+                                            </div>
+                                        </TableCell>
+                                        <TableCell className="hidden 2xl:table-cell text-center whitespace-normal">{item.nama_instansi}</TableCell>
+                                        <TableCell className="text-center">{item.nama_sumber_dana}</TableCell>
+                                        <TableCell>
+                                            <LabelIconStatus status={item.status_berka_id} />
+                                        </TableCell>
+                                        <TableCell>
+                                            <div className='flex justify-center'>
+                                                <DropDownPilihan user={auth.user} openModalCrud={openModalCrud} openDialogDestroy={openDialogDestroy} openDialogDetail={openDialogDetail} dataValue={item.id} />
+                                            </div>
+                                        </TableCell>
                                     </TableRow>
-                                    )
-                                }
-                            </TableBody>
-                        </Table>
-                        <div className="grid items-center auto-rows-min gap-4 md:grid-cols-2 py-4">
-                            <div className="text-foreground text-sm">
-                                {daftarberkas?.meta.from} sampai {daftarberkas?.meta.to} dari total: {daftarberkas?.meta.total}
-                            </div>
-                            <div className="flex flex-1 flex-row-reverse">
-                                <Pagination links={daftarberkas.links} meta={daftarberkas.meta} />
-                            </div>
+                                ))
+                                ):(
+                                <TableRow>
+                                    <TableCell colSpan={7} className="font-normal">Data tidak ditemukan.</TableCell>
+                                </TableRow>
+                                )
+                            }
+                        </TableBody>
+                    </Table>
+                    <div className="grid items-center auto-rows-min gap-4 md:grid-cols-2 py-4">
+                        <div className="text-foreground text-sm">
+                            {daftarberkas?.meta.from} sampai {daftarberkas?.meta.to} dari total: {daftarberkas?.meta.total}
+                        </div>
+                        <div className="flex flex-1 flex-row-reverse">
+                            <Pagination links={daftarberkas.links} meta={daftarberkas.meta} />
                         </div>
                     </div>
                 </div>

@@ -16,7 +16,6 @@ import {
 } from "@/components/ui/sidebar";
 import { Link, usePage } from "@inertiajs/react";
 import { resolveUrl } from "@/lib/utils";
-import berkas from "@/routes/berkas";
 import { NavCollapse } from "@/types";
 
 export function NavLaporanBerkas({ tahun }: { tahun?: number | null }) {
