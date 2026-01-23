@@ -93,10 +93,10 @@ export default function DialogDestroy({ dataState, closeModal, destroyBerkas } :
             </>
           ):('')}
           <DialogClose asChild>
-            <Button variant="outline" tabIndex={10}>Batal</Button>
+            <Button variant="outline" tabIndex={2}>Tidak</Button>
           </DialogClose>
-          <Button variant="destructive" disabled={isLoading ? true : false} type="button" onClick={() => onDestroy(dataState!)}>
-            Hapus
+          <Button variant="destructive" tabIndex={1} disabled={isLoading ? true : false} type="button" onClick={() => onDestroy(dataState!)}>
+            Ya, Hapus
           </Button>
         </DialogFooter>
       </DialogContent>

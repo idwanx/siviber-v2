@@ -15,6 +15,7 @@ import berkas from "@/routes/berkas";
 import DialogKonfirmasiSp2d from "./dialog-konfirmasi-sp2d";
 import { Dialog } from "@/components/ui/dialog";
 import { FieldDataBerkas, FlashProps, Riwayats, StatusType } from "@/types/berkas";
+import DialogBatalSp2d from "./dialog-batal-sp2d";
 
 interface ActionProps {
     updateStatusBerkas: (newData: any) => void;
@@ -24,6 +25,7 @@ interface ActionProps {
 export default function ButtonUpdateStatus({ updateStatusBerkas, dataValue }: ActionProps) {
     const { auth } = usePage<SharedData>().props;
     const [dialogIsOpen, setDialogIsOpen] = useState<boolean>(false);
+    const [dialogIsBatalSp2d, setDialogIsBatalSp2d] = useState<boolean>(false);
     const [pendingAction, setPendingAction] = useState<{
         id: number;
         type: StatusType;
@@ -38,11 +40,10 @@ export default function ButtonUpdateStatus({ updateStatusBerkas, dataValue }: Ac
 
     const busy = isTaskBusy(dataValue.id);
 
-    const handleAction = (berkasId: number, newStatus: StatusType) => {
-
+    const handleAction = (berkasValue: FieldDataBerkas, newStatus: StatusType) => {
         setPendingAction({ id: dataValue.id, type: newStatus });
 
-        router.post(berkas.addriwayat(berkasId), { berkasid: berkasId, statusberkas: newStatus }, {
+        router.post(berkas.addriwayat(berkasValue.id), { berkasid: berkasValue.id, statusberkas: newStatus }, {
             preserveScroll: true,
             onSuccess: (response: { props: FlashProps }) => {
                 if (response.props.flash?.type === 'success') {
@@ -51,6 +52,7 @@ export default function ButtonUpdateStatus({ updateStatusBerkas, dataValue }: Ac
                     setPendingAction(null);
                     toast.success(response.props.flash?.message);
                     dialogIsOpen ? setDialogIsOpen(!dialogIsOpen) : setDialogIsOpen(false)
+                    dialogIsBatalSp2d ? setDialogIsBatalSp2d(!dialogIsBatalSp2d) : setDialogIsBatalSp2d(false)
                 } else if (response.props.flash?.type === 'error') {
                     toast.error(response.props.flash?.message);
                     setPendingAction(null);
@@ -78,7 +80,7 @@ export default function ButtonUpdateStatus({ updateStatusBerkas, dataValue }: Ac
                             variant="ghost"
                             size="sm"
                             className={`h-7 w-7 ${checkUserVerifikasi ? 'bg-ring/50 dark:bg-sidebar-primary/20' : 'text-muted-foreground'}`}
-                            onClick={() => handleAction(dataValue.id, 2)}
+                            onClick={() => handleAction(dataValue, 2)}
                             disabled={busy || statusBerkas === 3 || statusBerkas === 4}
                             tabIndex={10}
                         >
@@ -107,7 +109,7 @@ export default function ButtonUpdateStatus({ updateStatusBerkas, dataValue }: Ac
                             variant="ghost"
                             size="sm"
                             className={`h-7 w-7 ${checkUserPenolakan ? 'bg-ring/50 dark:bg-sidebar-primary/20 text-muted-foreground' : 'text-muted-foreground'}`}
-                            onClick={() => handleAction(dataValue.id, 3)}
+                            onClick={() => handleAction(dataValue, 3)}
                             disabled={busy || statusBerkas === 3 && !checkUserPenolakan || statusBerkas === 4}
                             tabIndex={11}
                         >
@@ -136,7 +138,7 @@ export default function ButtonUpdateStatus({ updateStatusBerkas, dataValue }: Ac
                             variant="ghost"
                             size="sm"
                             className={`h-7 w-7 ${checkUserSp2d ? 'bg-ring/50 dark:bg-sidebar-primary/20' : 'text-muted-foreground'}`}
-                            onClick={statusBerkas === 4 && checkUserSp2d ? () => handleAction(dataValue.id, 4) : handleKonfirmasiSp2d}
+                            onClick={statusBerkas === 4 && checkUserSp2d ? handleBatalSp2d : handleKonfirmasiSp2d}
                             disabled={busy || statusBerkas === 4 && !checkUserSp2d || statusBerkas === 3}
                             tabIndex={12}
                         >
@@ -161,11 +163,26 @@ export default function ButtonUpdateStatus({ updateStatusBerkas, dataValue }: Ac
         setDialogIsOpen(dialogIsOpen);
     };
 
+    const handleBatalSp2d = () => {
+        setDialogIsBatalSp2d(true);
+    };
+
+    const handleDialogBatalSp2dToggle = (dialogIsOpen: boolean) => {
+        setDialogIsBatalSp2d(dialogIsOpen);
+    };
+
     return (
         <>
-        <Dialog open={dialogIsOpen}  onOpenChange={handleDialogToggle}>
+        <Dialog open={dialogIsOpen} onOpenChange={handleDialogToggle}>
             <DialogKonfirmasiSp2d 
                 dialogOpen={dialogIsOpen} 
+                dataValue={dataValue}
+                handleAction={handleAction}
+                busy={busy}
+            />
+        </Dialog>
+        <Dialog open={dialogIsBatalSp2d} onOpenChange={handleDialogBatalSp2dToggle}>
+            <DialogBatalSp2d
                 dataValue={dataValue}
                 handleAction={handleAction}
                 busy={busy}

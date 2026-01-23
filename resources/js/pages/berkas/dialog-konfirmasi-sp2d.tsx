@@ -25,7 +25,7 @@ import { useInitials } from "@/hooks/use-initials";
 interface DialogProps {
     dialogOpen: boolean;
     dataValue: FieldDataBerkas;
-    handleAction: (berkasId: number, newStatus: StatusType) => void;
+    handleAction: (berkasValue: FieldDataBerkas, newStatus: StatusType) => void;
     busy: boolean;
 }
 
@@ -147,7 +147,7 @@ export default function DialogKonfirmasiSp2d({
                       variant={"default"}
                       type="button" 
                       tabIndex={1}
-                      onClick={() => handleAction(dataValue.id, 4)}
+                      onClick={() => handleAction(dataValue, 4)}
                       disabled={busy}
                       autoFocus
                     >

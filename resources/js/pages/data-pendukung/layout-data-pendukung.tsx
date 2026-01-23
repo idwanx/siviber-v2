@@ -12,9 +12,9 @@ export default function LayoutDataPendukung({ children }: AppLayoutProps) {
         <>
             <DataPendukungSidebar />
             <SidebarInset>
-                <div className="flex flex-1 flex-col">
+                <main className="flex flex-1 flex-col mt-(--header-height) h-[calc(100svh-var(--header-height))]!">
                     {children}
-                </div>
+                </main>
             </SidebarInset>
         </>
     );
