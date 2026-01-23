@@ -160,13 +160,13 @@ export function AppHeader({
                             </SheetContent>
                         </Sheet>
                     </div>
-                    <Link
+                    <a
                         href={'/'}
-                        prefetch
-                        className="flex items-center space-x-2"
+
+                        className="flex items-center"
                     >
                         <AppLogo />
-                    </Link>
+                    </a>
                     {/* Desktop Navigation */}
                     <div className="ml-6 hidden h-full items-center space-x-6 lg:flex">
                         <NavigationMenu className="flex h-full items-stretch">

@@ -1,3 +1,4 @@
+import AppLogo from '@/components/app-logo';
 import {
     Card,
     CardContent,
@@ -21,9 +22,17 @@ export default function AuthCardLayout({
     const { url } = usePage();
     
     return (
-        <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-muted p-6 md:p-8">
-            <div className={`flex w-full ${url.startsWith('/register') ? 'max-w-2xl' : 'max-w-md'} flex-col gap-6`}>
+        <div className="flex min-h-svh flex-col items-center justify-center bg-muted p-6 md:p-8">
+            <div className={`flex w-full ${url.startsWith('/register') ? 'max-w-2xl' : 'max-w-md'} flex-col`}>
                 <div className="flex flex-col gap-6">
+                    <div className="flex items-center justify-center">
+                        {/* <AppLogo /> */}
+                        <img className="h-9 w-9" src="/apple-touch-icon.png" alt="" />
+                        <div className="ml-2 overflow-hidden leading-5 tracking-[.10em]">
+                            <p className="text-md/2 font-bold text-gray-900 dark:text-white">BPKPD</p>
+                            <p className="text-md/2 font-bold text-destructive">BOLSEL</p>
+                        </div>
+                    </div>
                     <Card className="rounded-xl">
                         <CardHeader className="px-10">
                             <CardTitle className="text-2xl">{title}</CardTitle>
